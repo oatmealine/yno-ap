@@ -1,0 +1,14 @@
+{
+  "name": "yno-archipelago-client",
+  "private": true,
+  "scripts": {
+    "dev": "node build.mjs --watch",
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "archipelago.js": "^2.0.4",
+    "esbuild": "^0.27.4",
+    "esbuild-plugin-glob-import": "^0.2.0"
+  },
+  "version": "0.0.0"
+}

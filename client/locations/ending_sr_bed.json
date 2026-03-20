@@ -1,0 +1,8 @@
+{
+  "name": "Ending #---",
+  "condition": {
+    "map": 457,
+    "switchId": 8,
+    "switchValue": true
+  }
+}

@@ -45,7 +45,9 @@ edit any file.
 
 Switch to the newly-created AP tab in the chat panel. Fill in your details as
 needed. **Do note that due to browser security context reasons, you cannot
-connect to insecure websockets (ws://).**
+connect to insecure websockets (ws://).** You can override this in your browser
+settings, see:
+[Allowing insecure WebSocket connections](https://www.damirscorner.com/blog/posts/20210528-AllowingInsecureWebsocketConnections.html)
 
 ## documentation
 

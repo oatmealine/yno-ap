@@ -52,3 +52,8 @@ connect to insecure websockets (ws://).**
 Most documentation about the inner workings of this is stored in the relevant
 folders; make sure to check for `readme` files around. Otherwise, feel free to
 ask if anything's unclear.
+
+## external links
+
+- [Archipelago server forum thread](https://discord.com/channels/731205301247803413/1483567293886763120)
+- [Bluesky post thread (mostly just ramblings)](https://bsky.app/profile/did:plc:7eansezz3nlumwc7gfuiaksv/post/3mgwvokc3k22z)

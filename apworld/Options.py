@@ -1,15 +1,8 @@
 from typing import List, Dict, Any
 from dataclasses import dataclass
 from worlds.AutoWorld import PerGameCommonOptions
-from Options import Choice, OptionGroup, Toggle, Range, OptionDict
+from Options import Choice, OptionGroup, Toggle, Range, OptionDict, OptionGroup
 from .data import items, locations, Yume2kkiItemType, Yume2kkiLocationType
-
-def create_option_groups() -> List[OptionGroup]:
-    option_group_list: List[OptionGroup] = []
-    for name, options in option_groups.items():
-        option_group_list.append(OptionGroup(name=name, options=options))
-
-    return option_group_list
 
 class MinigameTreatment(Choice):
     """
@@ -214,18 +207,18 @@ class ExpeditionMode(Toggle):
 
 @dataclass
 class Yume2kkiOptions(PerGameCommonOptions):
-    minigame_treatment: MinigameTreatment
-    starting_nexus_keys: StartingNexusKeys
     goal: Goal
+    starting_nexus_keys: StartingNexusKeys
+    minigame_treatment: MinigameTreatment
     ending_list: EndingList
     chance_threshold: ChanceThreshold
     hard_navitagion: HardNavigation
 
-    masksanity: Masksanity
+    npcsanity: NPCSanity
     eventsanity: Eventsanity
+    masksanity: Masksanity
     wallpapersanity: Wallpapersanity
     kura_puzzlesanity: KuraPuzzlesanity
-    npcsanity: NPCSanity
     vmsanity: VMSanity
     vmsanity_percentage: VMSanityPercentage
     vmsanity_filter: VMSanityFilter
@@ -234,17 +227,19 @@ class Yume2kkiOptions(PerGameCommonOptions):
     expedition_mode: ExpeditionMode
 
 option_groups: Dict[str, List[Any]] = {
-    "Game Options": [
-        MinigameTreatment,
-        StartingNexusKeys,
-        Goal,
-        EndingList,
-        ChanceThreshold,
-        HardNavigation,
-    ],
+    # this apparently overrides the default options. wild
+    #"Game Options": [
+    #    Goal,
+    #    StartingNexusKeys,
+    #    MinigameTreatment,
+    #    EndingList,
+    #    ChanceThreshold,
+    #    HardNavigation,
+    #],
     "Location Options": [
-        Masksanity,
+        NPCSanity,
         Eventsanity,
+        Masksanity,
         Wallpapersanity,
         KuraPuzzlesanity,
         VMSanity, VMSanityPercentage, VMSanityFilter,
@@ -252,3 +247,10 @@ option_groups: Dict[str, List[Any]] = {
         ExpeditionMode,
     ]
 }
+
+def create_option_groups() -> List[OptionGroup]:
+    option_group_list: List[OptionGroup] = []
+    for name, options in option_groups.items():
+        option_group_list.append(OptionGroup(name=name, options=options))
+
+    return option_group_list

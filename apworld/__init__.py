@@ -6,7 +6,7 @@ from worlds.AutoWorld import World, CollectionState, WebWorld
 from worlds.generic.Rules import add_rule
 from typing import Dict, List, Callable
 
-from .Options import Yume2kkiOptions, MinigameTreatment, KuraPuzzlesanity, Wallpapersanity, Goal
+from .Options import Yume2kkiOptions, MinigameTreatment, KuraPuzzlesanity, Wallpapersanity, Goal, create_option_groups
 from .data import items as item_data, locations as location_data, item_ids, location_ids, world_data, Yume2kkiItemData, Yume2kkiLocationData, Yume2kkiItemType, Yume2kkiLocationType, ConnType
 
 logger = logging.getLogger("Yume 2kki")
@@ -22,6 +22,8 @@ class Yume2kkiWeb(WebWorld):
         "setup/en",
         ["moonstruck.nectar"]
     )]
+
+    option_groups = create_option_groups()
 
 class Yume2kkiLocation(Location):
     game = "Yume2kki"

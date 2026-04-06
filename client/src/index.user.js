@@ -2,6 +2,7 @@ import { addUIElements, patchI18N } from './ui';
 import { patchWebsocketClass } from './websocket-intercept';
 import { patchXMLHTTPRequest } from './http-intercept';
 import { patchChangeLocation } from './easyrpg-client';
+import { addWarningElement, updateCanvasOverlays as sessionUpdateCanvasOverlays } from './dream-session';
 
 /*
   name: 'yno AP client',
@@ -19,6 +20,7 @@ patchWebsocketClass();
 document.addEventListener('DOMContentLoaded', () => {
   patchI18N();
   addUIElements();
+  addWarningElement();
 });
 
 // this is the easiest way to check for when the actual scripts are done loading...
@@ -28,7 +30,15 @@ const observer = new MutationObserver((mutationList, observer) => {
     for (const node of mutation.addedNodes) {
       if (node.nodeName === 'SCRIPT' && node.src?.includes('ynoengine')) {
         console.log('[yno-ap-client] yno scripts done loading');
+
         patchChangeLocation();
+
+        const _updateCanvasOverlays = window.updateCanvasOverlays;
+        window.updateCanvasOverlays = () => {
+          sessionUpdateCanvasOverlays();
+          _updateCanvasOverlays();
+        }
+
         observer.disconnect();
       }
     }

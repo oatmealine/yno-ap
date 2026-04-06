@@ -7,12 +7,9 @@
  */
 
 import { checkLocations } from './archipelago-client';
-import { handleMapSwitch, processTrigger } from './check';
+import { handleMapSwitch as checksHandleMapSwitch, processTrigger } from './check';
+import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch } from './dream-session';
 import { sendClientPackets } from './websocket-intercept';
-
-const alwaysTrackVariables = [
-
-];
 
 let prevMapID = 0;
 let mapID = 0;
@@ -128,6 +125,30 @@ export function getPos() {
   return [x, y];
 }
 
+function onSwitch(swID, value) {
+  switchState[swID] = value;
+
+  const listeners = switchListeners[swID];
+  if (listeners) {
+    for (const callback of listeners)
+      callback(value);
+    listeners.length = 0; 
+  }
+
+  sessionHandleSwitch(parseInt(swID), value);
+}
+
+function onVariable(varID, value) {
+  varState[varID] = parseInt(value);
+
+  const listeners = varListeners[varID];
+  if (listeners) {
+    for (const callback of listeners)
+      callback(value);
+    listeners.length = 0;
+  }
+}
+
 /**
  * @param {C2SPacketType} type 
  * @param {string[]} args
@@ -135,19 +156,9 @@ export function getPos() {
  */
 export function onPacket(type, args) {
   if (type === 'ss') {
-    switchState[args[0]] = args[1] === '1';
-    const listeners = switchListeners[args[0]];
-    if (!listeners) return;
-    for (const callback of listeners)
-      callback(switchState[args[0]]);
-    listeners.length = 0;
+    onSwitch(args[0], args[1] === '1');
   } else if (type === 'sv') {
-    varState[args[0]] = parseInt(args[1]);
-    const listeners = varListeners[args[0]];
-    if (!listeners) return;
-    for (const callback of listeners)
-      callback(varState[args[0]]);
-    listeners.length = 0;
+    onVariable(args[0], parseInt(args[1]))
   } else if (type === 'm' || type === 'tp' || type === 'jmp') {
     x = parseInt(args[0]);
     y = parseInt(args[1]);
@@ -187,11 +198,10 @@ export function onNewMap(newMapID) {
   actionEventListeners = {};
   pictureListeners = {};
   
-  handleMapSwitch(newMapID);
+  checksHandleMapSwitch(newMapID);
   processTrigger(mapID, 'prevMap', prevMapID.toString());
 
-  if (alwaysTrackVariables.length > 0)
-    sendPackets(alwaysTrackVariables.map(varID => ['sv', varID]));
+  sessionHandleMapSwitch(newMapID);
 }
 
 /**

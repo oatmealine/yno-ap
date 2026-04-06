@@ -58,7 +58,7 @@ Client:
       - [ ] Add icons for our own items
 
   - Effect items
-    - [ ] Invalidate a dream session when using a forbidden effect
+    - [x] Invalidate a dream session when using a forbidden effect
     - [ ] Prevent them from being usable?
     - [ ] Award items when given them
   - Nexus key items
@@ -66,6 +66,11 @@ Client:
     - [ ] Show a fake player to render it as inaccessible in-game
     - [ ] Wake up / abort if using it if possible?
   - [ ] Minigame items
+
+  - UI
+    - [ ] Show available effects
+    - [ ] Show available minigames
+    - [ ] Show possible checks in current area
 
   - [x] Award location on world visit
   - [ ] Award location on vending machine use

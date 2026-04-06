@@ -1,5 +1,6 @@
 import locations from '../locations/*.json';
 import { checkLocations } from './archipelago-client';
+import { isSessionValid } from './dream-session';
 import { getPos, getSwitch, getVariable, trackSwitch, waitForEvent, waitForPicture, waitForSwitchChange, waitForVariableChange } from './easyrpg-client';
 
 // this is structured rather differently than yno-server's badges.go impl - this
@@ -50,6 +51,8 @@ let completeConditions = new Set();
  * @param {Condition} condition
  */
 function markConditionAsComplete(condition) {
+  if (!isSessionValid()) return;
+
   completeConditions.add(condition);
 
   for (const location of Object.values(locations.locations)) {
@@ -249,12 +252,14 @@ function getRelevantConditions(mapId) {
  * @param {string} [value]
  */
 export function processTrigger(mapId, trigger, value) {
+  if (!isSessionValid()) return;
   const conds = getRelevantConditions(mapId);
   console.log(`[yno-ap-client] processing trigger ${trigger}; relevant conditions: `, conds);
   Promise.all(conds.map(cond => checkCondition(cond, trigger, value)));
 }
 
 export function handleMapSwitch(mapId) {
+  if (!isSessionValid()) return;
   const conds = getRelevantConditions(mapId);
   console.log(`[yno-ap-client] map${mapId.toString().padStart(4, '0')} relevant conditions: `, conds);
   Promise.all(conds.map(cond => passiveCheckCondition(cond)));

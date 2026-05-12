@@ -1,3 +1,5 @@
+- [AU] Automatic - low prio
+
 Common:
   - [ ] Figure out filler item type
   - [ ] Figure out traps
@@ -54,17 +56,17 @@ Client:
     - [x] Add an AP chat tab to the right
     - [x] Implement notifications for check get/send
     - [x] Implement notifications for hint get/send
-    - [ ] Icons for items
-      - [ ] Add icons for our own items
+    - [ ] ~~Icons for items~~ the way this is done sucks actually
+      - [ ] ~~Add icons for our own items~~
 
   - Effect items
     - [x] Invalidate a dream session when using a forbidden effect
     - [ ] Prevent them from being usable?
-    - [ ] Award items when given them
+    - [ ] [AU] Award items when given them
   - Nexus key items
     - [ ] Invalidate a dream session when using a forbidden connection
     - [ ] Show a fake player to render it as inaccessible in-game
-    - [ ] Wake up / abort if using it if possible?
+    - [ ] [AU] Wake up / abort if using it if possible?
   - [ ] Minigame items
 
   - UI

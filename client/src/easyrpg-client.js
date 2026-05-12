@@ -23,14 +23,24 @@ let varState = {};
 
 /** @type Record<string, (function(boolean): void)[]> */
 let switchListeners = {};
+/** @type Record<string, (function(string): void)[]> */
+let switchAborts = {};
 /** @type Record<string, (function(number): void)[]> */
 let varListeners = {};
+/** @type Record<string, (function(string): void)[]> */
+let varAborts = {};
 /** @type Record<string, (function(): void)[]> */
 let eventListeners = {};
+/** @type Record<string, (function(string): void)[]> */
+let eventAborts = {};
 /** @type Record<string, (function(): void)[]> */
 let actionEventListeners = {};
+/** @type Record<string, (function(string): void)[]> */
+let actionEventAborts = {};
 /** @type Record<string, (function(): void)[]> */
 let pictureListeners = {};
+/** @type Record<string, (function(string): void)[]> */
+let pictureAborts = {};
 
 let trackedSwitches = new Set();
 let trackedVariables = new Set();
@@ -58,9 +68,11 @@ export function trackSwitch(swID, alsoFetchCurrentValue) {
 }
 
 export function waitForSwitchChange(swID) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     switchListeners[swID] ??= [];
     switchListeners[swID].push(resolve);
+    switchAborts[swID] ??= [];
+    switchAborts[swID].push(reject);
   });
 }
 
@@ -85,9 +97,11 @@ export function trackVariable(varID, alsoFetchCurrentValue) {
 }
 
 export function waitForVariableChange(varID) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     varListeners[varID] ??= [];
     varListeners[varID].push(resolve);
+    varAborts[varID] ??= [];
+    varAborts[varID].push(reject);
   });
 }
 
@@ -100,10 +114,13 @@ function trackEvent(evID, actionEvent) {
 export function waitForEvent(evID, actionEvent) {
   trackEvent(evID);
   const listeners = actionEvent ? actionEventListeners : eventListeners;
-  return new Promise(resolve => {
+  const aborts = actionEvent ? actionEventAborts : eventAborts;
+  return new Promise((resolve, reject) => {
     listeners[evID] ??= [];
     // @ts-ignore why do you care
     listeners[evID].push(resolve);
+    aborts[evID] ??= [];
+    aborts[evID].push(reject);
   });
 }
 
@@ -114,10 +131,12 @@ function trackPicture(pictureName) {
 }
 export function waitForPicture(pictureName) {
   trackPicture(pictureName);
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     pictureListeners[pictureName] ??= [];
     // @ts-ignore why do you care
     pictureListeners[pictureName].push(resolve);
+    pictureAborts[pictureName] ??= [];
+    pictureAborts[pictureName].push(reject);
   });
 }
 
@@ -133,6 +152,7 @@ function onSwitch(swID, value) {
     for (const callback of listeners)
       callback(value);
     listeners.length = 0; 
+    switchAborts[swID].length = 0;
   }
 
   sessionHandleSwitch(parseInt(swID), value);
@@ -146,6 +166,7 @@ function onVariable(varID, value) {
     for (const callback of listeners)
       callback(value);
     listeners.length = 0;
+    varAborts[varID].length = 0;
   }
 }
 
@@ -166,37 +187,54 @@ export function onPacket(type, args) {
     processTrigger(mapID, 'coords');
   } else if (type === 'sev') {
     const listeners = (args[1] !== '0' ? actionEventListeners : eventListeners)[args[0]];
+    const aborts = (args[1] !== '0' ? actionEventAborts : eventAborts)[args[0]];
     if (!listeners) return;
     for (const callback of listeners)
       callback();
     listeners.length = 0;
+    aborts.length = 0;
   } else if (type === 'ap') {
     const pictureName = args[16];
     const listeners = pictureListeners[pictureName];
     if (!listeners) return;
     for (const callback of listeners)
       callback();
+    listeners.length = 0;
+    pictureAborts[pictureName].length = 0;
   } else if (type === 'sr') {
     onNewMap(parseInt(args[0]));
   }
+}
+
+function clearListeners(reason) {
+  trackedSwitches.clear();
+  trackedVariables.clear();
+  trackedEvents.clear();
+  trackedActionEvents.clear();
+  trackedPictures.clear();
+
+  for (const aborts of Object.values(switchAborts)) aborts.forEach(abort => abort(reason));
+  switchListeners = {};
+  switchAborts = {};
+  for (const aborts of Object.values(varAborts)) aborts.forEach(abort => abort(reason));
+  varListeners = {};
+  varAborts = {};
+  for (const aborts of Object.values(eventAborts)) aborts.forEach(abort => abort(reason));
+  eventListeners = {};
+  eventAborts = {};
+  for (const aborts of Object.values(actionEventAborts)) aborts.forEach(abort => abort(reason));
+  actionEventListeners = {};
+  actionEventAborts = {};
+  for (const aborts of Object.values(pictureAborts)) aborts.forEach(abort => abort(reason));
+  pictureListeners = {};
+  pictureAborts = {};
 }
 
 export function onNewMap(newMapID) {
   prevMapID = mapID;
   mapID = newMapID;
 
-  trackedSwitches.clear();
-  trackedVariables.clear();
-  trackedEvents.clear();
-  trackedActionEvents.clear();
-  trackedPictures.clear();
-  
-  // todo: maybe reject these instead of silently discarding the resolves
-  switchListeners = {};
-  varListeners = {};
-  eventListeners = {};
-  actionEventListeners = {};
-  pictureListeners = {};
+  clearListeners('switching room, trackers no longer valid');
   
   checksHandleMapSwitch(newMapID);
   processTrigger(mapID, 'prevMap', prevMapID.toString());

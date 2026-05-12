@@ -36,9 +36,10 @@ this is what each file in locations/ represents
 - `name`: the name of the location. crosscheck w/ `apworld/data/__init__.py`
 - `condition`: equivalent to `tag` in `badge`, except the condition is inlined.
 if this is true, grant the location
-- `conditions`: equivalent to `tags` in `badge`, except the condition is
+- `conditions`: equivalent to `tags` in `badge`, except the conditions are
 inlined. if at least `conditionsCount` conditions are met, grant the location.
 if `conditionsCount` is not set or 0, all conditions must be met
+- `conditionsCount`: controls `conditions` behavior, see above
 
 #### YNO format documentation
 

@@ -6,6 +6,7 @@ from worlds.AutoWorld import World, CollectionState
 
 world_data = []
 wallpaper_data = []
+vms_data = []
 
 with files().joinpath("data.json").open() as file:
     data = json.load(file)
@@ -194,7 +195,7 @@ locations += [
         logic=lambda state, self: state.has("Lantern", self.player)), # technically not required, but it's really annoying w/o it
     Yume2kkiLocationData(name="Glasses Splatter", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Night-Lost Atelier"),
     Yume2kkiLocationData(name="Rainbow", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Theatre World"),
-    Yume2kkiLocationData(name="Ookami", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Teleport Maze"),
+    Yume2kkiLocationData(name="Ōkami", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Teleport Maze"),
     Yume2kkiLocationData(name="Medabomb", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Mini-Maze"),
     Yume2kkiLocationData(name="Pet Telephone", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Dark Room"),
     Yume2kkiLocationData(name="Maiko Ghost", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Shinto Shrine"),
@@ -239,7 +240,109 @@ locations += [
         logic=lambda state, self: state.can_reach_region("Library", self.player) and state.has("Glasses", self.player)),
     Yume2kkiLocationData(name="Saikoro-kun", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Acerola World"),
 
+    # https://yume.wiki/Category:Yume_2kki_Characters
+    Yume2kkiLocationData(name="???-tsuki", type=Yume2kkiLocationType.NPC, region="Urotsuki's Room",
+        logic=lambda state, self:
+        state.can_reach_region("Second Nexus", self.player) or
+        state.can_reach_region("Gutter", self.player) or
+        state.can_reach_region("Opal Ruins A", self.player)),
+    # 01-kun too frequent for it to make sense
+    Yume2kkiLocationData(name="Aojiru", type=Yume2kkiLocationType.NPC, region="Hospital"),
+    # Bagefu accounted for under effects
+    # Bane Jack accounted for under effects
+    # Beniko too frequent for it to make sense
+    Yume2kkiLocationData(name="Beret Sisters", type=Yume2kkiLocationType.NPC, region="Snowy Pipe Organ"),
+    # Boutique-ko too frequent for it to make sense
+    # Boy Outline accounted for under effects
+    Yume2kkiLocationData(name="Ceru", type=Yume2kkiLocationType.NPC, region="Lost Forest"), # only really counting the one w/ the cutscene
+    # Dead Figure accounted for under effects
+    # Detective too frequent for it to make sense
+    Yume2kkiLocationData(name="Elvis Masada", type=Yume2kkiLocationType.NPC, region="Elvis Masada's Place"),
+    # Flashing Trombonist accounted for under effects
+    # Gakuran-kun accounted for under effects
+    # Gray Haniwa accounted for under effects
+    Yume2kkiLocationData(name="Hakoko", type=Yume2kkiLocationType.NPC, region="Visine World"),
+    # Haniwa-musume too frequent for it to make sense
+    # Heishi-kun accounted for under effects
+    # Houtai Ude accounted for under effects
+    # Iona too frequent for it to make sense
+    Yume2kkiLocationData(name="Jimbo", type=Yume2kkiLocationType.NPC, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Giant Desktop", self.player) or state.can_reach_region("Holiday Hell", self.player)),
+    Yume2kkiLocationData(name="Kanban Otoko", type=Yume2kkiLocationType.NPC, region="Japan Town"),
+    # Komorin accounted for under effects
+    # Maiko Ghost accounted for under effects
+    # Marginal Vivid Worker accounted for under effects
+    Yume2kkiLocationData(name="Marina", type=Yume2kkiLocationType.NPC, region="Neon Sea"),
+    # Medabomb accounted for under effects
+    Yume2kkiLocationData(name="Megusuri Uri", type=Yume2kkiLocationType.NPC, region="Visine World"),
+    # Monmon too frequent for it to make sense
+    Yume2kkiLocationData(name="Mysterious Maid", type=Yume2kkiLocationType.NPC, region="Urotsuki's Room",
+        logic=lambda state, self:
+        # TODO this should respect Chance Threshold, but in a smart way;
+        # eg. a chance threshold of 25% would only exclude this from being in logic if you only have 2 of the given locations available to you
+        state.can_reach_region("Hospital", self.player) or
+        state.can_reach_region("Train Tracks", self.player) or
+        state.can_reach_region("Sky Kingdom", self.player) or
+        state.can_reach_region("Construction Frame Building", self.player)
+    ),
+    # Ninchiundō too frequent for it to make sense
+    Yume2kkiLocationData(name="Ninetails", type=Yume2kkiLocationType.NPC, region="Red Lily Lake"),
+    Yume2kkiLocationData(name="Odoriko", type=Yume2kkiLocationType.NPC, region="Red Streetlight World"),
+    Yume2kkiLocationData(name="Olive", type=Yume2kkiLocationType.NPC, region="Lost Forest"),
+    Yume2kkiLocationData(name="Oni Musume", type=Yume2kkiLocationType.NPC, region="Dark Room"),
+    # Ōkami accounted for under effects
+    Yume2kkiLocationData(name="Painter-kun", type=Yume2kkiLocationType.NPC, region="Art Gallery"),
+    # Pet Telephone accounted for under effects
+    # Pole Man accounted for under effects
+    # Puni way too frequent for it to make sense
+    # Saikoro-kun accounted for under effects
+    Yume2kkiLocationData(name="Seishonen", type=Yume2kkiLocationType.NPC, region="Urotsuki's Dream Apartments"),
+    # Setsudan Kanja accounted for under effects
+    # Shimako too frequent, really annoying to implement
+    # Shimofuri-tan accounted for under effects
+    # Silhouette accounted for under effects
+    # Sniper-san too frequent for it to make sense
+    # Sprite accounted for under effects
+    # Surimuki too frequent for it to make sense
+    # Sweets Musume accounted for under effects
+    Yume2kkiLocationData(name="Twintail Monster", type=Yume2kkiLocationType.NPC, region="Broken Faces Area",
+        logic=lambda state, self: state.has_any(["Glasses", "Twintails"], self.player)),
+    # Usamimi accounted for under effects
+    Yume2kkiLocationData(name="Victim", type=Yume2kkiLocationType.NPC, region="Snowy Forest"),
+    # Walking Grave accounted for under effects
+    Yume2kkiLocationData(name="Witch of Hatred", type=Yume2kkiLocationType.NPC, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Love Lodge", self.player) or state.can_reach_region("Cold Summer Flames", self.player)),
+    Yume2kkiLocationData(name="Yume", type=Yume2kkiLocationType.NPC, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Dark Room", self.player) or state.can_reach_region("Tapir-San's Place", self.player)),
 
+    # https://yume.wiki/2kki/Minor_Characters
+    # this specific set of characters is for now grabbed directly from the 2kki manual npcs. bless you nullifi
+    Yume2kkiLocationData(name="Ahogeko", type=Yume2kkiLocationType.NPC, region="False Shoal"),
+    Yume2kkiLocationData(name="Spider Queen", type=Yume2kkiLocationType.NPC, region="Spiders' Nest"),
+    Yume2kkiLocationData(name="Firehead", type=Yume2kkiLocationType.NPC, region="Aquatic Cube City"),
+    Yume2kkiLocationData(name="Operator Cyborg", type=Yume2kkiLocationType.NPC, region="Rusty Urban Complex"),
+    Yume2kkiLocationData(name="Hiboushi", type=Yume2kkiLocationType.NPC, region="Apartments"),
+    Yume2kkiLocationData(name="Purple Haze", type=Yume2kkiLocationType.NPC, region="Vaporwave Mall"),
+    Yume2kkiLocationData(name="Blue Haired DJ", type=Yume2kkiLocationType.NPC, region="Virtual City"), # orig. name Hatsune Miku
+    # Map Girl no idea
+    Yume2kkiLocationData(name="Zalgo", type=Yume2kkiLocationType.NPC, region="Magnet Room"),
+    Yume2kkiLocationData(name="The Lamplighter", type=Yume2kkiLocationType.NPC, region="Rainy Town"),
+    Yume2kkiLocationData(name="Smile-san", type=Yume2kkiLocationType.NPC, region="Flying Fish World"),
+    Yume2kkiLocationData(name="Alley Robot", type=Yume2kkiLocationType.NPC, region="Dark Alleys"),
+    Yume2kkiLocationData(name="Shop Ruins Doctor", type=Yume2kkiLocationType.NPC, region="Shop Ruins"),
+    Yume2kkiLocationData(name="Blob of Good Fortune", type=Yume2kkiLocationType.NPC, region="Sandstone Brick Maze"),
+    Yume2kkiLocationData(name="Apartment Amoeba", type=Yume2kkiLocationType.NPC, region="Urotsuki's Dream Apartments"),
+    Yume2kkiLocationData(name="Key Girl", type=Yume2kkiLocationType.NPC, region="Cotton Candy Heaven"),
+    Yume2kkiLocationData(name="Merlot", type=Yume2kkiLocationType.NPC, region="Cat Cemetery"),
+    Yume2kkiLocationData(name="Midoriko", type=Yume2kkiLocationType.NPC, region="Checkerboard Clubhouse"),
+    Yume2kkiLocationData(name="Waku Waku-san", type=Yume2kkiLocationType.NPC, region="Library"),
+
+    # https://yume.wiki/2kki/Events
+    # TODO
+    # https://yume.wiki/2kki/Masks
+    # TODO
+    # https://yume.wiki/2kki/Kura_Puzzles
+    # TODO
 ]
 
 # location locations
@@ -254,6 +357,7 @@ for world in world_data:
     if world["title"] in locationsanity_blacklist:
         continue
 
+    # logic handled by root apworld
     locations.append(Yume2kkiLocationData(
         name=world["title"],
         type=Yume2kkiLocationType.LOCATION,
@@ -262,6 +366,7 @@ for world in world_data:
 
 # wallpaper locations
 for wallpaper in wallpaper_data:
+    # TODO logic
     locations.append(Yume2kkiLocationData(
         name=f"WP{wallpaper["wallpaperId"]} - {wallpaper["name"]}",
         type=Yume2kkiLocationType.WALLPAPER,

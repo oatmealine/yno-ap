@@ -125,7 +125,7 @@ class Yume2kkiWorld(World):
 
     @staticmethod
     def item_type_to_classification(t: Yume2kkiItemType) -> ItemClassification:
-        if t == Yume2kkiItemType.EFFECT:
+        if t == Yume2kkiItemType.EFFECT or t == Yume2kkiItemType.SPECIAL:
             return ItemClassification.progression
         if t == Yume2kkiItemType.FILLER:
             return ItemClassification.filler

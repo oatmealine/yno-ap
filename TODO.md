@@ -26,7 +26,7 @@ APWorld:
     - [ ] Ending #--- & Ending #...
     - [x] Win conditions
   - [x] Effect unlocks
-    - [ ] Logic
+    - [x] Logic
   - [x] Worlds (Locationsanity)
     - [x] Logic
     - [ ] Expedition mode

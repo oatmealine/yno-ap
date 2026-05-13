@@ -3,18 +3,24 @@ from importlib.resources import files
 from typing import NamedTuple, Optional, List, Dict, Callable
 import enum
 from worlds.AutoWorld import World, CollectionState
+from collections import defaultdict
 
 world_data = []
 wallpaper_data = []
-vms_data = []
+vm_data = []
 
 with files().joinpath("data.json").open() as file:
     data = json.load(file)
     world_data = data["worldData"]
     wallpaper_data = data["wallpaperData"]
 
+with files().joinpath("vms.json").open() as file:
+    data = json.load(file)
+    vm_data = data
+
 class Yume2kkiItemType(enum.Enum):
     EFFECT = "Effect"
+    SPECIAL = "Special"
     NEXUS_KEY = "Nexus Key"
     MINIGAME = "Minigame"
     FILLER = "Filler" # TODO: figure out what filler should be
@@ -92,6 +98,8 @@ items += [
     Yume2kkiItemData(name="Crossing", type=Yume2kkiItemType.EFFECT),
     Yume2kkiItemData(name="Bunny Ears", type=Yume2kkiItemType.EFFECT),
     Yume2kkiItemData(name="Dice", type=Yume2kkiItemType.EFFECT),
+
+    Yume2kkiItemData(name="Text Events", type=Yume2kkiItemType.SPECIAL),
 
     Yume2kkiItemData(name="Library", type=Yume2kkiItemType.NEXUS_KEY),
     Yume2kkiItemData(name="Graveyard World", type=Yume2kkiItemType.NEXUS_KEY),
@@ -371,6 +379,61 @@ for wallpaper in wallpaper_data:
         name=f"WP{wallpaper["wallpaperId"]} - {wallpaper["name"]}",
         type=Yume2kkiLocationType.WALLPAPER,
         region="Wallpapers"
+    ))
+
+# VM locations
+
+vm_counts = defaultdict(int)
+
+for vm in vm_data:
+    location_name = vm["locationAlias"]
+    if vm["locationAlias"] != vm["location"]:
+        location_name += f" ({vm["location"]})"
+    vm_counts[location_name] += 1
+
+# https://stackoverflow.com/a/47713392
+ROMAN = [
+    (1000, "M"),
+    ( 900, "CM"),
+    ( 500, "D"),
+    ( 400, "CD"),
+    ( 100, "C"),
+    (  90, "XC"),
+    (  50, "L"),
+    (  40, "XL"),
+    (  10, "X"),
+    (   9, "IX"),
+    (   5, "V"),
+    (   4, "IV"),
+    (   1, "I"),
+]
+
+def to_roman(number):
+    result = ""
+    for (arabic, roman) in ROMAN:
+        (factor, number) = divmod(number, arabic)
+        result += roman * factor
+    return result
+
+vm_index = defaultdict(int)
+
+for vm in vm_data:
+    location_name = vm["locationAlias"]
+    if vm["locationAlias"] != vm["location"]:
+        location_name += f" ({vm["location"]})"
+
+    count = vm_counts[location_name]
+    index = vm_index[location_name]
+
+    name = f"Vending Machine - {location_name}"
+    if count > 1:
+        vm_index[location_name] += 1
+        name += f" {to_roman(index)}"
+
+    locations.append(Yume2kkiLocationData(
+        name=name,
+        type=Yume2kkiLocationType.VENDING_MACHINE,
+        region=vm["location"]
     ))
 
 item_ids: Dict[int, Yume2kkiItemData] = {}

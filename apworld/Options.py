@@ -147,6 +147,8 @@ class NPCSanity(Toggle):
     """
     Interacting with certain NPCs will count as locations.
     The NPCs that count for this are generally the ones the Yume 2kki wiki considers as NPCs: https://yume.wiki/2kki/Minor_Characters#Non-Effect_NPCs
+
+    Note that some NPCs will be included regardless of this toggle, as they are the NPCs that would usually give the player an effect.
     """
     display_name = "NPCSanity"
     default = True

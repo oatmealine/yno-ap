@@ -161,6 +161,7 @@ can_get_500_wallpapers = lambda state, self: len([
 ]) >= 500
 
 locations += [
+    # https://yume.wiki/2kki/Endings
     Yume2kkiLocationData(name="Ending #1", type=Yume2kkiLocationType.ENDING, region="Trophy Room", logic=has_all_effects),
     Yume2kkiLocationData(name="Ending #2", type=Yume2kkiLocationType.ENDING, region="Trophy Room", logic=has_all_effects),
     Yume2kkiLocationData(name="Ending #3", type=Yume2kkiLocationType.ENDING, region="Trophy Room", logic=has_all_effects),
@@ -237,6 +238,8 @@ locations += [
     Yume2kkiLocationData(name="Usamimi", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Eyeball Archives",
         logic=lambda state, self: state.can_reach_region("Library", self.player) and state.has("Glasses", self.player)),
     Yume2kkiLocationData(name="Saikoro-kun", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Acerola World"),
+
+
 ]
 
 # location locations

@@ -35,19 +35,9 @@ APWorld:
       - [ ] Fix unknown chances (possibly requires better dataset)
       - [ ] Easy navigation option
       - Explicitly specify conditions
-        - [ ] Fake Apartments edgecase
-        - [ ] Dream Park -> Jigsaw Puzzle World - stub; cond unimplemented (Visit Jigsaw Puzzle World at least once)
-        - [ ] Shadowy Caves -> Stone World - stub; cond unimplemented (Visiting Stone World at least once)
-        - [ ] Balloon Park -> Legacy Nexus - stub; cond unimplemented (Night version only)
-        - [ ] Firefly Clinic -> Blissful Clinic - stub; cond unimplemented (Must have visited any of the hospital rooms in Blissful Clinic)
-        - [ ] Haunted Shipwreck Maze -> Quarter Flats - stub; cond unimplemented (Must have visited the Building area in Quarter Flats)
-        - [ ] Sculpture Exhibition -> Head World - stub; cond unimplemented (If you visited this world before)
-        - [ ] Thundercloud Cells -> Elemental Caves - stub; cond unimplemented (Visit Thunder Valley in the Elemental Caves)
-        - [ ] Acid Sun Plain -> Firefly Clinic - stub; cond unimplemented (Must have visited Firefly Clinic at least once)
-        - [ ] Black Cocoon Clouds -> Thundercloud Cells - stub; cond unimplemented (Must have visited Thundercloud Cells at least once)
-        - [ ] Silhouette Road -> Sculpture Exhibition - stub; cond unimplemented (Must have visited the Sculpture Exhibition at least once)
-        - [ ] Snail Sails -> Haunted Shipwreck Maze - stub; cond unimplemented (Must have visited the Haunted Shipwreck Maze at least once
-        - [ ] Check that the following regions are truly inaccessible: ['Maiden Outlook', 'Maiden Outlook', "Unknown Child's Room", 'Deserted Center', 'Cocoa Trap Streets', 'Grayscale Mountain Ring', 'Bleeding Sorrows', 'Pastel Mall', 'Live Idol World', 'Emotional Stones', 'Snowy Fields', 'Stone Dungeon']
+        - [x] Specify all explicit conditions
+        - [x] Fake Apartments edgecase
+        - [ ] Check that the following regions are truly inaccessible: ['Maiden Outlook', "Unknown Child's Room", 'Deserted Center', 'Cocoa Trap Streets', 'Grayscale Mountain Ring', 'Gallery of Me', 'Ironashi Coast', 'Live Idol World', 'Emotional Stones']
       - [ ] Double-triple-quadruple check the dataset is good and correct
         - This probably just requires testing it a bunch
 
@@ -68,6 +58,7 @@ Client:
     - [ ] Show a fake player to render it as inaccessible in-game
     - [ ] [AU] Wake up / abort if using it if possible?
   - [ ] Minigame items
+  - [ ] Text events invalidation
 
   - UI
     - [ ] Show available effects

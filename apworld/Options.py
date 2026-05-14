@@ -46,7 +46,7 @@ class Goal(Choice):
     default = 2
 
 default_endings = [
-    "Bleak Future",
+    #"Bleak Future",
     "Ending #-1",
     "Ending #?",
     "Ending #1",

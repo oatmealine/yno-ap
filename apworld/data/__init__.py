@@ -340,7 +340,7 @@ locations += [
     Yume2kkiLocationData(name="Shop Ruins Doctor", type=Yume2kkiLocationType.NPC, region="Shop Ruins"),
     Yume2kkiLocationData(name="Blob of Good Fortune", type=Yume2kkiLocationType.NPC, region="Sandstone Brick Maze"),
     Yume2kkiLocationData(name="Apartment Amoeba", type=Yume2kkiLocationType.NPC, region="Urotsuki's Dream Apartments"),
-    Yume2kkiLocationData(name="Key Girl", type=Yume2kkiLocationType.NPC, region="Cotton Candy Heaven"),
+    Yume2kkiLocationData(name="Key Girl", type=Yume2kkiLocationType.NPC, region="Cotton Candy Haven"),
     Yume2kkiLocationData(name="Merlot", type=Yume2kkiLocationType.NPC, region="Cat Cemetery"),
     Yume2kkiLocationData(name="Midoriko", type=Yume2kkiLocationType.NPC, region="Checkerboard Clubhouse"),
     Yume2kkiLocationData(name="Waku Waku-san", type=Yume2kkiLocationType.NPC, region="Library"),
@@ -350,6 +350,8 @@ locations += [
     # https://yume.wiki/2kki/Masks
     # TODO
     # https://yume.wiki/2kki/Kura_Puzzles
+    # TODO
+    # https://yume.wiki/2kki/Menu_Themes
     # TODO
 ]
 
@@ -387,8 +389,6 @@ vm_counts = defaultdict(int)
 
 for vm in vm_data:
     location_name = vm["locationAlias"]
-    if vm["locationAlias"] != vm["location"]:
-        location_name += f" ({vm["location"]})"
     vm_counts[location_name] += 1
 
 # https://stackoverflow.com/a/47713392
@@ -419,16 +419,14 @@ vm_index = defaultdict(int)
 
 for vm in vm_data:
     location_name = vm["locationAlias"]
-    if vm["locationAlias"] != vm["location"]:
-        location_name += f" ({vm["location"]})"
 
     count = vm_counts[location_name]
     index = vm_index[location_name]
 
     name = f"Vending Machine - {location_name}"
     if count > 1:
+        name += f" {to_roman(index + 1)}"
         vm_index[location_name] += 1
-        name += f" {to_roman(index)}"
 
     locations.append(Yume2kkiLocationData(
         name=name,

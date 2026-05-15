@@ -165,8 +165,9 @@ has_all_effects = lambda state, self: state.has_all(
     (item.name for item in items if item.type == Yume2kkiItemType.EFFECT), self.player
 )
 can_get_500_wallpapers = lambda state, self: len([
-    state.can_reach_location(location.name, self.player)
-    for location in locations if location.type == Yume2kkiLocationType.WALLPAPER
+    location
+    for location in locations
+    if location.type == Yume2kkiLocationType.WALLPAPER and state.can_reach_location(location.name, self.player)
 ]) >= 500
 
 locations += [
@@ -361,6 +362,7 @@ locationsanity_blacklist = [
     "Nexus",
     "Debug Room",
     "Game Console", # not even a world......
+    "Developer Room",
 ]
 
 for world in world_data:
@@ -437,10 +439,11 @@ for vm in vm_data:
 item_ids: Dict[int, Yume2kkiItemData] = {}
 location_ids: Dict[int, Yume2kkiLocationData] = {}
 
-id = 29910000
+id = 0
 for item in items:
     id += 1
     item_ids[id] = item
+id = 0
 for location in locations:
     id += 1
     location_ids[id] = location

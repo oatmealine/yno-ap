@@ -142,7 +142,6 @@ class KuraPuzzlesanity(Choice):
     option_solving = 3
     default = 2
 
-# TODO
 class NPCSanity(Toggle):
     """
     Interacting with certain NPCs will count as locations.
@@ -153,7 +152,6 @@ class NPCSanity(Toggle):
     display_name = "NPCSanity"
     default = True
 
-# TODO
 class VMSanity(Toggle):
     """
     Every vending machine is a location.
@@ -170,7 +168,6 @@ class VMSanityPercentage(Range):
     range_end = 100
     default = 50
 
-# TODO
 class VMSanityFilter(Toggle):
     """
     Only add vending machines in areas that are included by Locationsanity.
@@ -192,7 +189,7 @@ class Locationsanity(Toggle):
 class LocationsanityPercentage(Range):
     """
     How many locations to include as locations (as a percentage).
-    I wouldn't ever recommend setting this to 100%. Do you really want to go to Voxel Island?
+    I wouldn't ever recommend setting this to 100%. Do you really want to add ~1,500 locations?
     """
     display_name = "Location Percentage"
     range_start = 0
@@ -214,7 +211,7 @@ class Yume2kkiOptions(PerGameCommonOptions):
     minigame_treatment: MinigameTreatment
     ending_list: EndingList
     chance_threshold: ChanceThreshold
-    hard_navitagion: HardNavigation
+    hard_navigation: HardNavigation
 
     npcsanity: NPCSanity
     eventsanity: Eventsanity

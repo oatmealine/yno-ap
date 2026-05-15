@@ -34,6 +34,12 @@ class Yume2kkiItem(Item):
 
 forbidden_worlds = ["Debug Room"]
 
+# entrances that are still useful in spite of being "redundant" depth-wise
+hard_navigation_whitelist = [
+    "Legacy Nexus -> Nexus",
+    "Rooftops -> Symbolon"
+]
+
 # True if always accessible, False if always inaccessible, lambda otherwise
 text_condition_logic = {
     # text events
@@ -207,7 +213,7 @@ text_condition_logic = {
     "Finding all of the Five Guardians":
         lambda state, self:
             # SHOULD be everything needed to solve the guardians' puzzles?
-            state.has_all(["Fairy", "Chainsaw", "Child", "Penguin", "Stretch", "Lantern"]) and state.can_reach_region("Apartments", self.player),
+            state.has_all(["Fairy", "Chainsaw", "Child", "Penguin", "Stretch", "Lantern"], self.player) and state.can_reach_region("Apartments", self.player),
     "Viewing Ending #-1, breaking the egg in the Guardians' Temple and having the orbs show on each pillar":
         lambda state, self:
             state.can_reach_location("Ending #-1", self.player) and
@@ -283,7 +289,7 @@ text_condition_logic = {
     "Visiting Dream Venus at least once":
         lambda state, self: state.can_reach_region("Dream Venus", self.player),
     "Entering the Industrial Waterfront at least once":
-        lambda state, self: state.can_reach_region("Industrial Waterfront", self.player),
+        lambda state, self: state.can_reach_region("Tesla Garden", self.player),
     "If the player has visited Red Marbling World before":
         lambda state, self: state.can_reach_region("Red Marbling World", self.player),
     "Enter the Verdant Promenade at least once":
@@ -366,7 +372,7 @@ text_condition_logic = {
 
     # random specific ones
     "After seeing the first four endings":
-        lambda state, self: all(state.can_reach_location(ending, self.player) for ending in ["Ending #1", "Ending #2", "Ending #3", "Ending #4"]),
+        lambda state, self: all(ending in self.locations and state.can_reach_location(ending, self.player) for ending in ["Ending #1", "Ending #2", "Ending #3", "Ending #4"]),
     "Purchase an entry ticket at the museum": True,
     "Sleep at least 100 times": True, # god forgive me
     "When the UFO is present":
@@ -440,7 +446,10 @@ text_condition_logic = {
     "If number of times slept divided by 4 has 2 as the remainder": True,
     "If number of times slept divided by 4 has 3 as the remainder": True,
     "Accessible from this side with a mouse mask or the other side with certain masks":
-        lambda state, self: state.has("Fairy", self.player) or state.can_reach_location("Bleak Future", self.player), # needed to unlock the mask
+        lambda state, self:
+            # needed to unlock the mask
+            state.has("Fairy", self.player) or
+            ("Bleak Future" in self.locations and state.can_reach_location("Bleak Future", self.player)),
     "Leads to an isolated section with only the Magnet Room portal, unless the player has the Penguin and Fairy or Spacesuit effects":
         # TODO: technically inaccurate, Stone Maze - Partial should be accessible regardless and also link to Magnet Room
         lambda state, self: state.has("Penguin", self.player) and state.has_any(["Fairy", "Spacesuit"], self.player),
@@ -622,10 +631,10 @@ text_condition_logic = {
     "Must have Child effect and have unlocked at least two of Spectral Hub's connections":
         lambda state, self:
             state.has("Child", self.player) and
-            len(region for region in [
+            len([region for region in [
                 "Dal Segno Labyrinth", "Ancient Stone Plates",
                 "Fall Shoal", "Techno Rave Ruins",
-            ] if state.can_reach_region(region)) >= 2,
+            ] if state.can_reach_region(region, self.player)]) >= 2,
     "One-way unless Fluorescent City has been visited at least once": True,
     "Obtain Menu Theme #96":
         # TODO: menu themes have to be implemented first
@@ -685,7 +694,6 @@ text_condition_logic = {
         lambda state, self: state.can_reach_entrance("Promnesic Terminal -> Solemn Meadow", self.player),
     "If this world was reached via Mystery Zone":
         lambda state, self: state.can_reach_entrance("Promnesic Terminal -> Mystery Zone", self.player),
-
 }
 
 class Yume2kkiWorld(World):
@@ -698,11 +706,21 @@ class Yume2kkiWorld(World):
 
     origin_region_name = "Urotsuki's Room"
 
-    items: List[str] = []
-    locations: List[str] = []
-    precollected_items: List[str] = []
+    explicit_indirect_conditions = False
 
-    def generate_early(self):
+    items: List[str]
+    locations: List[str]
+    precollected_items: List[str]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.items = []
+        self.locations = []
+        self.precollected_items = []
+
+    #def generate_early(self):
+
+    def create_items(self):
         possible_starters = self.options.starting_nexus_keys
         nexus_keys = [
             item.name for item in item_data if item.name in possible_starters and possible_starters[item.name]
@@ -721,6 +739,48 @@ class Yume2kkiWorld(World):
 
             self.items.append(item.name)
 
+        item_pool: List[Yume2kkiItem] = []
+
+        for item_name in self.items:
+            item = self.create_item(item_name)
+            if item_name in self.precollected_items:
+                self.multiworld.push_precollected(item)
+            else:
+                item_pool.append(item)
+
+        # filler time
+        total_location_count = len(self.multiworld.get_unfilled_locations(self.player))
+        to_fill_location_count = total_location_count - len(item_pool)
+
+        for i in range(to_fill_location_count):
+            item_pool.append(self.create_filler())
+
+        self.multiworld.itempool += item_pool
+    
+    def create_filler(self) -> Yume2kkiItem:
+        return self.create_item("Filler") # TODO
+
+    @staticmethod
+    def item_type_to_classification(t: Yume2kkiItemType) -> ItemClassification:
+        if t == Yume2kkiItemType.EFFECT or t == Yume2kkiItemType.SPECIAL or t == Yume2kkiItemType.NEXUS_KEY:
+            return ItemClassification.progression
+        if t == Yume2kkiItemType.FILLER:
+            return ItemClassification.filler
+        if t == Yume2kkiItemType.MINIGAME:
+            return ItemClassification.useful
+
+    def create_item(self, name: str) -> Yume2kkiItem:
+        data = next(i for i in item_data if i.name == name)
+
+        return Yume2kkiItem(
+            name,
+            self.item_type_to_classification(data.type),
+            self.item_name_to_id[name],
+            self.player
+        )
+
+    # also: create_locations, since locations only matter with region associations
+    def create_regions(self):
         for location in location_data:
             if location.type == Yume2kkiLocationType.EVENT and not self.options.eventsanity:
                 continue
@@ -747,58 +807,22 @@ class Yume2kkiWorld(World):
 
             self.locations.append(location.name)
 
+        locationsanity_locations = []
         if self.options.locationsanity:
             locations = [location.name for location in location_data if location.type == Yume2kkiLocationType.LOCATION]
             locations_amt = math.floor(self.options.locationsanity_percentage / 100 * len(locations))
-            self.locations += self.random.sample(locations, locations_amt)
+            locationsanity_locations = self.random.sample(locations, locations_amt)
+            self.locations += locationsanity_locations
 
         if self.options.vmsanity:
             locations = [location.name for location in location_data if location.type == Yume2kkiLocationType.VENDING_MACHINE]
+            if self.options.vmsanity_filter:
+                locations = [location.name for location in location_data if location.type == Yume2kkiLocationType.VENDING_MACHINE and location.region in locationsanity_locations]
+            else:
+                locations = [location.name for location in location_data if location.type == Yume2kkiLocationType.VENDING_MACHINE]
             locations_amt = math.floor(self.options.vmsanity_percentage / 100 * len(locations))
             self.locations += self.random.sample(locations, locations_amt)
 
-    def create_items(self):
-        item_pool: List[Yume2kkiItem] = []
-
-        for item_name in self.items:
-            item = self.create_item(item_name)
-            if item_name in self.precollected_items:
-                self.multiworld.push_precollected(item)
-            else:
-                item_pool.append(item)
-
-        # filler time
-        total_location_count = len(self.multiworld.get_unfilled_locations(self.player))
-        to_fill_location_count = total_location_count - len(item_pool)
-
-        for i in range(to_fill_location_count):
-            item_pool.append(self.create_item("Filler")) # TODO
-
-        self.multiworld.itempool += item_pool
-
-    @staticmethod
-    def item_type_to_classification(t: Yume2kkiItemType) -> ItemClassification:
-        if t == Yume2kkiItemType.EFFECT or t == Yume2kkiItemType.SPECIAL:
-            return ItemClassification.progression
-        if t == Yume2kkiItemType.FILLER:
-            return ItemClassification.filler
-        if t == Yume2kkiItemType.MINIGAME:
-            return ItemClassification.useful
-        if t == Yume2kkiItemType.NEXUS_KEY:
-            return ItemClassification.progression
-
-    def create_item(self, name: str) -> Yume2kkiItem:
-        data = next(i for i in item_data if i.name == name)
-
-        return Yume2kkiItem(
-            name,
-            self.item_type_to_classification(data.type),
-            self.item_name_to_id[name],
-            self.player
-        )
-
-    # also: create_locations, since locations only matter with region associations
-    def create_regions(self):
         regions: Dict[str, Region] = {}
 
         regions["Wallpapers"] = Region("Wallpapers", self.player, self.multiworld)
@@ -826,10 +850,7 @@ class Yume2kkiWorld(World):
 
         endings = [location for location in self.locations if location in self.options.ending_list and self.options.ending_list[location]]
 
-        if self.options.goal == Goal.option_all_endings:
-            victory_rule = lambda state: all(state.can_reach_location(ending, self.player) for ending in endings)
-        elif self.options.goal == Goal.option_any_ending:
-            victory_rule = lambda state: any(state.can_reach_location(ending, self.player) for ending in endings)
+        victory_rule = lambda state: all(state.can_reach_location(ending, self.player) for ending in endings)
 
         regions["Urotsuki's Room"].connect(
             victory_region,
@@ -853,9 +874,6 @@ class Yume2kkiWorld(World):
             region = regions[world["title"]]
             connections = world["connections"]
 
-            if world["title"] + " - Partial" in regions:
-                region.connect(regions[world["title"] + " - Partial"], f"{world["title"]} (Full -> Partial)")
-
             for connection in connections:
                 target_id = connection["targetId"]
                 target_world = next((world for world in world_data if world["id"] == target_id), None)
@@ -867,8 +885,17 @@ class Yume2kkiWorld(World):
                 target_region = regions[target_world["title"]]
 
                 is_dead_end = False
+                is_exit_point = False
                 rules = []
                 name = f"{world["title"]} -> {target_world["title"]}"
+
+                if not self.options.hard_navigation:
+                    # using the wiki/explorer depths is unreliable
+                    #if world["depth"] > target_world["depth"] and world["minDepth"] > target_world["minDepth"] and name not in hard_navigation_whitelist:
+                    #    continue
+                    # TODO come up with an alt solution
+                    if False:
+                        continue
 
                 t = connection["type"]
 
@@ -879,7 +906,7 @@ class Yume2kkiWorld(World):
                 if t & ConnType.NO_ENTRY.value:
                     continue
                 if t & ConnType.LOCKED.value:
-                    rules.append(lambda state: state.can_reach_region(target_region.name, self.player))
+                    rules.append(lambda state, target_region_name=target_region.name: state.can_reach_region(target_region_name, self.player))
                 if t & ConnType.DEAD_END.value:
                     is_dead_end = True
                 if t & ConnType.ISOLATED.value:
@@ -897,7 +924,7 @@ class Yume2kkiWorld(World):
                         if item is None:
                             logger.warning(f"Yume 2kki: unknown effect used for {name} connection: {effect}")
                     
-                    rules.append(lambda state: state.has_all(effects, self.player))
+                    rules.append(lambda state, effects=effects: state.has_all(effects, self.player))
                 if t & ConnType.CHANCE.value:
                     chance = connection["typeParams"][str(ConnType.CHANCE.value)]["params"]
                     if chance == "0%":
@@ -913,12 +940,12 @@ class Yume2kkiWorld(World):
                         if condition_logic == False:
                             continue
                         elif condition_logic != True:
-                            rules.append(lambda state: condition_logic(state, self))
+                            rules.append(lambda state, logic=condition_logic: logic(state, self))
                     else:
                         logger.warning(f"Yume 2kki: {world["title"]} -> {target_world["title"]} - stub; cond unimplemented ({condition})")
                         continue
                 if t & ConnType.EXIT_POINT.value:
-                    continue
+                    is_exit_point = True
                 if t & ConnType.SEASONAL.value:
                     # TODO: fix for multiple possible seasons
                     if self.options.chance_threshold >= 25:
@@ -929,16 +956,26 @@ class Yume2kkiWorld(World):
                     logger.warning(f"Yume 2kki: {world["title"]} -> {target_world["title"]} - tracked stub")
                     continue
 
-                if region.name == "Nexus" and target_region.name != "Urotsuki's Room" and target_region.name in self.items and target_region.name not in self.precollected_items:
-                    rules.append(lambda state: state.has(target_region.name, self.player))
+                if region.name == "Nexus" and target_region.name != "Urotsuki's Room" and target_region.name in self.items:
+                    rules.append(lambda state, item_name=target_region.name: state.has(item_name, self.player))
 
+                # this is made with the foolish assumption that all dead ends in
+                # a given location will connect, but not making this assumption
+                # results in much more false negatives, leading to fill errors
+                region_entrance = region
+                region_exit = target_region
+                if is_exit_point:
+                    region_entrance = regions[world["title"] + " - Partial"]
                 if is_dead_end:
-                    entrance = region.connect(regions[target_world["title"] + " - Partial"], name)
-                else:
-                    entrance = region.connect(target_region, name)
+                    region_exit = regions[target_world["title"] + " - Partial"]
+
+                entrance = region_entrance.connect(region_exit, name)
 
                 for rule in rules:
                     add_rule(entrance, rule)
+
+            if world["title"] + " - Partial" in regions:
+                region.connect(regions[world["title"] + " - Partial"], f"{world["title"]} (Full -> Partial)")
 
         # trim off inaccessible regions
         # does a flood fill type thing
@@ -977,8 +1014,7 @@ class Yume2kkiWorld(World):
 
         for location in location_data:
             if location.logic is not None:
-                logic = location.logic
-                self.maybe_add_rule(locations, location.name, lambda state: logic(state, self))
+                self.maybe_add_rule(locations, location.name, lambda state, logic=location.logic: logic(state, self))
 
         self.multiworld.regions += regions.values()
 

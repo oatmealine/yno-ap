@@ -3,14 +3,14 @@
 Common:
   - [ ] Figure out filler item type
   - [ ] Figure out traps
-  - [ ] Vending machine locations & event IDs(?)
+  - [x] Vending machine locations & event IDs(?)
   - [ ] Minigame goals
 
 APWorld:
   - [ ] Figure out how to make chance threshold more granular
-  - [ ] Vending machines
-    - [ ] Logic
-    - [ ] Vending Machinesanity Filter
+  - [x] Vending machines
+    - [x] Logic (kind of? needs testing)
+    - [x] Vending Machinesanity Filter
   - [ ] Masks
     - [ ] Logic
   - [ ] Events
@@ -20,8 +20,8 @@ APWorld:
     - [ ] Logic
   - [ ] Kura Puzzles
     - [ ] Logic
-  - [ ] NPCs
-    - [ ] Logic
+  - [x] NPCs
+    - [x] Logic
   - [x] Endings & associated logic
     - [ ] Ending #--- & Ending #...
     - [x] Win conditions

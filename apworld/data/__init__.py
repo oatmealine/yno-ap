@@ -164,7 +164,9 @@ locations: List[Yume2kkiLocationData] = []
 has_all_effects = lambda state, self: state.has_all(
     (item.name for item in items if item.type == Yume2kkiItemType.EFFECT), self.player
 )
-can_get_500_wallpapers = lambda state, self: len([
+# TODO the wallpapersanity hardcoded enum here sucks
+# i think ideally wallpapers should be switched to events
+can_get_500_wallpapers = lambda state, self: self.options.wallpapersanity == 1 or len([
     location
     for location in locations
     if location.type == Yume2kkiLocationType.WALLPAPER and state.can_reach_location(location.name, self.player)
@@ -364,7 +366,7 @@ locations += [
     Yume2kkiLocationData(name="Chasers in the Woods", type=Yume2kkiLocationType.EVENT, region="Fairy Tale Woods"),
     Yume2kkiLocationData(name="The Cloning Room", type=Yume2kkiLocationType.EVENT, region="Red Brick Maze"),
     Yume2kkiLocationData(name="Giant Cloning Room", type=Yume2kkiLocationType.EVENT, region="Red Brick Maze",
-        logic=lambda state, self: "Ending #4" in self.locations and state.can_reach_location("Ending #4", self.player)), # TODO: 1/10 chance
+        logic=lambda state, self: state.can_reach_location("Ending #4", self.player)), # TODO: 1/10 chance; exclude if ending #4 is excluded
     Yume2kkiLocationData(name="Clowns at the Circus", type=Yume2kkiLocationType.EVENT, region="Circus"),
     Yume2kkiLocationData(name="The Colossus of Rhomb", type=Yume2kkiLocationType.EVENT, region="Square-Square World",
         logic=lambda state, self:

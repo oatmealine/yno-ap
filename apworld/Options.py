@@ -56,7 +56,7 @@ default_endings = [
 
 class EndingList(OptionDict):
     """
-    Which endings to use for the **All Endings** win condition. Also specifies which endings should count as locations.
+    Which endings to use for the **All Endings** win condition. Also specifies which endings can contain progression and useful items.
 
     Ending #4 will be ignored regardless of the setting here if Wallpapersanity is disabled, as then the world will have no clue how many wallpapers are logically accessible to the player.
 
@@ -70,9 +70,9 @@ class ChanceThreshold(Range):
     """
     The "reasonability" threshold for chance-based locations, as a percentage. In other words, your tolerance level of RPG Maker RNG bullshit.
 
-    For instance, if set to 25, then any chance checks lower than 25% (1/4) will be excluded, and never required. Succeeding at them anyways will count as out-of-logic.
+    For instance, if set to 25, then any chance checks lower than 25% (1/4) will be excluded, and never required. Succeeding at them anyways will count as out-of-logic or exclusively lead to filler items.
 
-    This affects world connections and the Bleak Future ending.
+    This affects world connections, the Bleak Future ending and several events.
     """
     display_name = "Chance Threshold"
     range_start = 0
@@ -85,6 +85,7 @@ class HardNavigation(Toggle):
     Determines when a region is counted as in logic.
 
     When disabled, a region will be counted as in logic if the shortest path is accessible. When enabled, a region will be counted as in logic if any path to it is available.
+    For instance, even if Red Streetlight World is inaccessible from the Nexus, logic may expect you to traverse to it by going through Nexus → Deep Red Wilds → Bleeding Mushroom Garden → Rapeseed Fields and then backtracking to Bridged Swamp Islands → Red Streetlight World.
     
     This will significantly increase the tediousness of some checks, as there is no limit to how far an alternate path could go on for, and these paths are generally undocumented on the wiki.
     """
@@ -99,11 +100,10 @@ class Masksanity(Toggle):
     display_name = "Masksanity"
     default = True
 
-# TODO
 class Eventsanity(Toggle):
     """
     Triggering certain events will count as locations.
-    The events that count for this are generally thee ones the Yume 2kki wiki considers as events: https://yume.wiki/2kki/Events
+    The events that count for this are generally the ones the Yume 2kki wiki considers as events: https://yume.wiki/2kki/Events
     """
     display_name = "Eventsanity"
     default = True

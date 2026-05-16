@@ -1,7 +1,7 @@
 import logging
 import math
 
-from BaseClasses import MultiWorld, Item, Tutorial, Location, Region, ItemClassification
+from BaseClasses import MultiWorld, Item, Tutorial, Location, Region, ItemClassification, LocationProgressType
 from worlds.AutoWorld import World, CollectionState, WebWorld
 from worlds.generic.Rules import add_rule
 from typing import Dict, List, Callable
@@ -372,7 +372,7 @@ text_condition_logic = {
 
     # random specific ones
     "After seeing the first four endings":
-        lambda state, self: all(ending in self.locations and state.can_reach_location(ending, self.player) for ending in ["Ending #1", "Ending #2", "Ending #3", "Ending #4"]),
+        lambda state, self: all(state.can_reach_location(ending, self.player) for ending in ["Ending #1", "Ending #2", "Ending #3", "Ending #4"]),
     "Purchase an entry ticket at the museum": True,
     "Sleep at least 100 times": True, # god forgive me
     "When the UFO is present":
@@ -449,7 +449,7 @@ text_condition_logic = {
         lambda state, self:
             # needed to unlock the mask
             state.has("Fairy", self.player) or
-            ("Bleak Future" in self.locations and state.can_reach_location("Bleak Future", self.player)),
+            state.can_reach_location("Bleak Future", self.player),
     "Leads to an isolated section with only the Magnet Room portal, unless the player has the Penguin and Fairy or Spacesuit effects":
         # TODO: technically inaccurate, Stone Maze - Partial should be accessible regardless and also link to Magnet Room
         lambda state, self: state.has("Penguin", self.player) and state.has_any(["Fairy", "Spacesuit"], self.player),
@@ -798,12 +798,6 @@ class Yume2kkiWorld(World):
                 continue
             if location.type == Yume2kkiLocationType.WALLPAPER and self.options.wallpapersanity == Wallpapersanity.option_ignore:
                 continue
-            if location.type == Yume2kkiLocationType.ENDING and not (location.name in self.options.ending_list and self.options.ending_list[location.name]):
-                continue
-            if location.name == "Ending #4" and self.options.wallpapersanity == Wallpapersanity.option_ignore:
-                continue
-            if location.name == "Bleak Future" and self.options.chance_threshold/100 < 1/64:
-                continue
 
             self.locations.append(location.name)
 
@@ -1006,6 +1000,17 @@ class Yume2kkiWorld(World):
 
             region = regions[data.region]
             location = Yume2kkiLocation(self.player, data.name, self.location_name_to_id[data.name], region)
+
+            if data.type == Yume2kkiLocationType.EFFECT_UNLOCK:
+                location.progress_type = LocationProgressType.PRIORITY
+
+            if data.type == Yume2kkiLocationType.ENDING and not (data.name in self.options.ending_list and self.options.ending_list[data.name]):
+                location.progress_type = LocationProgressType.EXCLUDED
+            if data.name == "Ending #4" and self.options.wallpapersanity == Wallpapersanity.option_ignore:
+                location.progress_type = LocationProgressType.EXCLUDED
+            if data.name == "Bleak Future" and self.options.chance_threshold/100 < 1/64:
+                location.progress_type = LocationProgressType.EXCLUDED
+
             region.locations.append(location)
             locations[location_name] = location
                 

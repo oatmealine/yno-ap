@@ -329,7 +329,7 @@ locations += [
     Yume2kkiLocationData(name="Ahogeko", type=Yume2kkiLocationType.NPC, region="False Shoal"),
     Yume2kkiLocationData(name="Spider Queen", type=Yume2kkiLocationType.NPC, region="Spiders' Nest"),
     Yume2kkiLocationData(name="Firehead", type=Yume2kkiLocationType.NPC, region="Aquatic Cube City"),
-    Yume2kkiLocationData(name="Operator Cyborg", type=Yume2kkiLocationType.NPC, region="Rusty Urban Complex"),
+    Yume2kkiLocationData(name="Operator Cyborg", type=Yume2kkiLocationType.NPC, region="Rusty Urban Complex - Partial"),
     Yume2kkiLocationData(name="Hiboushi", type=Yume2kkiLocationType.NPC, region="Apartments"),
     Yume2kkiLocationData(name="Purple Haze", type=Yume2kkiLocationType.NPC, region="Vaporwave Mall"),
     Yume2kkiLocationData(name="Blue Haired DJ", type=Yume2kkiLocationType.NPC, region="Virtual City"), # orig. name Hatsune Miku
@@ -347,7 +347,150 @@ locations += [
     Yume2kkiLocationData(name="Waku Waku-san", type=Yume2kkiLocationType.NPC, region="Library"),
 
     # https://yume.wiki/2kki/Events
-    # TODO
+    Yume2kkiLocationData(name="Abuse", type=Yume2kkiLocationType.EVENT, region="Florist"),
+    Yume2kkiLocationData(name="Amusement Park Clown Hell", type=Yume2kkiLocationType.EVENT, region="Underwater Amusement Park"),
+    Yume2kkiLocationData(name="Ancient Rave", type=Yume2kkiLocationType.EVENT, region="Ancient Crypt"),
+    Yume2kkiLocationData(name="Anetra's Rave", type=Yume2kkiLocationType.EVENT, region="Pinwheel Countryside"),
+    Yume2kkiLocationData(name="Aooh", type=Yume2kkiLocationType.EVENT, region="Ahogeko's House"), # TODO: 1/64 chance
+    Yume2kkiLocationData(name="Big Red", type=Yume2kkiLocationType.EVENT, region="Abandoned Factory"),
+    Yume2kkiLocationData(name="Blood Sacrifice", type=Yume2kkiLocationType.EVENT, region="Blood World",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Book Return", type=Yume2kkiLocationType.EVENT, region="Eyeball Archives",
+        logic=lambda state, self: state.can_reach_region("Library", self.player) and state.has("Glasses", self.player)),
+    Yume2kkiLocationData(name="Buddha Rave", type=Yume2kkiLocationType.EVENT, region="Marijuana Goddess World"),
+    Yume2kkiLocationData(name="Butcher's Wrath", type=Yume2kkiLocationType.EVENT, region="Mutant Pig Farm",
+        logic=lambda state, self: state.has("Marginal", self.player)), # TODO: 1/1024 chance
+    Yume2kkiLocationData(name="Chasers in Urotsuki's Room", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments"), # TODO: 1/64 chance
+    Yume2kkiLocationData(name="Chasers in the Woods", type=Yume2kkiLocationType.EVENT, region="Fairy Tale Woods"),
+    Yume2kkiLocationData(name="The Cloning Room", type=Yume2kkiLocationType.EVENT, region="Red Brick Maze"),
+    Yume2kkiLocationData(name="Giant Cloning Room", type=Yume2kkiLocationType.EVENT, region="Red Brick Maze",
+        logic=lambda state, self: "Ending #4" in self.locations and state.can_reach_location("Ending #4", self.player)), # TODO: 1/10 chance
+    Yume2kkiLocationData(name="Clowns at the Circus", type=Yume2kkiLocationType.EVENT, region="Circus"),
+    Yume2kkiLocationData(name="The Colossus of Rhomb", type=Yume2kkiLocationType.EVENT, region="Square-Square World",
+        logic=lambda state, self:
+            state.can_reach_location("Flying Fish World", self.player) or
+            (state.can_reach_location("Cog Maze", self.player) and (state.can_reach_location("Japan Town", self.player) or True))), # TODO: replace True with unknown chance check
+    Yume2kkiLocationData(name="Corrupted Nexus", type=Yume2kkiLocationType.EVENT, region="Nexus",
+        # TODO: needs menu themes to be implemented
+        # TODO: 1/1011 chance check
+        #logic=lambda state, self: state.can_reach_location("Menu Theme #52", self.player)),
+    ),
+    Yume2kkiLocationData(name="Creatures of the Power Plant", type=Yume2kkiLocationType.EVENT, region="Power Plant"),
+    Yume2kkiLocationData(name="The Cursed Corridor", type=Yume2kkiLocationType.EVENT, region="Execution Ground",
+        logic=lambda state, self:
+            state.can_reach_location("Atelier", self.player) and
+            state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Decapitation", type=Yume2kkiLocationType.EVENT, region="Realistic Beach",
+        logic=lambda state, self:
+            (state.can_reach_location("Teleport Maze", self.player) or
+            state.has_any(["Child", "Fairy", "Grave", "Dice"], self.player)) and
+            state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="DECK RAVE", type=Yume2kkiLocationType.EVENT, region="Smiley Face DECK"),
+    Yume2kkiLocationData(name="Dream of Roses", type=Yume2kkiLocationType.EVENT, region="Red Rock Caves",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Drowning", type=Yume2kkiLocationType.EVENT, region="Depths"),
+    Yume2kkiLocationData(name="Duet with Elvis Masada", type=Yume2kkiLocationType.EVENT, region="Elvis Masada's Place",
+        logic=lambda state, self: state.has("Trombone", self.player)),
+    Yume2kkiLocationData(name="Duet with the Piano Girl", type=Yume2kkiLocationType.EVENT, region="Picture Book",
+        logic=lambda state, self:
+            state.can_reach_location("Rainy Docks", self.player) and
+            state.has_any(["Fairy", "Spacesuit"], self.player) and
+            state.has_any(["Spring", "Bat"], self.player) and
+            state.has("Haniwa", self.player) and
+            state.has_all(["Chainsaw", "Child"], self.player)), # TODO: 50% chance
+    Yume2kkiLocationData(name="The Fisherman", type=Yume2kkiLocationType.EVENT, region="School",
+        logic=lambda state, self: state.has("Penguin", self.player)),
+    Yume2kkiLocationData(name="Flight", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments"), # TODO: 1/9 chance
+    Yume2kkiLocationData(name="The Flying Whale", type=Yume2kkiLocationType.EVENT, region="Paradise"), # TODO: 1/5 chance
+    Yume2kkiLocationData(name="Flower Lady", type=Yume2kkiLocationType.EVENT, region="Apartments",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Fresh Bait", type=Yume2kkiLocationType.EVENT, region="Blizzard Plains"),
+    Yume2kkiLocationData(name="Ghostly Ambush", type=Yume2kkiLocationType.EVENT, region="Rainy Town",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="The Graveyard's Sculpture", type=Yume2kkiLocationType.EVENT, region="Graveyard World",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Hallucination", type=Yume2kkiLocationType.EVENT, region="Laboratory",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Haniwa Dance", type=Yume2kkiLocationType.EVENT, region="Haniwa Temple",
+        logic=lambda state, self: state.has("Haniwa", self.player)),
+    Yume2kkiLocationData(name="The Haunted Cabinet", type=Yume2kkiLocationType.EVENT, region="Nostalgic House"),
+    Yume2kkiLocationData(name="High Priestess", type=Yume2kkiLocationType.EVENT, region="Forest Carnival",
+        logic=lambda state, self: state.has_all(["Chainsaw", "Crossing"], self.player)), # TODO: 1/5 chance
+    Yume2kkiLocationData(name="Honoring the Dead", type=Yume2kkiLocationType.EVENT, region="Dream Mexico"),
+    Yume2kkiLocationData(name="The Hospital Chainsaw Massacre", type=Yume2kkiLocationType.EVENT, region="Hospital"),
+    Yume2kkiLocationData(name="Into the Mirror", type=Yume2kkiLocationType.EVENT, region="Jigsaw Puzzle World"),
+    Yume2kkiLocationData(name="It Came From Behind", type=Yume2kkiLocationType.EVENT, region="Neon City"), # TODO: 1/2500 chance
+    Yume2kkiLocationData(name="Japanese Turntables Event", type=Yume2kkiLocationType.EVENT, region="Urban Street Area",
+        logic=lambda state, self: state.has("Fairy", self.player)),
+    Yume2kkiLocationData(name="Lonely Urotsuki", type=Yume2kkiLocationType.EVENT, region="Underwater Amusement Park"),
+    Yume2kkiLocationData(name="Madotsuki's Room", type=Yume2kkiLocationType.EVENT, region="Never-Ending Hallway"),
+    Yume2kkiLocationData(name="Maiden Outlook Event", type=Yume2kkiLocationType.EVENT, region="Maiden Outlook"),
+    Yume2kkiLocationData(name="March of Progress", type=Yume2kkiLocationType.EVENT, region="Chess World"),
+    Yume2kkiLocationData(name="Mask Shop Ambush", type=Yume2kkiLocationType.EVENT, region="Mask Shop"),
+    Yume2kkiLocationData(name="Masked Dance", type=Yume2kkiLocationType.EVENT, region="Opal Archives"),
+    Yume2kkiLocationData(name="Mechanical Heart Act", type=Yume2kkiLocationType.EVENT, region="Amphitheater"),
+    Yume2kkiLocationData(name="Mirror Urotsuki", type=Yume2kkiLocationType.EVENT, region="Day and Night Towers",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Monochrome Eye", type=Yume2kkiLocationType.EVENT, region="Flying Fish World"),
+    Yume2kkiLocationData(name="Monochromatic Flying Creature", type=Yume2kkiLocationType.EVENT, region="Monochromatic Abyss"), # TODO: 1/2500 chance
+    Yume2kkiLocationData(name="Mutation", type=Yume2kkiLocationType.EVENT, region="Parasite Laboratory",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="The Nail Lady", type=Yume2kkiLocationType.EVENT, region="Nail World",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Neon Sea Monster", type=Yume2kkiLocationType.EVENT, region="Neon Sea"), # TODO: 1/500 chance
+    Yume2kkiLocationData(name="Nurie Event", type=Yume2kkiLocationType.EVENT, region="Library",
+        logic=lambda state, self: state.can_reach_region("Bishop Cathedral", self.player) and state.has("Child", self.player)), # TODO: 1/48 chance
+    Yume2kkiLocationData(name="Odorika's Dance", type=Yume2kkiLocationType.EVENT, region="Red Streetlight World",
+        logic=lambda state, self: state.has("Maiko", self.player)),
+    Yume2kkiLocationData(name="Operator Cyborg (event)", type=Yume2kkiLocationType.EVENT, region="Rusty Urban Complex - Partial",
+        logic=lambda state, self: state.can_reach_region("Dream Pool", self.player) and state.has("Plaster Cast", self.player)),
+    Yume2kkiLocationData(name="The Paying Customer", type=Yume2kkiLocationType.EVENT, region="Japan Town"),
+    Yume2kkiLocationData(name="Peak Event", type=Yume2kkiLocationType.EVENT, region="Twisted Thickets",
+        logic=lambda state, self: state.has("Lantern", self.player)),
+    Yume2kkiLocationData(name="Photorealistic Event", type=Yume2kkiLocationType.EVENT, region="Fused Faces World"),
+    Yume2kkiLocationData(name="Possessed by Yourself", type=Yume2kkiLocationType.EVENT, region="Static Noise Hell"),
+    Yume2kkiLocationData(name="Resentment", type=Yume2kkiLocationType.EVENT, region="Crescent Tile World",
+        logic=lambda state, self: state.has("Lantern", self.player)),
+    Yume2kkiLocationData(name="Retaliation", type=Yume2kkiLocationType.EVENT, region="Gemstone Cave",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Rise and Shine!", type=Yume2kkiLocationType.EVENT, region="Pop Tiles Maze"),
+    Yume2kkiLocationData(name="Rooftop", type=Yume2kkiLocationType.EVENT, region="Techno Condominium"),
+    Yume2kkiLocationData(name="Seishonen's Glitched Room", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments"), # TODO: 1/31 chance
+    Yume2kkiLocationData(name="Screaming Forest", type=Yume2kkiLocationType.EVENT, region="Bright Forest"),
+    Yume2kkiLocationData(name="Shadow Lady Forest", type=Yume2kkiLocationType.EVENT, region="Forest World",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Shadow Lady's Lap", type=Yume2kkiLocationType.EVENT, region="Toy World",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Sinister Smile", type=Yume2kkiLocationType.EVENT, region="Decrepit Village",
+        logic=lambda state, self: state.has("Grave", self.player)),
+    Yume2kkiLocationData(name="Spider Queen (event)", type=Yume2kkiLocationType.EVENT, region="Spiders' Nest",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Starry Night Event", type=Yume2kkiLocationType.EVENT, region="Planetarium"),
+    Yume2kkiLocationData(name="Strange Image", type=Yume2kkiLocationType.EVENT, region="Flying Fish World",
+        logic=lambda state, self: state.has("Telephone", self.player)),
+    Yume2kkiLocationData(name="Surgical Ward's Facade", type=Yume2kkiLocationType.EVENT, region="Shop Ruins",
+        logic=lambda state, self: state.has("Glasses", self.player)),
+    Yume2kkiLocationData(name="The Spider's Web", type=Yume2kkiLocationType.EVENT, region="Fairy Tale Path",
+        logic=lambda state, self: state.has_any(["Chainsaw", "Insect"], self.player) and state.can_reach_region("Bug Maze", self.player)),
+    Yume2kkiLocationData(name="The Toxic Corruption", type=Yume2kkiLocationType.EVENT, region="Nerium Lab",
+        logic=lambda state, self: state.can_reach_region("Pleasure Street", self.player) and state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Traffic Accident", type=Yume2kkiLocationType.EVENT, region="Splash Streetway"),
+    Yume2kkiLocationData(name="Urotsuki's Execution", type=Yume2kkiLocationType.EVENT, region="Execution Ground",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Vaporwave Event", type=Yume2kkiLocationType.EVENT, region="Virtual City"),
+    Yume2kkiLocationData(name="Vertigo", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Room",
+        logic=lambda state, self: state.has("Chainsaw", self.player)), # TODO: unknown chance
+    Yume2kkiLocationData(name="Vision", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Room",
+        logic=lambda state, self: state.has("Chainsaw", self.player)), # TODO: unknown chance
+    Yume2kkiLocationData(name="Wardrobe Face", type=Yume2kkiLocationType.EVENT, region="Board Game Islands",
+        logic=lambda state, self: state.has("Dice", self.player)), # TODO: unknown chance
+    Yume2kkiLocationData(name="White Drooling Creature", type=Yume2kkiLocationType.EVENT, region="Apartments"),
+    Yume2kkiLocationData(name="Woman and the Mirror", type=Yume2kkiLocationType.EVENT, region="Ocean Storehouse"), # TODO: 1/11 chance
+    Yume2kkiLocationData(name="Watching and Warning Sign", type=Yume2kkiLocationType.EVENT, region="Foggy Remnants"),
+    Yume2kkiLocationData(name="Zalgo (event)", type=Yume2kkiLocationType.EVENT, region="Magnet Room"),
+    Yume2kkiLocationData(name="???-tsuki and the Liar's Vision", type=Yume2kkiLocationType.EVENT, region="Unknown Child's Room"), # TODO: 1/28 chance
+    Yume2kkiLocationData(name="???-tsuki's Descent", type=Yume2kkiLocationType.EVENT, region="Second Nexus"),
+
     # https://yume.wiki/2kki/Masks
     # TODO
     # https://yume.wiki/2kki/Kura_Puzzles

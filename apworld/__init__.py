@@ -6,8 +6,8 @@ from worlds.AutoWorld import World, CollectionState, WebWorld
 from worlds.generic.Rules import add_rule
 from typing import Dict, List, Callable
 
-from .Options import Yume2kkiOptions, MinigameTreatment, KuraPuzzlesanity, Wallpapersanity, Goal, create_option_groups
-from .data import items as item_data, locations as location_data, item_ids, location_ids, world_data, Yume2kkiItemData, Yume2kkiLocationData, Yume2kkiItemType, Yume2kkiLocationType, ConnType
+from .Options import Yume2kkiOptions, MinigameTreatment, KuraPuzzlesanity, Wallpapersanity, Goal, AuthorGating, create_option_groups
+from .data import items as item_data, locations as location_data, item_ids, location_ids, world_data, Yume2kkiItemData, Yume2kkiLocationData, Yume2kkiItemType, Yume2kkiLocationType, ConnType, sanitize_author_name
 
 logger = logging.getLogger("Yume 2kki")
 
@@ -725,19 +725,30 @@ class Yume2kkiWorld(World):
         nexus_keys = [
             item.name for item in item_data if item.name in possible_starters and possible_starters[item.name]
         ]
+        nexus_key = self.random.choice(nexus_keys)
 
         self.precollected_items.append("Bike")
-        self.precollected_items.append(self.random.choice(nexus_keys))
-
-        logger.debug(f"Yume 2kki: {self.player_name}: precollected_items = {self.precollected_items}")
+        self.precollected_items.append(nexus_key)
 
         for item in item_data:
             if item.type == Yume2kkiItemType.MINIGAME and self.options.minigame_treatment != MinigameTreatment.option_locations:
                 continue
             if item.type == Yume2kkiItemType.FILLER:
                 continue
+            if item.type == Yume2kkiItemType.AUTHOR and self.options.author_gating == AuthorGating.option_disable:
+                continue
 
             self.items.append(item.name)
+        
+        if self.options.author_gating != AuthorGating.option_disable:
+            for world_name in ["Urotsuki's Room", "Nexus", nexus_key]:
+                world = next(w for w in world_data if w["title"] == world_name)
+                for author in world["author"].split(", "):
+                    author_name = sanitize_author_name(author)
+                    if author_name not in self.precollected_items:
+                        self.precollected_items.append(author_name)
+
+        logger.debug(f"Yume 2kki: {self.player_name}: precollected_items = {self.precollected_items}")
 
         item_pool: List[Yume2kkiItem] = []
 
@@ -762,7 +773,9 @@ class Yume2kkiWorld(World):
 
     @staticmethod
     def item_type_to_classification(t: Yume2kkiItemType) -> ItemClassification:
-        if t == Yume2kkiItemType.EFFECT or t == Yume2kkiItemType.SPECIAL or t == Yume2kkiItemType.NEXUS_KEY:
+        if t == Yume2kkiItemType.EFFECT:
+            return ItemClassification(ItemClassification.progression + ItemClassification.useful)
+        if t == Yume2kkiItemType.SPECIAL or t == Yume2kkiItemType.NEXUS_KEY or t == Yume2kkiItemType.AUTHOR:
             return ItemClassification.progression
         if t == Yume2kkiItemType.FILLER:
             return ItemClassification.filler
@@ -950,8 +963,14 @@ class Yume2kkiWorld(World):
                     logger.warning(f"Yume 2kki: {world["title"]} -> {target_world["title"]} - tracked stub")
                     continue
 
+                # nexus key check
                 if region.name == "Nexus" and target_region.name != "Urotsuki's Room" and target_region.name in self.items:
                     rules.append(lambda state, item_name=target_region.name: state.has(item_name, self.player))
+
+                # author gating check
+                if self.options.author_gating != AuthorGating.option_disable:
+                    authors = map(sanitize_author_name, target_world["author"].split(", "))
+                    rules.append(lambda state, authors=authors: state.has_all(authors, self.player))
 
                 # this is made with the foolish assumption that all dead ends in
                 # a given location will connect, but not making this assumption
@@ -1001,8 +1020,9 @@ class Yume2kkiWorld(World):
             region = regions[data.region]
             location = Yume2kkiLocation(self.player, data.name, self.location_name_to_id[data.name], region)
 
-            if data.type == Yume2kkiLocationType.EFFECT_UNLOCK:
-                location.progress_type = LocationProgressType.PRIORITY
+            # TODO: currently creates gen errors since it tries to shove everything in effects
+            #if data.type == Yume2kkiLocationType.EFFECT_UNLOCK:
+            #    location.progress_type = LocationProgressType.PRIORITY
 
             if data.type == Yume2kkiLocationType.ENDING and not (data.name in self.options.ending_list and self.options.ending_list[data.name]):
                 location.progress_type = LocationProgressType.EXCLUDED

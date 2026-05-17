@@ -92,6 +92,27 @@ class HardNavigation(Toggle):
     display_name = "Hard Navigation"
     default = False
 
+class AuthorGating(Choice):
+    """
+    Creates associated items from authors. In order to enter a world, you will need to have that world's primary author as an item.
+
+    This will create ~120 additional items and will help with the item-location balance without making navigation annoying, as authors' paths will remain only either wholly accessible or inaccessible.
+
+    Primary authors of Urotsuki's Room, The Nexus and your starting Nexus key will be precollected to avoid early BKs.
+
+    **Disable:** Authors will not be added as items. Worlds are freely accessible.
+
+    **Primary Author:** Every world's primary author will be turned into an item. In order to access a world, you'll need to have collected the author.
+
+    **Contributing Authors:** Every contributor to every world will be turned into an item. In order to access a world, you'll need to have collected any of the contributors.
+    """
+    display_name = "Author Gating"
+    option_disable = 1
+    option_primary_author = 2
+    # TODO: requires refactoring everything to use wrapper.yume.wiki data
+    option_contributing_authors = 3
+    default = 1
+
 # TODO
 class Masksanity(Toggle):
     """
@@ -212,6 +233,7 @@ class Yume2kkiOptions(PerGameCommonOptions):
     ending_list: EndingList
     chance_threshold: ChanceThreshold
     hard_navigation: HardNavigation
+    author_gating: AuthorGating
 
     npcsanity: NPCSanity
     eventsanity: Eventsanity

@@ -15,14 +15,14 @@ with files().joinpath("data.json").open() as file:
     wallpaper_data = data["wallpaperData"]
 
 with files().joinpath("vms.json").open() as file:
-    data = json.load(file)
-    vm_data = data
+    vm_data = json.load(file)
 
 class Yume2kkiItemType(enum.Enum):
     EFFECT = "Effect"
     SPECIAL = "Special"
     NEXUS_KEY = "Nexus Key"
     MINIGAME = "Minigame"
+    AUTHOR = "Author"
     FILLER = "Filler" # TODO: figure out what filler should be
 
 class Yume2kkiItemData(NamedTuple):
@@ -138,6 +138,25 @@ items += [
 
     Yume2kkiItemData(name="Filler", type=Yume2kkiItemType.FILLER),
 ]
+
+# author gating
+authors = set()
+
+for world in world_data:
+    for author in world["author"].split(", "):
+        authors.add(author)
+
+def sanitize_author_name(author):
+    if author.isdigit():
+        return f"{author} (author)"
+    return author
+
+for author in sorted(authors):
+    author_name = sanitize_author_name(author)
+
+    items.append(
+        Yume2kkiItemData(name=author_name, type=Yume2kkiItemType.AUTHOR)
+    )
 
 class Yume2kkiLocationType(enum.Enum):
     LOCATION = "Location"
@@ -322,7 +341,7 @@ locations += [
     Yume2kkiLocationData(name="Victim", type=Yume2kkiLocationType.NPC, region="Snowy Forest"),
     # Walking Grave accounted for under effects
     Yume2kkiLocationData(name="Witch of Hatred", type=Yume2kkiLocationType.NPC, region="Urotsuki's Room",
-        logic=lambda state, self: state.can_reach_region("Love Lodge", self.player) or state.can_reach_region("Cold Summer Flames", self.player)),
+        logic=lambda state, self: state.can_reach_region("Love Lodge", self.player) or state.can_reach_region("Digital Heart Space", self.player)),
     Yume2kkiLocationData(name="Yume", type=Yume2kkiLocationType.NPC, region="Urotsuki's Room",
         logic=lambda state, self: state.can_reach_region("Dark Room", self.player) or state.can_reach_region("Tapir-San's Place", self.player)),
 
@@ -430,7 +449,7 @@ locations += [
     Yume2kkiLocationData(name="March of Progress", type=Yume2kkiLocationType.EVENT, region="Chess World"),
     Yume2kkiLocationData(name="Mask Shop Ambush", type=Yume2kkiLocationType.EVENT, region="Mask Shop"),
     Yume2kkiLocationData(name="Masked Dance", type=Yume2kkiLocationType.EVENT, region="Opal Archives"),
-    Yume2kkiLocationData(name="Mechanical Heart Act", type=Yume2kkiLocationType.EVENT, region="Amphitheater"),
+    Yume2kkiLocationData(name="Mechanical Heart Act", type=Yume2kkiLocationType.EVENT, region="Chainlink Lees"),
     Yume2kkiLocationData(name="Mirror Urotsuki", type=Yume2kkiLocationType.EVENT, region="Day and Night Towers",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="Monochrome Eye", type=Yume2kkiLocationType.EVENT, region="Flying Fish World"),
@@ -472,11 +491,12 @@ locations += [
         logic=lambda state, self: state.has("Telephone", self.player)),
     Yume2kkiLocationData(name="Surgical Ward's Facade", type=Yume2kkiLocationType.EVENT, region="Shop Ruins",
         logic=lambda state, self: state.has("Glasses", self.player)),
-    Yume2kkiLocationData(name="The Spider's Web", type=Yume2kkiLocationType.EVENT, region="Fairy Tale Path",
+    Yume2kkiLocationData(name="The Spider's Web", type=Yume2kkiLocationType.EVENT, region="Scenic Outlook",
         logic=lambda state, self: state.has_any(["Chainsaw", "Insect"], self.player) and state.can_reach_region("Bug Maze", self.player)),
     Yume2kkiLocationData(name="The Toxic Corruption", type=Yume2kkiLocationType.EVENT, region="Nerium Lab",
         logic=lambda state, self: state.can_reach_region("Pleasure Street", self.player) and state.has("Chainsaw", self.player)),
-    Yume2kkiLocationData(name="Traffic Accident", type=Yume2kkiLocationType.EVENT, region="Splash Streetway"),
+    Yume2kkiLocationData(name="Traffic Accident", type=Yume2kkiLocationType.EVENT, region="Red Sky Cliff",
+        logic=lambda state, self: state.has("Invisible", self.player)),
     Yume2kkiLocationData(name="Urotsuki's Execution", type=Yume2kkiLocationType.EVENT, region="Execution Ground",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="Vaporwave Event", type=Yume2kkiLocationType.EVENT, region="Virtual City"),

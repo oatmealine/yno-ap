@@ -19,7 +19,6 @@ export function sendClientPacket(type, args) {
  */
 export function sendClientPackets(packets) {
   const message = packets.map(([type, args]) => [type, ...args].join(SPLIT_ARGS)).join(SPLIT_PACKET);
-  console.log('<', message);
   socketStore.forEach(socket => {
     const encoder = new TextEncoder();
     const messageEvent = new MessageEvent('message', {
@@ -44,8 +43,6 @@ function onPacketData(data) {
     console.error('[websocket-intercept] idk wtf this is', data);
     return;
   }
-
-  console.log('>', str);
 
   const packets = str
     .split(SPLIT_PACKET)

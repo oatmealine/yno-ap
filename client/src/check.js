@@ -137,18 +137,25 @@ async function variableCheck(condition) {
     switch (ops[i]) {
       case '=':
         ok = value === condValue;
+        break;
       case '<':
         ok = value < condValue;
+        break;
       case '>':
         ok = value > condValue;
+        break;
       case '<=':
         ok = value <= condValue;
+        break;
       case '>=':
         ok = value >= condValue;
+        break;
       case '!=':
         ok = value !== condValue;
+        break;
       case '>=<':
         ok = condValue < value && value < condValue2;
+        break;
     }
 
     if (!ok) return false;

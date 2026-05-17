@@ -89,6 +89,8 @@ export async function getVariable(varID) {
 
   sendPacket('sv', [varID, 0]);
   await waitForVariableChange(varID);
+
+  return getCachedVariable(varID);
 }
 
 export function trackVariable(varID, alsoFetchCurrentValue) {

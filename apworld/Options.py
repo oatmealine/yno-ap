@@ -4,6 +4,35 @@ from worlds.AutoWorld import PerGameCommonOptions
 from Options import Choice, OptionGroup, Toggle, Range, OptionDict, OptionGroup
 from .data import items, locations, Yume2kkiItemType, Yume2kkiLocationType
 
+class ClientMode(Choice):
+    """
+    The YNO implementation has 2 modes of play, decided in the APWorld options:
+
+    - On **automatic mode** _(currently unimplemented)_, the client will hook deep
+    into the game, physically preventing you from doing actions not allowed by your
+    items. It will also physically give you items whenever you obtain them. This is
+    the most fluent way to play, and is the "standard" experience.
+
+        Automatic mode should be played on a new save to prevent altering your main
+    save.
+
+    - On **manual mode** _(currently the only implemented mode)_, the client cannot
+    and will not alter your game state or save. It will only be able to peform basic
+    checks if you're "cheating" by using items you're not meant to have access to
+    (effects, etc.). This means that ideally you should play this on a **save that
+    has every effect**, as this mode will expect you to have the effect in you save
+    when it is given to you by another location.
+
+        This may be the preferred way to play if you want the Archipelago to act more
+    like a motivator for you to further your main YNO save's completion.
+
+    Modes will not impact logic, but may change filler item behavior.
+    """
+    display_name = "Client Mode"
+    option_automatic = 1
+    option_manual = 2
+    default = 1
+
 class MinigameTreatment(Choice):
     """
     How to treat minigames:
@@ -227,6 +256,8 @@ class ExpeditionMode(Toggle):
 
 @dataclass
 class Yume2kkiOptions(PerGameCommonOptions):
+    client_mode: ClientMode
+
     goal: Goal
     starting_nexus_keys: StartingNexusKeys
     minigame_treatment: MinigameTreatment

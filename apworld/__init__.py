@@ -1052,7 +1052,14 @@ class Yume2kkiWorld(World):
         slot_data: Dict[str, object] = {
             "Seed": self.multiworld.seed_name,
             "Slot": self.multiworld.player_name[self.player],
-            "TotalLocations": len(self.locations)
+            "TotalLocations": len(self.locations),
+
+            "client_mode": self.options.client_mode,
+
+            "endings": 
+                [location for location in self.locations if location in self.options.ending_list and self.options.ending_list[location]],
+            "goal":
+                self.options.goal,
         }
 
         return slot_data

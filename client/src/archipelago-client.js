@@ -1,5 +1,6 @@
 import { Client, itemsHandlingFlags, PlayerMessageNode, TextualMessageNode } from 'archipelago.js';
 import { onMessage, onToastMessage, setConnected, showToastMessage } from './ui';
+import { globalStore, loadSlot, saveGlobal, saveSlot, slotStore } from './store';
 
 export const client = new Client();
 
@@ -7,26 +8,57 @@ client.options.maximumMessages = 0;
 
 const GAME_NAME = 'Yume 2kki';
 
-// TODO: more permanent storage
-/** @type {string[]} */
-let locationQueue = [];
+// enums ported over from Options.py
+
+export const ClientMode = {
+  Automatic: 1,
+  Manual: 2,
+}; Object.freeze(ClientMode);
+
+export const Goal = {
+  AnyEnding: 1,
+  AllEndings: 2,
+}; Object.freeze(Goal);
+
+export const slotData = {
+  mode: ClientMode.Automatic,
+  endings: [ 'Ending #-1', 'Ending #?', 'Ending #1', 'Ending #2', 'Ending #3' ],
+  goal: Goal.AllEndings,
+};
 
 export async function connect(host, password, slot) {  
-  await client.login(host, slot, GAME_NAME, {
+  const remoteSlotData = await client.login(host, slot, GAME_NAME, {
     password,
     items: itemsHandlingFlags.all,
     tags: [ 'Client' ],
+    slotData: true,
   });
   setConnected(true);
   showToastMessage('Connected to Archipelago server successfully', 'archipelago', false, undefined);
   
-  checkLocationsRaw(...locationQueue);
-  locationQueue = [];
+  checkLocationsRaw(...slotStore.locationQueue);
+  slotStore.locationQueue = [];
+
+  if (remoteSlotData.client_mode !== undefined)
+    // @ts-ignore
+    slotData.mode = remoteSlotData.client_mode;
+  if (remoteSlotData.endings !== undefined)
+    // @ts-ignore
+    slotData.endings = remoteSlotData.endings;
+  if (remoteSlotData.goal !== undefined)
+    // @ts-ignore
+    slotData.goal = remoteSlotData.goal;
+
+  loadSlot(client.room.seedName, slot);
+  console.log('[yno-ap-client] loaded slot data: ', slotData);
 }
 
 client.socket.on('disconnected', () => {
   setConnected(false);
   showToastMessage('Archipelago connection closed', 'archipelago', false, undefined);
+  globalStore.lastConnection.autoConnect = false;
+  saveGlobal();
+  saveSlot();
 });
 
 // hacky
@@ -112,7 +144,8 @@ async function checkLocationsRaw(...locationNames) {
  */
 export async function checkLocations(...locationNames) {
   if (!client.socket.connected) {
-    locationQueue.push(...locationNames);
+    slotStore.locationQueue.push(...locationNames);
+    saveSlot();
     return;
   }
 

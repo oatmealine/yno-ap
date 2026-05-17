@@ -45,12 +45,15 @@ function getLocations() {
   @property {boolean} [timeTrial]
  */
 
-// TODO: reset this when the AP slot changes, and probably store this
-// permanently associated to the save aswell
-// which... speaking of, this should probably store some absolute index to the
-// condition instead of relying on pointers so it's actually serializable
+// TODO: make this serializable and move it to slotStore
 /** @type Set<Condition> */
 let completeConditions = new Set();
+
+// locations to not stop listening for, as they are useful for things other than
+// sending locations
+function shouldNeverStoreLocation(location) {
+  return location.category === 'ending';
+}
 
 /**
  * @param {Condition} condition

@@ -175,7 +175,7 @@ class Yume2kkiLocationData(NamedTuple):
     name: str
     type: Yume2kkiLocationType
     region: str
-    logic: Optional[Callable[[CollectionState, World], bool]]
+    logic: Optional[Callable]
 Yume2kkiLocationData.__new__.__defaults__ = (None,) * len(Yume2kkiLocationData._fields)
 
 locations: List[Yume2kkiLocationData] = []

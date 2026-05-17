@@ -2,6 +2,7 @@
 #! nix-shell -i python3 -p python3Packages.requests
 
 # downloads and merges results for a wrapper.yume.wiki query into a single json
+# requires requests (or just plainly executable with nix)
 # usage: wrapper_dl.py https://wrapper.yume.wiki/locations?game=2kki > locations.json
 
 import sys

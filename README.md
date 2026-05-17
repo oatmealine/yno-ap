@@ -88,6 +88,16 @@ Most documentation about the inner workings of this is stored in the relevant
 folders; make sure to check for `readme` files around. Otherwise, feel free to
 ask if anything's unclear.
 
+### scripts
+
+- `scripts/wrapper_dl.py`: Downloads `wrapper.yume.wiki` data and stores it as a
+single JSON. Instructions in script.
+- `scripts/validate_locations.mjs`: Validates `client/locations/` locations.
+This will parse the JSON, validate the schema, and look for common pitfalls.
+Requires `python3` to be in path, as it evaluates `apworld/data/__init__.py` to
+get a list of known location names; also requires `zod` (installable with the
+provided `package.json`).
+
 ## external links
 
 - [Archipelago server forum thread](https://discord.com/channels/731205301247803413/1483567293886763120)

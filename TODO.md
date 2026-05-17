@@ -80,4 +80,5 @@ Client:
     - [ ] Implement view mode
   - [ ] Award location on NPC
   - [x] Award location on ending
-  - [ ] Award location on effect unlock
+  - [x] Award location on effect unlock
+  - [ ] Goal whenever prerequisites are met

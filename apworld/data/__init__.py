@@ -1,8 +1,9 @@
 import json
 from importlib.resources import files
-from typing import NamedTuple, Optional, List, Dict, Callable
+from typing import NamedTuple, Optional, List, Dict, Callable, TYPE_CHECKING
 import enum
-from worlds.AutoWorld import World, CollectionState
+if TYPE_CHECKING:
+    from worlds.AutoWorld import World, CollectionState
 from collections import defaultdict
 
 world_data = []
@@ -506,7 +507,8 @@ locations += [
         logic=lambda state, self: state.has("Chainsaw", self.player)), # TODO: unknown chance
     Yume2kkiLocationData(name="Wardrobe Face", type=Yume2kkiLocationType.EVENT, region="Board Game Islands",
         logic=lambda state, self: state.has("Dice", self.player)), # TODO: unknown chance
-    Yume2kkiLocationData(name="White Drooling Creature", type=Yume2kkiLocationType.EVENT, region="Apartments"),
+    Yume2kkiLocationData(name="White Drooling Creature", type=Yume2kkiLocationType.EVENT, region="Apartments",
+        logic=lambda state, self: state.can_reach_region("Library", self.player)),
     Yume2kkiLocationData(name="Woman and the Mirror", type=Yume2kkiLocationType.EVENT, region="Ocean Storehouse"), # TODO: 1/11 chance
     Yume2kkiLocationData(name="Watching and Warning Sign", type=Yume2kkiLocationType.EVENT, region="Foggy Remnants"),
     Yume2kkiLocationData(name="Zalgo (event)", type=Yume2kkiLocationType.EVENT, region="Magnet Room"),

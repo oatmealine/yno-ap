@@ -1020,9 +1020,8 @@ class Yume2kkiWorld(World):
             region = regions[data.region]
             location = Yume2kkiLocation(self.player, data.name, self.location_name_to_id[data.name], region)
 
-            # TODO: currently creates gen errors since it tries to shove everything in effects
-            #if data.type == Yume2kkiLocationType.EFFECT_UNLOCK:
-            #    location.progress_type = LocationProgressType.PRIORITY
+            if data.type == Yume2kkiLocationType.EFFECT_UNLOCK:
+                location.progress_type = LocationProgressType.PRIORITY
 
             if data.type == Yume2kkiLocationType.ENDING and not (data.name in self.options.ending_list and self.options.ending_list[data.name]):
                 location.progress_type = LocationProgressType.EXCLUDED

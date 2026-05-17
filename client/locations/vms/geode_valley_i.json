@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Geode Valley I","condition":{"map":2985,"trigger":"eventAction","values":["19"],"varId":10000,"varValue":100,"varOp":">="}}

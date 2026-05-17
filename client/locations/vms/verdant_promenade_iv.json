@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Verdant Promenade IV","condition":{"map":1012,"trigger":"eventAction","values":["1491"],"varId":10000,"varValue":100,"varOp":">="}}

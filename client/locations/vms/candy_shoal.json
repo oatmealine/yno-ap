@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Candy Shoal","condition":{"map":2417,"trigger":"eventAction","values":["59","60"],"varId":10000,"varValue":100,"varOp":">="}}

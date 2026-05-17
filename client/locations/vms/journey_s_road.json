@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Journey's Road","condition":{"map":2816,"trigger":"eventAction","values":["54"],"varId":10000,"varValue":100,"varOp":">="}}

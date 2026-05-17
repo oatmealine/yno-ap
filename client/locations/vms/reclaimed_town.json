@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Reclaimed Town","condition":{"map":3456,"trigger":"eventAction","values":["3"],"varId":10000,"varValue":100,"varOp":">="}}

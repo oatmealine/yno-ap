@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Tanuki Tail Portrait","condition":{"map":3366,"trigger":"eventAction","values":["245"],"varId":10000,"varValue":100,"varOp":">="}}

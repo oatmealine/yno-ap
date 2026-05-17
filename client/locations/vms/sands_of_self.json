@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sands of Self","condition":{"map":2297,"trigger":"eventAction","values":["47"],"varId":10000,"varValue":100,"varOp":">="}}

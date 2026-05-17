@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Beyond","condition":{"map":2493,"trigger":"eventAction","values":["21"],"varId":10000,"varValue":100,"varOp":">="}}

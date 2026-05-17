@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Fast Food Hell: Pier","condition":{"map":2747,"trigger":"eventAction","values":["1"],"varId":10000,"varValue":100,"varOp":">="}}

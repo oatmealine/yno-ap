@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Shunned Street","condition":{"map":1717,"trigger":"eventAction","values":["48"],"varId":10000,"varValue":100,"varOp":">="}}

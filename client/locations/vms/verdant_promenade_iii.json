@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Verdant Promenade III","condition":{"map":1015,"trigger":"eventAction","values":["192"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sea Slug House","condition":{"map":2796,"trigger":"eventAction","values":["231"],"varId":10000,"varValue":100,"varOp":">="}}

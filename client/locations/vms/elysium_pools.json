@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Elysium Pools","condition":{"map":3224,"trigger":"eventAction","values":["129"],"varId":10000,"varValue":100,"varOp":">="}}

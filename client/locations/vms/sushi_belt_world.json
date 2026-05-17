@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sushi Belt World","condition":{"map":2114,"trigger":"eventAction","values":["251","252","257"],"varId":10000,"varValue":100,"varOp":">="}}

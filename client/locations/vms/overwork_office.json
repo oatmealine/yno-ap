@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Overwork Office","condition":{"map":3368,"trigger":"eventAction","values":["1029","1031","1032","1037"],"varId":10000,"varValue":100,"varOp":">="}}

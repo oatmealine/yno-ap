@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Conifer World","condition":{"map":2608,"trigger":"eventAction","values":["9"],"varId":10000,"varValue":100,"varOp":">="}}

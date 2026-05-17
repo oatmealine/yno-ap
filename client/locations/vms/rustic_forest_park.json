@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Rustic Forest Park","condition":{"map":3458,"trigger":"eventAction","values":["1068"],"varId":10000,"varValue":100,"varOp":">="}}

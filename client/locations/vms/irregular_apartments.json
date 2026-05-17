@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Irregular Apartments","condition":{"map":3832,"trigger":"eventAction","values":["96","97"],"varId":10000,"varValue":100,"varOp":">="}}

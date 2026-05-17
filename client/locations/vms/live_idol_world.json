@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Live Idol World","condition":{"map":3702,"trigger":"eventAction","values":["275"],"varId":10000,"varValue":100,"varOp":">="}}

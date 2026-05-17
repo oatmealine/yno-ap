@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Fall Shoal","condition":{"map":2590,"trigger":"eventAction","values":["21"],"varId":10000,"varValue":100,"varOp":">="}}

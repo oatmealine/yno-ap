@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cuckoo Skyline Express I","condition":{"map":2181,"trigger":"eventAction","values":["93"],"varId":10000,"varValue":100,"varOp":">="}}

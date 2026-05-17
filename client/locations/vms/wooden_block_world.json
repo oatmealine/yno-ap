@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Wooden Block World","condition":{"map":1624,"trigger":"eventAction","values":["6"],"varId":10000,"varValue":100,"varOp":">="}}

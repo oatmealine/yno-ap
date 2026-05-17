@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Flicker Trail","condition":{"map":1338,"trigger":"eventAction","values":["262","263"],"varId":10000,"varValue":100,"varOp":">="}}

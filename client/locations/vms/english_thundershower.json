@@ -1,0 +1,1 @@
+{"name":"Vending Machine - English Thundershower","condition":{"map":3110,"trigger":"eventAction","values":["194","196"],"varId":10000,"varValue":100,"varOp":">="}}

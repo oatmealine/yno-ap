@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Flooded Baths","condition":{"map":488,"trigger":"eventAction","values":["48"],"varId":10000,"varValue":100,"varOp":">="}}

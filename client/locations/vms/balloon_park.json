@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Balloon Park","condition":{"map":2295,"trigger":"eventAction","values":["1046"],"varId":10000,"varValue":100,"varOp":">="}}

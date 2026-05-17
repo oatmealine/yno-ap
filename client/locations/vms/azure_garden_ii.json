@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Azure Garden II","condition":{"map":1670,"trigger":"eventAction","values":["284"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blueberry Farm","condition":{"map":2074,"trigger":"eventAction","values":["4"],"varId":10000,"varValue":100,"varOp":">="}}

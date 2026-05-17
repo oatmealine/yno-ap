@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Static Noise Hell","condition":{"map":945,"trigger":"eventAction","values":["34"],"varId":10000,"varValue":100,"varOp":">="}}

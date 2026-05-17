@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Candyfloss Sea","condition":{"map":2965,"trigger":"eventAction","values":["13"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Bottom Garden","condition":{"map":525,"trigger":"eventAction","values":["452"],"varId":10000,"varValue":100,"varOp":">="}}

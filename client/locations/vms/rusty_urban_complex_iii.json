@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Rusty Urban Complex III","condition":{"map":1588,"trigger":"eventAction","values":["376"],"varId":10000,"varValue":100,"varOp":">="}}

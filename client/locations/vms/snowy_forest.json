@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Snowy Forest","condition":{"map":892,"trigger":"eventAction","values":["64"],"varId":10000,"varValue":100,"varOp":">="}}

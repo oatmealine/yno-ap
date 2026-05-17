@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Quarter Flats","condition":{"map":2769,"trigger":"eventAction","values":["23","24"],"varId":10000,"varValue":100,"varOp":">="}}

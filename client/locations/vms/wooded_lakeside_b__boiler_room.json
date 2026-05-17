@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Wooded Lakeside B: Boiler Room","condition":{"map":1882,"trigger":"eventAction","values":["175","176"],"varId":10000,"varValue":100,"varOp":">="}}

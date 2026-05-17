@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Stone Plinth Garden","condition":{"map":3089,"trigger":"eventAction","values":["23"],"varId":10000,"varValue":100,"varOp":">="}}

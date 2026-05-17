@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Wheat Field","condition":{"map":2886,"trigger":"eventAction","values":["20","21"],"varId":10000,"varValue":100,"varOp":">="}}

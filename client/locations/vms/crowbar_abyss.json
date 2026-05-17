@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Crowbar Abyss","condition":{"map":2981,"trigger":"eventAction","values":["212"],"varId":10000,"varValue":100,"varOp":">="}}

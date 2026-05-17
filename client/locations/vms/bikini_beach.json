@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Bikini Beach","condition":{"map":3017,"trigger":"eventAction","values":["1102","1103","1104","1105","1106","1107"],"varId":10000,"varValue":100,"varOp":">="}}

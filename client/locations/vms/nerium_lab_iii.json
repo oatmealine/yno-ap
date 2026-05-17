@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Nerium Lab III","condition":{"map":2153,"trigger":"eventAction","values":["61","62"],"varId":10000,"varValue":100,"varOp":">="}}

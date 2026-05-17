@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Citrus Springs","condition":{"map":3368,"trigger":"eventAction","values":["194"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Docks","condition":{"map":187,"trigger":"eventAction","values":["30"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Abandoned Apartments I","condition":{"map":566,"trigger":"eventAction","values":["163"],"varId":10000,"varValue":100,"varOp":">="}}

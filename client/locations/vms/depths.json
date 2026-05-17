@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Depths","condition":{"map":532,"trigger":"eventAction","values":["138"],"varId":10000,"varValue":100,"varOp":">="}}

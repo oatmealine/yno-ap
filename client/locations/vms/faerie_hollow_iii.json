@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Faerie Hollow III","condition":{"map":3195,"trigger":"eventAction","values":["44"],"varId":10000,"varValue":100,"varOp":">="}}

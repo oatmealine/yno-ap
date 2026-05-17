@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Deserted Town I","condition":{"map":530,"trigger":"eventAction","values":["10"],"varId":10000,"varValue":100,"varOp":">="}}

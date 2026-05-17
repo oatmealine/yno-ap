@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Neon Sewers","condition":{"map":3153,"trigger":"eventAction","values":["415"],"varId":10000,"varValue":100,"varOp":">="}}

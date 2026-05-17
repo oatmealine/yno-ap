@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Scorched Wasteland: Ashen","condition":{"map":761,"trigger":"eventAction","values":["89","90"],"varId":10000,"varValue":10,"varOp":">="}}

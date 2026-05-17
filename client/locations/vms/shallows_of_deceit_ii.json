@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Shallows of Deceit II","condition":{"map":1305,"trigger":"eventAction","values":["77","80","81","84"],"varId":10000,"varValue":200,"varOp":">="}}

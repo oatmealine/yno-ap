@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Garden Festival","condition":{"map":3421,"trigger":"eventAction","values":["110","310"],"varId":10000,"varValue":100,"varOp":">="}}

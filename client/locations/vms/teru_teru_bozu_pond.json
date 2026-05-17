@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Teru Teru Bozu Pond","condition":{"map":2197,"trigger":"eventAction","values":["14"],"varId":10000,"varValue":100,"varOp":">="}}

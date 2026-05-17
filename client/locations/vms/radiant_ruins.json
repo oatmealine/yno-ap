@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Radiant Ruins","condition":{"map":515,"trigger":"eventAction","values":["148"],"varId":10000,"varValue":100,"varOp":">="}}

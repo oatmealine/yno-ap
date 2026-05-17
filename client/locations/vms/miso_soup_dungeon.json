@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Miso Soup Dungeon","condition":{"map":2624,"trigger":"eventAction","values":["277","278","281","282"],"varId":10000,"varValue":100,"varOp":">="}}

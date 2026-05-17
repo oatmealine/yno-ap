@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Somber Establishment I","condition":{"map":2256,"trigger":"eventAction","values":["144"],"varId":10000,"varValue":100,"varOp":">="}}

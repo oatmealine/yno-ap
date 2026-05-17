@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Abandoned Underpass","condition":{"map":3556,"trigger":"eventAction","values":["21"],"varId":10000,"varValue":100,"varOp":">="}}

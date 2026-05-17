@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Grape Mall","condition":{"map":1096,"trigger":"eventAction","values":["39","40"],"varId":10000,"varValue":100,"varOp":">="}}

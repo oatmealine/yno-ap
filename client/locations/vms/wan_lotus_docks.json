@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Wan Lotus Docks","condition":{"map":3067,"trigger":"eventAction","values":["16"],"varId":10000,"varValue":100,"varOp":">="}}

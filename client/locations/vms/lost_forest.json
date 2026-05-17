@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Lost Forest","condition":{"map":2226,"trigger":"eventAction","values":["46","47"],"varId":10000,"varValue":100,"varOp":">="}}

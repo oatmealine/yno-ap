@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Ruined Garden II","condition":{"map":954,"trigger":"eventAction","values":["110"],"varId":10000,"varValue":100,"varOp":">="}}

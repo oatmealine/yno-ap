@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Potato World","condition":{"map":3369,"trigger":"eventAction","values":["368"],"varId":10000,"varValue":100,"varOp":">="}}

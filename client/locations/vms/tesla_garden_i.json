@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Tesla Garden I","condition":{"map":834,"trigger":"eventAction","values":["1091"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Neon City","condition":{"map":528,"trigger":"eventAction","values":["3"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Slate Doorway I","condition":{"map":2392,"trigger":"eventAction","values":["777"],"varId":10000,"varValue":100,"varOp":">="}}

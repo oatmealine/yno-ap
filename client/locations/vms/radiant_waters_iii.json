@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Radiant Waters III","condition":{"map":2486,"trigger":"eventAction","values":["1153","1154"],"varId":10000,"varValue":100,"varOp":">="}}

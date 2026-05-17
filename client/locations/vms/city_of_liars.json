@@ -1,0 +1,1 @@
+{"name":"Vending Machine - City of Liars","condition":{"map":1308,"trigger":"eventAction","values":["578","584","587"],"varId":10000,"varValue":200,"varOp":">="}}

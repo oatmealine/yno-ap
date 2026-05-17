@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Atlantis","condition":{"map":201,"trigger":"eventAction","values":["180","181"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Laboratory I","condition":{"map":384,"trigger":"eventAction","values":["3","13"],"varId":10000,"varValue":100,"varOp":">="}}

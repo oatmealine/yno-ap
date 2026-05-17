@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Foggy Red Street","condition":{"map":2396,"trigger":"eventAction","values":["1399","1400"],"varId":10000,"varValue":100,"varOp":">="}}

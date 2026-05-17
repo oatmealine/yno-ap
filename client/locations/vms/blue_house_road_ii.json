@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blue House Road II","condition":{"map":1374,"trigger":"eventAction","values":["192","193"],"varId":10000,"varValue":100,"varOp":">="}}

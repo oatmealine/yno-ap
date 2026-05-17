@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pollution District I","condition":{"map":3101,"trigger":"eventAction","values":["586"],"varId":10000,"varValue":50,"varOp":">="}}

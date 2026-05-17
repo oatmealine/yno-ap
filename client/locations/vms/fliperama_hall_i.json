@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Fliperama Hall I","condition":{"map":1609,"trigger":"eventAction","values":["2987"],"varId":10000,"varValue":100,"varOp":">="}}

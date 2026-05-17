@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Theatre World","condition":{"map":15,"trigger":"eventAction","values":["51"],"varId":10000,"varValue":100,"varOp":">="}}

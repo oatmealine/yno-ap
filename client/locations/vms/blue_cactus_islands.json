@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blue Cactus Islands","condition":{"map":842,"trigger":"eventAction","values":["163"],"varId":10000,"varValue":100,"varOp":">="}}

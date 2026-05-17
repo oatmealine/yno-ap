@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pastel Mall","condition":{"map":2567,"trigger":"eventAction","values":["176"],"varId":10000,"varValue":100,"varOp":">="}}

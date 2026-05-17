@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Shattered Stars World","condition":{"map":3129,"trigger":"eventAction","values":["10"],"varId":10000,"varValue":100,"varOp":">="}}

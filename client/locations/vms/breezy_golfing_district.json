@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Breezy Golfing District","condition":{"map":2800,"trigger":"eventAction","values":["6"],"varId":10000,"varValue":100,"varOp":">="}}

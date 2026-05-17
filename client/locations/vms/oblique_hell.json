@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Oblique Hell","condition":{"map":1883,"trigger":"eventAction","values":["74","75"],"varId":10000,"varValue":100,"varOp":">="}}

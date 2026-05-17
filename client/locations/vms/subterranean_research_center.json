@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Subterranean Research Center","condition":{"map":1652,"trigger":"eventAction","values":["20","28"],"varId":10000,"varValue":230,"varOp":">="}}

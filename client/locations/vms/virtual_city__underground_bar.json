@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Virtual City: Underground Bar","condition":{"map":1899,"trigger":"eventAction","values":["179"],"varId":10000,"varValue":100,"varOp":">="}}

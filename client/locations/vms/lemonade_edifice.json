@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Lemonade Edifice","condition":{"map":2763,"trigger":"eventAction","values":["21"],"varId":10000,"varValue":100,"varOp":">="}}

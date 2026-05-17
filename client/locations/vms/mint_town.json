@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Mint Town","condition":{"map":1594,"trigger":"eventAction","values":["32","33"],"varId":10000,"varValue":100,"varOp":">="}}

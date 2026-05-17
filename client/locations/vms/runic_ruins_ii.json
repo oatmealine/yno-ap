@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Runic Ruins II","condition":{"map":2457,"trigger":"eventAction","values":["123","124"],"varId":10000,"varValue":100,"varOp":">="}}

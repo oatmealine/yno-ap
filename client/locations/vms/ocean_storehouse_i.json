@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Ocean Storehouse I","condition":{"map":788,"trigger":"eventAction","values":["19","20","21"],"varId":10000,"varValue":100,"varOp":">="}}

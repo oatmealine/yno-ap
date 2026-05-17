@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Confection Estate","condition":{"map":2798,"trigger":"eventAction","values":["303"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cosmic Cube World","condition":{"map":1312,"trigger":"eventAction","values":["53"],"varId":10000,"varValue":100,"varOp":">="}}

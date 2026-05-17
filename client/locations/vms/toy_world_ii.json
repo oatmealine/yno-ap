@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Toy World II","condition":{"map":617,"trigger":"eventAction","values":["102"],"varId":10000,"varValue":100,"varOp":">="}}

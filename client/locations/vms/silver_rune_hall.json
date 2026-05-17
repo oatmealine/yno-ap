@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Silver Rune Hall","condition":{"map":1865,"trigger":"eventAction","values":["6"],"varId":10000,"varValue":100,"varOp":">="}}

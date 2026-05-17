@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Terrace Gardens","condition":{"map":3152,"trigger":"eventAction","values":["47","48"],"varId":10000,"varValue":100,"varOp":">="}}

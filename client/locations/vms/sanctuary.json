@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sanctuary","condition":{"map":1417,"trigger":"eventAction","values":["42","43","44","45"],"varId":10000,"varValue":100,"varOp":">="}}

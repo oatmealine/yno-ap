@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sunken Spore Sea","condition":{"map":3123,"trigger":"eventAction","values":["44"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Alrescha Sea","condition":{"map":1398,"trigger":"eventAction","values":["83"],"varId":10000,"varValue":100,"varOp":">="}}

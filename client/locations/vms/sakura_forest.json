@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sakura Forest","condition":{"map":2051,"trigger":"eventAction","values":["341","342"],"varId":10000,"varValue":100,"varOp":">="}}

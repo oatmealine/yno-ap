@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pudding World","condition":{"map":887,"trigger":"eventAction","values":["79"],"varId":10000,"varValue":200,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Limestone Dam","condition":{"map":4082,"trigger":"eventAction","values":["16"],"varId":10000,"varValue":100,"varOp":">="}}

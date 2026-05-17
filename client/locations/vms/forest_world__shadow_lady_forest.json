@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Forest World: Shadow Lady Forest","condition":{"map":73,"trigger":"eventAction","values":["65","66"],"varId":10000,"varValue":100,"varOp":">="}}

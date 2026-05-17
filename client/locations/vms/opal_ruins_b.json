@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Opal Ruins B","condition":{"map":1291,"trigger":"eventAction","values":["947"],"varId":10000,"varValue":100,"varOp":">="}}

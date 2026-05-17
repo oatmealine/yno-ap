@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Forest Pier","condition":{"map":523,"trigger":"eventAction","values":["3577"],"varId":10000,"varValue":100,"varOp":">="}}

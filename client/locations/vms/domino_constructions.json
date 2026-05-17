@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Domino Constructions","condition":{"map":1969,"trigger":"eventAction","values":["161"],"varId":10000,"varValue":100,"varOp":">="}}

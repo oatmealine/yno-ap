@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Green Tile Room","condition":{"map":754,"trigger":"eventAction","values":["57","58","59","60"],"varId":10000,"varValue":50,"varOp":">="}}

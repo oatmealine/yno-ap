@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Green Tile Room: Wilderness","condition":{"map":760,"trigger":"eventAction","values":["7"],"varId":10000,"varValue":50,"varOp":">="}}

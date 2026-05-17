@@ -1,0 +1,1 @@
+{"name":"Vending Machine - TST_MAP","condition":{"map":2565,"trigger":"eventAction","values":["67"],"varId":10000,"varValue":100,"varOp":">="}}

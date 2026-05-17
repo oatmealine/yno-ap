@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Scarlet Corridors","condition":{"map":966,"trigger":"eventAction","values":["3"],"varId":10000,"varValue":100,"varOp":">="}}

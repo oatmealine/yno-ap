@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Shop Ruins: Ground Floor","condition":{"map":705,"trigger":"eventAction","values":["19"],"varId":10000,"varValue":100,"varOp":">="}}

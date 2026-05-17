@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Obsidian Plains","condition":{"map":1298,"trigger":"eventAction","values":["15"],"varId":10000,"varValue":100,"varOp":">="}}

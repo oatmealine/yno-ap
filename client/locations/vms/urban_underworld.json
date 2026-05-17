@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Urban Underworld","condition":{"map":3453,"trigger":"eventAction","values":["9"],"varId":10000,"varValue":200,"varOp":">="}}

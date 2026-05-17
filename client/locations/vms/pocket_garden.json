@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pocket Garden","condition":{"map":2563,"trigger":"eventAction","values":["292","293"],"varId":10000,"varValue":100,"varOp":">="}}

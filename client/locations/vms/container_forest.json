@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Container Forest","condition":{"map":782,"trigger":"eventAction","values":["237","240"],"varId":10000,"varValue":100,"varOp":">="}}

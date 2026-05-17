@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cocktail Lounge","condition":{"map":702,"trigger":"eventAction","values":["391"],"varId":10000,"varValue":100,"varOp":">="}}

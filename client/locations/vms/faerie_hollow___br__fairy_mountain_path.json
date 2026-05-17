@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Faerie Hollow :<Br> Fairy Mountain Path","condition":{"map":3200,"trigger":"eventAction","values":["432"],"varId":10000,"varValue":100,"varOp":">="}}

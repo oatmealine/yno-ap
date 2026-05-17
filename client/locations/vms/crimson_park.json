@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Crimson Park","condition":{"map":2490,"trigger":"eventAction","values":["288","289"],"varId":10000,"varValue":100,"varOp":">="}}

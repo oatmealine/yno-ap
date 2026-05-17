@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sunrise Road","condition":{"map":2804,"trigger":"eventAction","values":["5"],"varId":10000,"varValue":100,"varOp":">="}}

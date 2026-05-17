@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Moonlight Lantern Forest","condition":{"map":2459,"trigger":"eventAction","values":["103"],"varId":10000,"varValue":100,"varOp":">="}}

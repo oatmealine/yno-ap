@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Rune Dunes","condition":{"map":3108,"trigger":"eventAction","values":["378"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cyber Bar","condition":{"map":676,"trigger":"eventAction","values":["6"],"varId":10000,"varValue":100,"varOp":">="}}

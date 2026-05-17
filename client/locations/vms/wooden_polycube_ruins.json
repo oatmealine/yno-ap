@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Wooden Polycube Ruins","condition":{"map":947,"trigger":"eventAction","values":["330"],"varId":10000,"varValue":120,"varOp":">="}}

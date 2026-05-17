@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Decrepit Dwellings II","condition":{"map":958,"trigger":"eventAction","values":["123"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pale Corridors","condition":{"map":2072,"trigger":"eventAction","values":["406","407"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Graveyard of Repentance II","condition":{"map":2696,"trigger":"eventAction","values":["50"],"varId":10000,"varValue":100,"varOp":">="}}

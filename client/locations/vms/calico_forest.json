@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Calico Forest","condition":{"map":2290,"trigger":"eventAction","values":["844"],"varId":10000,"varValue":100,"varOp":">="}}

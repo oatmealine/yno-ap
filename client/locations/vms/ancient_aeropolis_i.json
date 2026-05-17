@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Ancient Aeropolis I","condition":{"map":1206,"trigger":"eventAction","values":["176"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Expanded Corridors","condition":{"map":2253,"trigger":"eventAction","values":["30","31","32","33"],"varId":10000,"varValue":100,"varOp":">="}}

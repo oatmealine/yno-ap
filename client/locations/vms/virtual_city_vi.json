@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Virtual City VI","condition":{"map":1898,"trigger":"eventAction","values":["620","621"],"varId":10000,"varValue":100,"varOp":">="}}

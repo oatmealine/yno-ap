@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Fluorescent City","condition":{"map":1195,"trigger":"eventAction","values":["109"],"varId":10000,"varValue":100,"varOp":">="}}

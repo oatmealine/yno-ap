@@ -69,7 +69,7 @@ Client:
     - [ ] Show possible checks in current area
 
   - [x] Award location on world visit
-  - [ ] Award location on vending machine use
+  - [x] Award location on vending machine use
   - [ ] Award location on mask purchase
   - [ ] Award location on event trigger
   - [ ] Award location on minigame goal

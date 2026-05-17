@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Glowfruit Garden","condition":{"map":3944,"trigger":"eventAction","values":["4"],"varId":10000,"varValue":100,"varOp":">="}}

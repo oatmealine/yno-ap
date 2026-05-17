@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Litter Heaven","condition":{"map":1728,"trigger":"eventAction","values":["95"],"varId":10000,"varValue":100,"varOp":">="}}

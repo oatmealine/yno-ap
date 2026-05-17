@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Constellation World","condition":{"map":699,"trigger":"eventAction","values":["1203"],"varId":10000,"varValue":50,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Egyptian Rave Dungeon","condition":{"map":1695,"trigger":"eventAction","values":["52"],"varId":10000,"varValue":100,"varOp":">="}}

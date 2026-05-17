@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Amoeba Woods","condition":{"map":2391,"trigger":"eventAction","values":["2880"],"varId":10000,"varValue":100,"varOp":">="}}

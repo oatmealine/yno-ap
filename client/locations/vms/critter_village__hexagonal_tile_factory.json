@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Critter Village: Hexagonal Tile Factory","condition":{"map":1828,"trigger":"eventAction","values":["798"],"varId":10000,"varValue":100,"varOp":">="}}

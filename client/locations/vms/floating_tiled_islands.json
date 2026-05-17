@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Floating Tiled Islands","condition":{"map":2214,"trigger":"eventAction","values":["130"],"varId":10000,"varValue":100,"varOp":">="}}

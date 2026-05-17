@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Stargazing Puddles","condition":{"map":1866,"trigger":"eventAction","values":["82"],"varId":10000,"varValue":100,"varOp":">="}}

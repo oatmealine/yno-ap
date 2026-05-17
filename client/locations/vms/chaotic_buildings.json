@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Chaotic Buildings","condition":{"map":536,"trigger":"eventAction","values":["316"],"varId":10000,"varValue":100,"varOp":">="}}

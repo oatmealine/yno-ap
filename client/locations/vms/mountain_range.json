@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Mountain Range","condition":{"map":2455,"trigger":"eventAction","values":["381"],"varId":10000,"varValue":100,"varOp":">="}}

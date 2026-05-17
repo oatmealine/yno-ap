@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Spherical Space Labyrinth","condition":{"map":1241,"trigger":"eventAction","values":["134"],"varId":10000,"varValue":100,"varOp":">="}}

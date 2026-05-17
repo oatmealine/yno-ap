@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Location Motif 1","condition":{"map":3097,"trigger":"eventAction","values":["1","9"],"varId":10000,"varValue":100,"varOp":">="}}

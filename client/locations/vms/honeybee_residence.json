@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Honeybee Residence","condition":{"map":2039,"trigger":"eventAction","values":["11"],"varId":10000,"varValue":100,"varOp":">="}}

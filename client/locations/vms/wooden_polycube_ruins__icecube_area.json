@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Wooden Polycube Ruins: Icecube area","condition":{"map":947,"trigger":"eventAction","values":["660"],"varId":10000,"varValue":120,"varOp":">="}}

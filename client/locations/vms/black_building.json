@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Black Building","condition":{"map":68,"trigger":"eventAction","values":["45"],"varId":10000,"varValue":100,"varOp":">="}}

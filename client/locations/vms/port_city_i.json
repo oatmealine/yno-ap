@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Port City I","condition":{"map":2182,"trigger":"eventAction","values":["374"],"varId":10000,"varValue":100,"varOp":">="}}

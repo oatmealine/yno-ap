@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Hemophilic Islands","condition":{"map":4051,"trigger":"eventAction","values":["5"],"varId":10000,"varValue":100,"varOp":">="}}

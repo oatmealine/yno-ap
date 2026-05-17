@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Clandestine Research Laboratory","condition":{"map":1254,"trigger":"eventAction","values":["19"],"varId":10000,"varValue":100,"varOp":">="}}

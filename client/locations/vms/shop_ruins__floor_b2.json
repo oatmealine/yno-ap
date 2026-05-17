@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Shop Ruins: Floor B2","condition":{"map":705,"trigger":"eventAction","values":["205"],"varId":10000,"varValue":100,"varOp":">="}}

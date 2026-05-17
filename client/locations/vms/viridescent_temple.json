@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Viridescent Temple","condition":{"map":1132,"trigger":"eventAction","values":["781"],"varId":10000,"varValue":100,"varOp":">="}}

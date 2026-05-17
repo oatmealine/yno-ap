@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pillars World","condition":{"map":537,"trigger":"eventAction","values":["289"],"varId":10000,"varValue":100,"varOp":">="}}

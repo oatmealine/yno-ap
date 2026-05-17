@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Encrypted Labyrinth","condition":{"map":2975,"trigger":"eventAction","values":["211"],"varId":10000,"varValue":100,"varOp":">="}}

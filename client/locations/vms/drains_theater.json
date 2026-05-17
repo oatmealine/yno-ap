@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Drains Theater","condition":{"map":1972,"trigger":"eventAction","values":["49","56"],"varId":10000,"varValue":100,"varOp":">="}}

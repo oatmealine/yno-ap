@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Neon Caves","condition":{"map":936,"trigger":"eventAction","values":["39"],"varId":10000,"varValue":100,"varOp":">="}}

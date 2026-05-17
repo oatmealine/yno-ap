@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Visage World","condition":{"map":3671,"trigger":"eventAction","values":["40"],"varId":10000,"varValue":100,"varOp":">="}}

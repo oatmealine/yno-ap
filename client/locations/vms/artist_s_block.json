@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Artist's Block","condition":{"map":2996,"trigger":"eventAction","values":["9"],"varId":10000,"varValue":100,"varOp":">="}}

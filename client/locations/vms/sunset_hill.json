@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sunset Hill","condition":{"map":2069,"trigger":"eventAction","values":["28","29"],"varId":10000,"varValue":100,"varOp":">="}}

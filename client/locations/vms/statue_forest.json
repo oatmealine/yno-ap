@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Statue Forest","condition":{"map":1295,"trigger":"eventAction","values":["640"],"varId":10000,"varValue":100,"varOp":">="}}

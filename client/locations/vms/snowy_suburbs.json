@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Snowy Suburbs","condition":{"map":1808,"trigger":"eventAction","values":["27"],"varId":10000,"varValue":100,"varOp":">="}}

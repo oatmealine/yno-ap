@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Birch Forest","condition":{"map":2196,"trigger":"eventAction","values":["11"],"varId":10000,"varValue":100,"varOp":">="}}

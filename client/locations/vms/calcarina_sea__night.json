@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Calcarina Sea: Night","condition":{"map":1255,"trigger":"eventAction","values":["368"],"varId":10000,"varValue":100,"varOp":">="}}

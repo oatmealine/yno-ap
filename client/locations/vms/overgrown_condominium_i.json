@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Overgrown Condominium I","condition":{"map":810,"trigger":"eventAction","values":["93","94"],"varId":10000,"varValue":100,"varOp":">="}}

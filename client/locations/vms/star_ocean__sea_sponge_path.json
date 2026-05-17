@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Star Ocean: Sea Sponge Path","condition":{"map":206,"trigger":"eventAction","values":["45","46"],"varId":10000,"varValue":100,"varOp":">="}}

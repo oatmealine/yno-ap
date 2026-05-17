@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Aquatic Cafe","condition":{"map":852,"trigger":"eventAction","values":["427"],"varId":10000,"varValue":100,"varOp":">="}}

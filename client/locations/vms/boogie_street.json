@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Boogie Street","condition":{"map":424,"trigger":"eventAction","values":["3","4"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sour Void","condition":{"map":2791,"trigger":"eventAction","values":["70"],"varId":10000,"varValue":100,"varOp":">="}}

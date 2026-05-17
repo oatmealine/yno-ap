@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blue Undergrowth","condition":{"map":3156,"trigger":"eventAction","values":["61"],"varId":10000,"varValue":100,"varOp":">="}}

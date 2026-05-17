@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Rusted Factory II","condition":{"map":1476,"trigger":"eventAction","values":["453"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Dark Red Wasteland","condition":{"map":2502,"trigger":"eventAction","values":["459"],"varId":10000,"varValue":100,"varOp":">="}}

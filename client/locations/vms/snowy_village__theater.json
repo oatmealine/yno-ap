@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Snowy Village: Theater","condition":{"map":1004,"trigger":"eventAction","values":["474"],"varId":10000,"varValue":100,"varOp":">="}}

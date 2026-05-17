@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Snowy Forest: Winter Path","condition":{"map":894,"trigger":"eventAction","values":["27","33"],"varId":10000,"varValue":100,"varOp":">="}}

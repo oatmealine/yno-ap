@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Stereo Station","condition":{"map":3093,"trigger":"eventAction","values":["119"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Fossil Mines","condition":{"map":1810,"trigger":"eventAction","values":["386"],"varId":10000,"varValue":100,"varOp":">="}}

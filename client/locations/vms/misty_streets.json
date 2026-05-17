@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Misty Streets","condition":{"map":3102,"trigger":"eventAction","values":["84","86"],"varId":10000,"varValue":100,"varOp":">="}}

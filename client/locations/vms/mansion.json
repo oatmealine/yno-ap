@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Mansion","condition":{"map":569,"trigger":"eventAction","values":["874"],"varId":10000,"varValue":100,"varOp":">="}}

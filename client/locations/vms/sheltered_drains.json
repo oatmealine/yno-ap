@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sheltered Drains","condition":{"map":2667,"trigger":"eventAction","values":["29"],"varId":10000,"varValue":100,"varOp":">="}}

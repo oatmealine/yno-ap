@@ -1,0 +1,1 @@
+{"name":"Vending Machine - MAP3747","condition":{"map":3747,"trigger":"eventAction","values":["170"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Frozen Smile World","condition":{"map":2142,"trigger":"eventAction","values":["49"],"varId":10000,"varValue":100,"varOp":">="}}

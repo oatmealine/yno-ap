@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sweet Pink Docks","condition":{"map":2208,"trigger":"eventAction","values":["68"],"varId":10000,"varValue":100,"varOp":">="}}

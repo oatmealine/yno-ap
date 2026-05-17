@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Beachside Infirmary","condition":{"map":3366,"trigger":"eventAction","values":["247"],"varId":10000,"varValue":100,"varOp":">="}}

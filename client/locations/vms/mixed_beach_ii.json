@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Mixed Beach II","condition":{"map":2629,"trigger":"eventAction","values":["54"],"varId":10000,"varValue":1,"varOp":">="}}

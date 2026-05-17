@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cat Cemetery: Halloween Forest","condition":{"map":843,"trigger":"eventAction","values":["281"],"varId":10000,"varValue":100,"varOp":">="}}

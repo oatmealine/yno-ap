@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pastel Grassland","condition":{"map":2601,"trigger":"eventAction","values":["55"],"varId":10000,"varValue":100,"varOp":">="}}

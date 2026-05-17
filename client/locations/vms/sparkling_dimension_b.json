@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sparkling Dimension B","condition":{"map":1123,"trigger":"eventAction","values":["14"],"varId":10000,"varValue":100,"varOp":">="}}

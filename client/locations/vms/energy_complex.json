@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Energy Complex","condition":{"map":1723,"trigger":"eventAction","values":["85"],"varId":10000,"varValue":100,"varOp":">="}}

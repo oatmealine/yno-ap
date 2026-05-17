@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Moth Meadow","condition":{"map":3192,"trigger":"eventAction","values":["4"],"varId":10000,"varValue":100,"varOp":">="}}

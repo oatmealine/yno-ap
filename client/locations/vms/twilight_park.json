@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Twilight Park","condition":{"map":1562,"trigger":"eventAction","values":["762","1295"],"varId":10000,"varValue":100,"varOp":">="}}

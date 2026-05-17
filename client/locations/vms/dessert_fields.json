@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Dessert Fields","condition":{"map":1496,"trigger":"eventAction","values":["9"],"varId":10000,"varValue":100,"varOp":">="}}

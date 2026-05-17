@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Glowing Hives","condition":{"map":3090,"trigger":"eventAction","values":["18"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sepia Factory","condition":{"map":2510,"trigger":"eventAction","values":["226"],"varId":10000,"varValue":100,"varOp":">="}}

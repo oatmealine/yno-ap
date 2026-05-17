@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Vintage Town","condition":{"map":956,"trigger":"eventAction","values":["122"],"varId":10000,"varValue":100,"varOp":">="}}

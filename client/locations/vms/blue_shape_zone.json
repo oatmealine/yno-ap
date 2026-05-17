@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blue Shape Zone","condition":{"map":2503,"trigger":"eventAction","values":["194"],"varId":10000,"varValue":100,"varOp":">="}}

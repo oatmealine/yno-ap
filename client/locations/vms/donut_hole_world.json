@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Donut Hole World","condition":{"map":883,"trigger":"eventAction","values":["77"],"varId":10000,"varValue":110,"varOp":">="}}

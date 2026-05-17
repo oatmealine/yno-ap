@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Serum Laboratory","condition":{"map":1807,"trigger":"eventAction","values":["138"],"varId":10000,"varValue":100,"varOp":">="}}

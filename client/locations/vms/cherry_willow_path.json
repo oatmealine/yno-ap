@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cherry Willow Path","condition":{"map":2148,"trigger":"eventAction","values":["5"],"varId":10000,"varValue":100,"varOp":">="}}

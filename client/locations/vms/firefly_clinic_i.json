@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Firefly Clinic I","condition":{"map":3311,"trigger":"eventAction","values":["237"],"varId":10000,"varValue":100,"varOp":">="}}

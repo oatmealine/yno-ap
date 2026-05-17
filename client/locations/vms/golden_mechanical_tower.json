@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Golden Mechanical Tower","condition":{"map":1697,"trigger":"eventAction","values":["160"],"varId":10000,"varValue":100,"varOp":">="}}

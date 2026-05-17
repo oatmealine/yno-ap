@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Carnage Carnival","condition":{"map":3363,"trigger":"eventAction","values":["174"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Red Sun Outlook","condition":{"map":2872,"trigger":"eventAction","values":["23"],"varId":10000,"varValue":100,"varOp":">="}}

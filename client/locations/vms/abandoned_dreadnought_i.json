@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Abandoned Dreadnought I","condition":{"map":959,"trigger":"eventAction","values":["372"],"varId":10000,"varValue":100,"varOp":">="}}

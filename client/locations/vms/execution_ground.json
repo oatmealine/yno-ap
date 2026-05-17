@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Execution Ground","condition":{"map":1547,"trigger":"eventAction","values":["36"],"varId":10000,"varValue":100,"varOp":">="}}

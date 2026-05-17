@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Burger Joint","condition":{"map":3369,"trigger":"eventAction","values":["371"],"varId":10000,"varValue":100,"varOp":">="}}

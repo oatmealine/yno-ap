@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Forest Interlude","condition":{"map":1316,"trigger":"eventAction","values":["1045"],"varId":10000,"varValue":100,"varOp":">="}}

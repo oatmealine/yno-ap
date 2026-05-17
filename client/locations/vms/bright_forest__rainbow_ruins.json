@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Bright Forest: Rainbow Ruins","condition":{"map":1350,"trigger":"eventAction","values":["549"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Hidden Shoal II","condition":{"map":531,"trigger":"eventAction","values":["229"],"varId":10000,"varValue":100,"varOp":">="}}

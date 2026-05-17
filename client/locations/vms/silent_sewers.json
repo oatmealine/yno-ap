@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Silent Sewers","condition":{"map":952,"trigger":"eventAction","values":["40"],"varId":10000,"varValue":100,"varOp":">="}}

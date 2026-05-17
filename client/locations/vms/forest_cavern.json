@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Forest Cavern","condition":{"map":1729,"trigger":"eventAction","values":["466"],"varId":10000,"varValue":100,"varOp":">="}}

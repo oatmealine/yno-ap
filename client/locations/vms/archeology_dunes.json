@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Archeology Dunes","condition":{"map":1863,"trigger":"eventAction","values":["1"],"varId":10000,"varValue":100,"varOp":">="}}

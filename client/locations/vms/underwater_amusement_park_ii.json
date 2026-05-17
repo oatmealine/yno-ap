@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Underwater Amusement Park II","condition":{"map":186,"trigger":"eventAction","values":["29"],"varId":10000,"varValue":100,"varOp":">="}}

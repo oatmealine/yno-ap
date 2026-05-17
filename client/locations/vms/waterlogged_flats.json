@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Waterlogged Flats","condition":{"map":3248,"trigger":"eventAction","values":["12"],"varId":10000,"varValue":100,"varOp":">="}}

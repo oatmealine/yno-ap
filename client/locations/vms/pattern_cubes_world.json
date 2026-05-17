@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pattern Cubes World","condition":{"map":2907,"trigger":"eventAction","values":["502"],"varId":10000,"varValue":100,"varOp":">="}}

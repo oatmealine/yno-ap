@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Olympus Ruins II","condition":{"map":3595,"trigger":"eventAction","values":["1589"],"varId":10000,"varValue":100,"varOp":">="}}

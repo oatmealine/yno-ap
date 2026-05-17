@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pillar Ark","condition":{"map":2262,"trigger":"eventAction","values":["2"],"varId":10000,"varValue":100,"varOp":">="}}

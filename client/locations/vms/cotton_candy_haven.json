@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cotton Candy Haven","condition":{"map":916,"trigger":"eventAction","values":["164","168"],"varId":10000,"varValue":100,"varOp":">="}}

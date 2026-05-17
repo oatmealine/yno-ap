@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Highway I","condition":{"map":66,"trigger":"eventAction","values":["459","460","461"],"varId":10000,"varValue":100,"varOp":">="}}

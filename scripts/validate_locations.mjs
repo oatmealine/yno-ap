@@ -1,7 +1,7 @@
 import * as z from 'zod';
 import * as fs from 'node:fs/promises';
 import { join } from 'node:path';
-import {  execSync } from 'node:child_process';
+import { execSync } from 'node:child_process';
 
 const Op = z.enum(['=', '<', '>', '<=', '>=', '!=', '>=<']);
 const Trigger = z.enum(['', 'event', 'eventAction', 'picture', 'coords', 'teleport', 'prevMap']);
@@ -126,7 +126,7 @@ for (const dir of rootDirs) {
       continue;
     }
 
-    if (stat.isFile()) {
+    if (subDir.endsWith('.json') && stat.isFile()) {
       const filename = `locations/${dir}/${subDir}`;
       const content = await fs.readFile(subDirPath, 'utf8');
       let parsed;
@@ -134,6 +134,7 @@ for (const dir of rootDirs) {
         parsed = JSON.parse(content);
       } catch(err) {
         error(`${filename}: ${err}`);
+        continue;
       }
       
       const res = Location.safeParse(parsed);
@@ -159,7 +160,6 @@ for (const dir of rootDirs) {
           console.log(`${filename}: OK`);
       } else {
         error(`${filename}: parse error`);
-        console.log(res.error);
         console.log(z.prettifyError(res.error));
       }
     }

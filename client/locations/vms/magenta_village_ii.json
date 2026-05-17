@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Magenta Village II","condition":{"map":2392,"trigger":"eventAction","values":["98","103","820"],"varId":10000,"varValue":100,"varOp":">="}}

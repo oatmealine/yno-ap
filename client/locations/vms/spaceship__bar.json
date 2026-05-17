@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Spaceship: Bar","condition":{"map":1008,"trigger":"eventAction","values":["341"],"varId":10000,"varValue":100,"varOp":">="}}

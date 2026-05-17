@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Urban Heights","condition":{"map":2809,"trigger":"eventAction","values":["167"],"varId":10000,"varValue":100,"varOp":">="}}

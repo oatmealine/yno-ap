@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Bloom 99","condition":{"map":3091,"trigger":"eventAction","values":["147","151"],"varId":10000,"varValue":100,"varOp":">="}}

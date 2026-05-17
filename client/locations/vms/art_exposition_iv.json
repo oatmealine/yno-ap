@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Art Exposition IV","condition":{"map":2813,"trigger":"eventAction","values":["175"],"varId":10000,"varValue":150,"varOp":">="}}

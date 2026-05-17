@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Respite","condition":{"map":2962,"trigger":"eventAction","values":["28"],"varId":10000,"varValue":100,"varOp":">="}}

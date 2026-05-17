@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Mushroom World","condition":{"map":289,"trigger":"eventAction","values":["12"],"varId":10000,"varValue":100,"varOp":">="}}

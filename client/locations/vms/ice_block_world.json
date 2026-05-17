@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Ice Block World","condition":{"map":2111,"trigger":"eventAction","values":["8"],"varId":10000,"varValue":100,"varOp":">="}}

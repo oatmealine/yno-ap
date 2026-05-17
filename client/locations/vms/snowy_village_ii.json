@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Snowy Village II","condition":{"map":1003,"trigger":"eventAction","values":["2159"],"varId":10000,"varValue":100,"varOp":">="}}

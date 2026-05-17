@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Surgical Scissors World","condition":{"map":937,"trigger":"eventAction","values":["26"],"varId":10000,"varValue":100,"varOp":">="}}

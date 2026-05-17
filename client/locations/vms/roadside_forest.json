@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Roadside Forest","condition":{"map":2101,"trigger":"eventAction","values":["2"],"varId":10000,"varValue":100,"varOp":">="}}

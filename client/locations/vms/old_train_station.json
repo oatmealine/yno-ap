@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Old Train Station","condition":{"map":545,"trigger":"eventAction","values":["113"],"varId":10000,"varValue":100,"varOp":">="}}

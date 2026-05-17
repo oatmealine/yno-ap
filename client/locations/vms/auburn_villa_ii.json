@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Auburn Villa II","condition":{"map":3046,"trigger":"eventAction","values":["47"],"varId":10000,"varValue":100,"varOp":">="}}

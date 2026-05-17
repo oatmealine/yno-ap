@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Birch Tree Docks","condition":{"map":2343,"trigger":"eventAction","values":["960"],"varId":10000,"varValue":100,"varOp":">="}}

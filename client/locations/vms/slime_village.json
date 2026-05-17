@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Slime Village","condition":{"map":2500,"trigger":"eventAction","values":["33"],"varId":10000,"varValue":100,"varOp":">="}}

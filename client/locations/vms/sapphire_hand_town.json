@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sapphire Hand Town","condition":{"map":3124,"trigger":"eventAction","values":["582"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Hydrangea Waters","condition":{"map":3247,"trigger":"eventAction","values":["3","10"],"varId":10000,"varValue":100,"varOp":">="}}

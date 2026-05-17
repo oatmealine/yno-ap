@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Homesickness I","condition":{"map":736,"trigger":"eventAction","values":["2"],"varId":10000,"varValue":100,"varOp":">="}}

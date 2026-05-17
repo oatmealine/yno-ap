@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Town Maze II","condition":{"map":527,"trigger":"eventAction","values":["856"],"varId":10000,"varValue":100,"varOp":">="}}

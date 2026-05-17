@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Clubhouse Yard I","condition":{"map":2413,"trigger":"eventAction","values":["23","24"],"varId":10000,"varValue":100,"varOp":">="}}

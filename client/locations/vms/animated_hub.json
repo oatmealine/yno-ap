@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Animated Hub","condition":{"map":2012,"trigger":"eventAction","values":["841","842"],"varId":10000,"varValue":100,"varOp":">="}}

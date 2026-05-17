@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Moss World II","condition":{"map":3196,"trigger":"eventAction","values":["7"],"varId":10000,"varValue":100,"varOp":">="}}

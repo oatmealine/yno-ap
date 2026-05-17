@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cerulean School","condition":{"map":2805,"trigger":"eventAction","values":["56"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Labyrinth of Dread","condition":{"map":2122,"trigger":"eventAction","values":["27","77"],"varId":10000,"varValue":100,"varOp":">="}}

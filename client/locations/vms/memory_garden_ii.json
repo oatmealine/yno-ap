@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Memory Garden II","condition":{"map":1473,"trigger":"eventAction","values":["2573"],"varId":10000,"varValue":100,"varOp":">="}}

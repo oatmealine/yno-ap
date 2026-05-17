@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Ice Thorn Cave","condition":{"map":2796,"trigger":"eventAction","values":["248"],"varId":10000,"varValue":100,"varOp":">="}}

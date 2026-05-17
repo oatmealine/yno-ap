@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Spacey Retreat","condition":{"map":2057,"trigger":"eventAction","values":["482","483"],"varId":10000,"varValue":100,"varOp":">="}}

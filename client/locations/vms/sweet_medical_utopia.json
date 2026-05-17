@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sweet Medical Utopia","condition":{"map":2871,"trigger":"eventAction","values":["20"],"varId":10000,"varValue":100,"varOp":">="}}

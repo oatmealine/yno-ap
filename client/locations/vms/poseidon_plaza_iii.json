@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Poseidon Plaza III","condition":{"map":1643,"trigger":"eventAction","values":["1547","1548","1549"],"varId":10000,"varValue":100,"varOp":">="}}

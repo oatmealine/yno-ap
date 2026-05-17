@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Scattered Sky Fields","condition":{"map":3120,"trigger":"eventAction","values":["45"],"varId":10000,"varValue":100,"varOp":">="}}

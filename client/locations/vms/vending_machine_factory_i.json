@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Vending Machine Factory I","condition":{"map":1072,"trigger":"eventAction","values":["308"],"varId":10000,"varValue":100,"varOp":">="}}

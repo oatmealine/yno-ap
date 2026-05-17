@@ -1,0 +1,1 @@
+{"name":"Vending Machine - River Complex","condition":{"map":64,"trigger":"eventAction","values":["643"],"varId":10000,"varValue":100,"varOp":">="}}

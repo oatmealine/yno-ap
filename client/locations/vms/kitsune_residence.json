@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Kitsune Residence","condition":{"map":1864,"trigger":"eventAction","values":["397"],"varId":10000,"varValue":100,"varOp":">="}}

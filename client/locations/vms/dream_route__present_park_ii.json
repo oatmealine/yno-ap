@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Dream Route: Present Park II","condition":{"map":3014,"trigger":"eventAction","values":["294","295"],"varId":10000,"varValue":100,"varOp":">="}}

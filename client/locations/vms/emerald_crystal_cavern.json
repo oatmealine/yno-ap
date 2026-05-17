@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Emerald Crystal Cavern","condition":{"map":3204,"trigger":"eventAction","values":["1"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Miasma","condition":{"map":2799,"trigger":"eventAction","values":["406"],"varId":10000,"varValue":100,"varOp":">="}}

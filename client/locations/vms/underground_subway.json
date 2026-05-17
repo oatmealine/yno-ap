@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Underground Subway","condition":{"map":2298,"trigger":"eventAction","values":["18"],"varId":10000,"varValue":100,"varOp":">="}}

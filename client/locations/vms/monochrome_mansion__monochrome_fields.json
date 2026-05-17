@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Monochrome Mansion: Monochrome Fields","condition":{"map":904,"trigger":"eventAction","values":["620"],"varId":10000,"varValue":100,"varOp":">="}}

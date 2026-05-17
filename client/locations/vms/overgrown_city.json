@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Overgrown City","condition":{"map":577,"trigger":"eventAction","values":["1"],"varId":10000,"varValue":100,"varOp":">="}}

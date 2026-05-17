@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Neon Suburbs III","condition":{"map":1577,"trigger":"eventAction","values":["253"],"varId":10000,"varValue":100,"varOp":">="}}

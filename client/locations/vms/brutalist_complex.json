@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Brutalist Complex","condition":{"map":3104,"trigger":"eventAction","values":["61"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Dull Hub","condition":{"map":1211,"trigger":"eventAction","values":["6"],"varId":10000,"varValue":100,"varOp":">="}}

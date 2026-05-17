@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Glacier Maze","condition":{"map":2471,"trigger":"eventAction","values":["11"],"varId":10000,"varValue":100,"varOp":">="}}

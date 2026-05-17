@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Monolith Jungle IV","condition":{"map":1210,"trigger":"eventAction","values":["244"],"varId":10000,"varValue":100,"varOp":">="}}

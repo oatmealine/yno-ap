@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Scrapyard: Treatment Plant","condition":{"map":2037,"trigger":"eventAction","values":["439"],"varId":10000,"varValue":100,"varOp":">="}}

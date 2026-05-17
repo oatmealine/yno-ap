@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blue Eyes World","condition":{"map":2001,"trigger":"eventAction","values":["10"],"varId":10000,"varValue":100,"varOp":">="}}

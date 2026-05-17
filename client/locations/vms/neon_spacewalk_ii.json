@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Neon Spacewalk II","condition":{"map":3707,"trigger":"eventAction","values":["33","179"],"varId":10000,"varValue":100,"varOp":">="}}

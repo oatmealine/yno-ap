@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Totem Hotel II","condition":{"map":1622,"trigger":"eventAction","values":["24"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Color Capital III","condition":{"map":2117,"trigger":"eventAction","values":["6"],"varId":10000,"varValue":100,"varOp":">="}}

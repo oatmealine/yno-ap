@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Aurora Lake","condition":{"map":1143,"trigger":"eventAction","values":["37"],"varId":10000,"varValue":100,"varOp":">="}}

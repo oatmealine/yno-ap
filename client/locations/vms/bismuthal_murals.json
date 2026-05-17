@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Bismuthal Murals","condition":{"map":3413,"trigger":"eventAction","values":["12"],"varId":10000,"varValue":100,"varOp":">="}}

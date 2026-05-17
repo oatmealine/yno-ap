@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Constellation World: Star Building","condition":{"map":1524,"trigger":"eventAction","values":["639"],"varId":10000,"varValue":50,"varOp":">="}}

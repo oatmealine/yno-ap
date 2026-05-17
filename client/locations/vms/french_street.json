@@ -1,0 +1,1 @@
+{"name":"Vending Machine - French Street","condition":{"map":612,"trigger":"eventAction","values":["115"],"varId":10000,"varValue":100,"varOp":">="}}

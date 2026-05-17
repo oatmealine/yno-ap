@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Vandalized Station","condition":{"map":4062,"trigger":"eventAction","values":["6","7"],"varId":10000,"varValue":100,"varOp":">="}}

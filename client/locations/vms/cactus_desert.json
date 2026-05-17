@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Cactus Desert","condition":{"map":1546,"trigger":"eventAction","values":["5"],"varId":10000,"varValue":100,"varOp":">="}}

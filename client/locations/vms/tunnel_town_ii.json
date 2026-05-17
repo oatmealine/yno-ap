@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Tunnel Town II","condition":{"map":1841,"trigger":"eventAction","values":["10"],"varId":10000,"varValue":100,"varOp":">="}}

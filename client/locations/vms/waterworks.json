@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Waterworks","condition":{"map":3160,"trigger":"eventAction","values":["59"],"varId":10000,"varValue":100,"varOp":">="}}

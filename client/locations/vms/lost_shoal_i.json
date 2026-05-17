@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Lost Shoal I","condition":{"map":1561,"trigger":"eventAction","values":["88"],"varId":10000,"varValue":100,"varOp":">="}}

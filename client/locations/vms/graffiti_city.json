@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Graffiti City","condition":{"map":1845,"trigger":"eventAction","values":["216"],"varId":10000,"varValue":100,"varOp":">="}}

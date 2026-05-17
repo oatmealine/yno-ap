@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Travel Hotel VII","condition":{"map":1141,"trigger":"eventAction","values":["204","206","208"],"varId":10000,"varValue":100,"varOp":">="}}

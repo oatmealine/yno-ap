@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Ethereal Garden I","condition":{"map":3122,"trigger":"eventAction","values":["673"],"varId":10000,"varValue":100,"varOp":">="}}

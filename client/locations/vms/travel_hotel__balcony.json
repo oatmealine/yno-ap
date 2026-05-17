@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Travel Hotel: Balcony","condition":{"map":1141,"trigger":"eventAction","values":["80","81"],"varId":10000,"varValue":100,"varOp":">="}}

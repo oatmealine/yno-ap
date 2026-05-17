@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Valentine Meadow","condition":{"map":2841,"trigger":"eventAction","values":["142"],"varId":10000,"varValue":100,"varOp":">="}}

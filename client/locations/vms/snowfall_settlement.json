@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Snowfall Settlement","condition":{"map":3655,"trigger":"eventAction","values":["24"],"varId":10000,"varValue":100,"varOp":">="}}

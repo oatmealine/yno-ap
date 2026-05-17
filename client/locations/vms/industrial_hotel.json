@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Industrial Hotel","condition":{"map":1806,"trigger":"eventAction","values":["356"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Suspended Steamworks","condition":{"map":3107,"trigger":"eventAction","values":["1250"],"varId":10000,"varValue":100,"varOp":">="}}

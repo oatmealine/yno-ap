@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Forgotten Megalopolis I","condition":{"map":1017,"trigger":"eventAction","values":["931"],"varId":10000,"varValue":100,"varOp":">="}}

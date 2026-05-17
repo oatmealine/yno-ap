@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Canned Fish World","condition":{"map":3369,"trigger":"eventAction","values":["440"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Stained Glass Cosmo","condition":{"map":1279,"trigger":"eventAction","values":["64"],"varId":10000,"varValue":100,"varOp":">="}}

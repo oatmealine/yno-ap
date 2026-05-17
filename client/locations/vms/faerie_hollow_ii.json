@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Faerie Hollow II","condition":{"map":3195,"trigger":"eventAction","values":["184"],"varId":10000,"varValue":100,"varOp":">="}}

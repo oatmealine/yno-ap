@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Highway III","condition":{"map":67,"trigger":"eventAction","values":["45"],"varId":10000,"varValue":100,"varOp":">="}}

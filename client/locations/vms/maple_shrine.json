@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Maple Shrine","condition":{"map":622,"trigger":"eventAction","values":["53"],"varId":10000,"varValue":70,"varOp":">="}}

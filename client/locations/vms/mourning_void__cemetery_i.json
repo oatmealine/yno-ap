@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Mourning Void: Cemetery I","condition":{"map":3040,"trigger":"eventAction","values":["77"],"varId":10000,"varValue":100,"varOp":">="}}

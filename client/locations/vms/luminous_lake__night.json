@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Luminous Lake: Night","condition":{"map":1471,"trigger":"eventAction","values":["300"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Infinite Pools","condition":{"map":3103,"trigger":"eventAction","values":["139","141"],"varId":10000,"varValue":100,"varOp":">="}}

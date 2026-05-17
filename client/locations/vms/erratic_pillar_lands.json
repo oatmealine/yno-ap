@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Erratic Pillar Lands","condition":{"map":912,"trigger":"eventAction","values":["35"],"varId":10000,"varValue":100,"varOp":">="}}

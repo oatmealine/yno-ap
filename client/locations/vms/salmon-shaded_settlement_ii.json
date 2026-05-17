@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Salmon-shaded Settlement II","condition":{"map":2397,"trigger":"eventAction","values":["168"],"varId":10000,"varValue":100,"varOp":">="}}

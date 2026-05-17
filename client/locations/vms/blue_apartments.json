@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blue Apartments","condition":{"map":2292,"trigger":"eventAction","values":["608"],"varId":10000,"varValue":100,"varOp":">="}}

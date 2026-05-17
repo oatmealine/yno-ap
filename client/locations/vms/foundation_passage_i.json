@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Foundation Passage I","condition":{"map":2462,"trigger":"eventAction","values":["34"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Dark Room","condition":{"map":52,"trigger":"eventAction","values":["7"],"varId":10000,"varValue":100,"varOp":">="}}

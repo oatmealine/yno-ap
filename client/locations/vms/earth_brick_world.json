@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Earth Brick World","condition":{"map":2892,"trigger":"eventAction","values":["107"],"varId":10000,"varValue":100,"varOp":">="}}

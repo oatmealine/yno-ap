@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Polygon Mazescape I","condition":{"map":3150,"trigger":"eventAction","values":["22","23"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Chaos Exhibition","condition":{"map":734,"trigger":"eventAction","values":["65"],"varId":10000,"varValue":100,"varOp":">="}}

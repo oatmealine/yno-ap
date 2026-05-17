@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Forest World","condition":{"map":71,"trigger":"eventAction","values":["55","56"],"varId":10000,"varValue":100,"varOp":">="}}

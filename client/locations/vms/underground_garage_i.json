@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Underground Garage I","condition":{"map":147,"trigger":"eventAction","values":["172","178","192","213"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Pointing Labyrinth III","condition":{"map":2593,"trigger":"eventAction","values":["50"],"varId":10000,"varValue":100,"varOp":">="}}

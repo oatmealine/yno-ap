@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Art Exposition: Cyberpunk City","condition":{"map":2813,"trigger":"eventAction","values":["199"],"varId":10000,"varValue":151,"varOp":">="}}

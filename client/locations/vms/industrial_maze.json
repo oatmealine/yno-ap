@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Industrial Maze","condition":{"map":573,"trigger":"eventAction","values":["1572"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Holographic Chamber","condition":{"map":1193,"trigger":"eventAction","values":["85"],"varId":10000,"varValue":100,"varOp":">="}}

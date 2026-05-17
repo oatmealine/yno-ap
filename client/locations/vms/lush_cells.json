@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Lush Cells","condition":{"map":2982,"trigger":"eventAction","values":["44"],"varId":10000,"varValue":100,"varOp":">="}}

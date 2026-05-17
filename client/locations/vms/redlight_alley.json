@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Redlight Alley","condition":{"map":1122,"trigger":"eventAction","values":["2","3","4"],"varId":10000,"varValue":100,"varOp":">="}}

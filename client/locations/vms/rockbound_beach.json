@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Rockbound Beach","condition":{"map":2983,"trigger":"eventAction","values":["399","416"],"varId":10000,"varValue":100,"varOp":">="}}

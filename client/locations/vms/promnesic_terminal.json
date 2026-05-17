@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Promnesic Terminal","condition":{"map":4066,"trigger":"eventAction","values":["17"],"varId":10000,"varValue":100,"varOp":">="}}

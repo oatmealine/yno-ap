@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Burgundy Flats I","condition":{"map":2967,"trigger":"eventAction","values":["13"],"varId":10000,"varValue":100,"varOp":">="}}

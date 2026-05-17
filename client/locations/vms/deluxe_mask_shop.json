@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Deluxe Mask Shop","condition":{"map":1521,"trigger":"eventAction","values":["102"],"varId":10000,"varValue":100,"varOp":">="}}

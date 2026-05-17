@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Clubhouse Yard: Dancheong Corridor","condition":{"map":2411,"trigger":"eventAction","values":["3"],"varId":10000,"varValue":100,"varOp":">="}}

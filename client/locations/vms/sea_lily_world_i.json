@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Sea Lily World I","condition":{"map":809,"trigger":"eventAction","values":["6","7"],"varId":10000,"varValue":100,"varOp":">="}}

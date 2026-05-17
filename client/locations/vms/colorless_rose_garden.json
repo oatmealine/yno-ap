@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Colorless Rose Garden","condition":{"map":2498,"trigger":"eventAction","values":["3"],"varId":10000,"varValue":100,"varOp":">="}}

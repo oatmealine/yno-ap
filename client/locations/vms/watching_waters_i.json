@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Watching Waters I","condition":{"map":1862,"trigger":"eventAction","values":["874"],"varId":10000,"varValue":100,"varOp":">="}}

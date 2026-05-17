@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Forest of Reflections","condition":{"map":1803,"trigger":"eventAction","values":["129"],"varId":10000,"varValue":100,"varOp":">="}}

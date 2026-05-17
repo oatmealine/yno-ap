@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Hop Springs IV","condition":{"map":3368,"trigger":"eventAction","values":["68"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Twisted Forest","condition":{"map":2602,"trigger":"eventAction","values":["309"],"varId":10000,"varValue":100,"varOp":">="}}

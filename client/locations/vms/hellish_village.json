@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Hellish Village","condition":{"map":2564,"trigger":"eventAction","values":["163","164"],"varId":10000,"varValue":100,"varOp":">="}}

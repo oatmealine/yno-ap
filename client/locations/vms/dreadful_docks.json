@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Dreadful Docks","condition":{"map":1302,"trigger":"eventAction","values":["7"],"varId":10000,"varValue":100,"varOp":">="}}

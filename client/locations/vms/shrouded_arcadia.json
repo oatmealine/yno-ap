@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Shrouded Arcadia","condition":{"map":3365,"trigger":"eventAction","values":["98"],"varId":10000,"varValue":100,"varOp":">="}}

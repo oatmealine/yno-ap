@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Alien World","condition":{"map":2482,"trigger":"eventAction","values":["3"],"varId":10000,"varValue":100,"varOp":">="}}

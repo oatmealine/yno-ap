@@ -1,0 +1,1 @@
+{"name":"Vending Machine - The Desktop","condition":{"map":3592,"trigger":"eventAction","values":["554"],"varId":10000,"varValue":100,"varOp":">="}}

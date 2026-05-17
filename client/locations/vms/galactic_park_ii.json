@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Galactic Park II","condition":{"map":742,"trigger":"eventAction","values":["85","113"],"varId":10000,"varValue":100,"varOp":">="}}

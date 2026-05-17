@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Toxicology Research Facility","condition":{"map":1805,"trigger":"eventAction","values":["213","216"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blissful Clinic","condition":{"map":3061,"trigger":"eventAction","values":["65"],"varId":10000,"varValue":100,"varOp":">="}}

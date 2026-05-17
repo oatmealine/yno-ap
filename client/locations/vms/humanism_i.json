@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Humanism I","condition":{"map":2641,"trigger":"eventAction","values":["84","86","87","88"],"varId":10000,"varValue":100,"varOp":">="}}

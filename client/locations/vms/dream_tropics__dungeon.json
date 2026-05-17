@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Dream Tropics: Dungeon","condition":{"map":2991,"trigger":"eventAction","values":["1803","1804","1805"],"varId":10000,"varValue":100,"varOp":">="}}

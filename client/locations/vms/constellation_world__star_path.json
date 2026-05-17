@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Constellation World: Star Path","condition":{"map":808,"trigger":"eventAction","values":["35"],"varId":10000,"varValue":50,"varOp":">="}}

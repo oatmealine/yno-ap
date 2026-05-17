@@ -13,8 +13,8 @@ APWorld:
     - [x] Vending Machinesanity Filter
   - [ ] Masks
     - [ ] Logic
-  - [ ] Events
-    - [ ] Logic
+  - [x] Events
+    - [x] Logic
   - [ ] Minigame goals
   - [x] Wallpapers
     - [ ] Logic
@@ -27,6 +27,8 @@ APWorld:
     - [x] Win conditions
   - [x] Effect unlocks
     - [x] Logic
+  - [x] Author gating
+    - [ ] Contributing author gating
   - [x] Worlds (Locationsanity)
     - [x] Logic
     - [ ] Expedition mode
@@ -59,6 +61,7 @@ Client:
     - [ ] [AU] Wake up / abort if using it if possible?
   - [ ] Minigame items
   - [ ] Text events invalidation
+  - [ ] Author gating
 
   - UI
     - [ ] Show available effects

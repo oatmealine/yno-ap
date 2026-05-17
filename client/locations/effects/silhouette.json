@@ -1,0 +1,11 @@
+{
+  "name": "Silhouette",
+  "condition": {
+    "map": 239,
+    "trigger": "coords",
+    "mapX1": 32,
+    "mapY1": 10,
+    "mapX2": 36,
+    "mapY2": 14
+  }
+}

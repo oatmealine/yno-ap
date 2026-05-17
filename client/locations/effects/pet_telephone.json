@@ -1,0 +1,11 @@
+{
+  "name": "Pet Telephone",
+  "condition": {
+    "map": 52,
+    "trigger": "coords",
+    "mapX1": 98,
+    "mapY1": 38,
+    "mapX2": 100,
+    "mapY2": 40
+  }
+}

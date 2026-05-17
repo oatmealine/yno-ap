@@ -1,0 +1,6 @@
+{
+  "name": "Chainsaw Item",
+  "condition": {
+    "map": 26
+  }
+}

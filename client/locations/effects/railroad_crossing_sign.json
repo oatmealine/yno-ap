@@ -1,0 +1,13 @@
+{
+  "name": "Railroad Crossing Sign",
+  "condition": {
+    "map": 91,
+    "trigger": "coords",
+    "mapX1": 75,
+    "mapY1": 45,
+    "mapX2": 77,
+    "mapY2": 47,
+    "switchId": 10,
+    "switchValue": true
+  }
+}

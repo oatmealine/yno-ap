@@ -1,0 +1,11 @@
+{
+  "name": "Sprite",
+  "condition": {
+    "map": 68,
+    "trigger": "coords",
+    "mapX1": 11,
+    "mapY1": 76,
+    "mapX2": 13,
+    "mapY2": 77
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Flashing Trombonist",
+  "conditions": [{
+    "map": 265,
+    "trigger": "eventAction",
+    "value": "8"
+  }, {
+    "map": 3135,
+    "trigger": "eventAction",
+    "value": "29"
+  }],
+  "conditionsCount": 1
+}

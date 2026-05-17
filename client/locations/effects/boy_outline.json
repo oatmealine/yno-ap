@@ -1,0 +1,8 @@
+{
+  "name": "Boy Outline",
+  "condition": {
+    "map": 31,
+    "trigger": "eventAction",
+    "value": "10"
+  }
+}

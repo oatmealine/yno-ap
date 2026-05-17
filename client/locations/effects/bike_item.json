@@ -1,0 +1,19 @@
+{
+  "name": "Bike Item",
+  "conditionsCount": 1,
+  "conditions": [{
+    "map": 81,
+    "trigger": "coords",
+    "mapX1": 92,
+    "mapY1": 80,
+    "mapX2": 94,
+    "mapY2": 82
+  }, {
+    "map": 1313,
+    "trigger": "coords",
+    "mapX1": 146,
+    "mapY1": 97,
+    "mapX2": 148,
+    "mapY2": 99
+  }]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Glasses Pedestal",
+  "condition": {
+    "map": 255,
+    "trigger": "coords",
+    "mapX1": 116,
+    "mapY1": 67,
+    "mapX2": 121,
+    "mapY2": 68
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Apple Tree",
+  "condition": {
+    "map": 287,
+    "trigger": "coords",
+    "mapX1": 88,
+    "mapY1": 190,
+    "mapX2": 91,
+    "mapY2": 192
+  }
+}

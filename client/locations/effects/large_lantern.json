@@ -1,0 +1,8 @@
+{
+  "name": "Large Lantern",
+  "condition": {
+    "map": 3471,
+    "trigger": "eventAction",
+    "values": ["11", "15", "16"]
+  }
+}

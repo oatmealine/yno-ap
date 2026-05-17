@@ -1,0 +1,19 @@
+{
+  "name": "Polygon",
+  "conditions": [{
+    "map": 316,
+    "trigger": "coords",
+    "mapX1": 79,
+    "mapY1": 10,
+    "mapX2": 81,
+    "mapY2": 12
+  }, {
+    "map": 3592,
+    "trigger": "coords",
+    "mapX1": 62,
+    "mapY1": 41,
+    "mapX2": 64,
+    "mapY2": 43
+  }],
+  "conditionsCount": 1
+}

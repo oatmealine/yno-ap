@@ -1,0 +1,11 @@
+{
+  "name": "Rainbow",
+  "condition": {
+    "map": 15,
+    "trigger": "coords",
+    "mapX1": 59,
+    "mapY1": 12,
+    "mapX2": 61,
+    "mapY2": 14
+  }
+}

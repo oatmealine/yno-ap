@@ -1,0 +1,11 @@
+{
+  "name": "Komorin",
+  "condition": {
+    "map": 55,
+    "trigger": "coords",
+    "mapX1": 62,
+    "mapY1": 10,
+    "mapX2": 64,
+    "mapY2": 12
+  }
+}

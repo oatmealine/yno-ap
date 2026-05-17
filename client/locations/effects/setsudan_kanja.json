@@ -1,0 +1,11 @@
+{
+  "name": "Setsudan Kanja",
+  "condition": {
+    "map": 3063,
+    "trigger": "coords",
+    "mapX1": 7,
+    "mapY1": 54,
+    "mapX2": 20,
+    "mapY2": 56
+  }
+}

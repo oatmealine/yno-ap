@@ -1,0 +1,8 @@
+{
+  "name": "Pole Man",
+  "condition": {
+    "map": 95,
+    "switchId": 82,
+    "switchValue": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Oil Drum",
+  "condition": {
+    "map": 61,
+    "trigger": "eventAction",
+    "value": "25"
+  }
+}

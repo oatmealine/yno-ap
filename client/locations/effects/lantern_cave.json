@@ -1,0 +1,11 @@
+{
+  "name": "Lantern Cave",
+  "condition": {
+    "map": 72,
+    "trigger": "coords",
+    "mapX1": 53,
+    "mapY1": 25,
+    "mapX2": 55,
+    "mapY2": 27
+  }
+}

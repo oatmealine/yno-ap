@@ -1,0 +1,11 @@
+{
+  "name": "Walking Grave",
+  "condition": {
+    "map": 21,
+    "trigger": "coord",
+    "mapX1": 0,
+    "mapY1": 50,
+    "mapX2": 6,
+    "mapY2": 56
+  }
+}

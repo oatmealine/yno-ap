@@ -1,0 +1,11 @@
+{
+  "name": "Paper Dolls",
+  "condition": {
+    "map": 357,
+    "trigger": "coords",
+    "mapX1": 13,
+    "mapY1": 118,
+    "mapX2": 15,
+    "mapY2": 118
+  }
+}

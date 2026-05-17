@@ -1,0 +1,11 @@
+{
+  "name": "Medabomb",
+  "condition": {
+    "map": 142,
+    "trigger": "coords",
+    "mapX1": 13,
+    "mapY1": 39,
+    "mapX2": 13,
+    "mapY2": 40
+  }
+}

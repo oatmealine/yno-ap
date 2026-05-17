@@ -1,0 +1,11 @@
+{
+  "name": "Spacesuit Helmet",
+  "condition": {
+    "map": 253,
+    "trigger": "coords",
+    "mapX1": 30,
+    "mapY1": 21,
+    "mapX2": 32,
+    "mapY2": 22
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Dead Figure",
+  "condition": {
+    "map": 139,
+    "trigger": "coords",
+    "mapX1": 15,
+    "mapY1": 1,
+    "mapX2": 16,
+    "mapY2": 1
+  }
+}

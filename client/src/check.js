@@ -1,7 +1,12 @@
-import locations from '../locations/*.json';
+import locations from '../locations/**/*.json';
 import { checkLocations } from './archipelago-client';
 import { isSessionValid } from './dream-session';
 import { getPos, getSwitch, getVariable, trackSwitch, waitForEvent, waitForPicture, waitForSwitchChange, waitForVariableChange } from './easyrpg-client';
+
+function getLocations() {
+  return Object.values(locations.locations)
+    .flatMap(dir => Object.values(dir))
+}
 
 // this is structured rather differently than yno-server's badges.go impl - this
 // is mostly just because i like it better this way
@@ -55,7 +60,7 @@ function markConditionAsComplete(condition) {
 
   completeConditions.add(condition);
 
-  for (const location of Object.values(locations.locations)) {
+  for (const location of getLocations()) {
     const conditions = location.conditions ?? singleton(location.condition);
     const neededConditionsCount = location.conditionsCount ?? conditions.length;
     const completedCount = conditions
@@ -228,8 +233,10 @@ async function passiveCheckCondition(condition) {
 async function checkCondition(condition, trigger, value) {
   if (condition.trigger !== trigger) return;
 
-  const valueMatched = (condition.values ?? singleton(condition.value))
-    .some(condValue => condValue === value);
+  const checkValues = condition.values ?? singleton(condition.value);
+  const valueMatched =
+    checkValues.length === 0 ||
+    checkValues.some(condValue => condValue === value);
 
   if (!valueMatched) return;
 
@@ -240,7 +247,7 @@ async function checkCondition(condition, trigger, value) {
  * @param {number} mapId
  */
 function getRelevantConditions(mapId) {
-  return Object.values(locations.locations)
+  return getLocations()
     .flatMap(location => location.conditions ?? singleton(location.condition))
     .filter(condition => !condition.map || condition.map === mapId)
     .filter(condition => !completeConditions.has(condition));

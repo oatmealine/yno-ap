@@ -1,0 +1,8 @@
+{
+  "name": "Marginal Vivid Worker",
+  "condition": {
+    "map": 16,
+    "trigger": "eventAction",
+    "values": ["140", "136", "137"]
+  }
+}

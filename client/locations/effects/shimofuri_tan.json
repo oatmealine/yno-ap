@@ -1,0 +1,11 @@
+{
+  "name": "Shimofuri-tan",
+  "condition": {
+    "map": 246,
+    "trigger": "coords",
+    "mapX1": 4,
+    "mapY1": 4,
+    "mapX2": 13,
+    "mapY2": 7
+  }
+}

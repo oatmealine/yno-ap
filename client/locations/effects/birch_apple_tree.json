@@ -1,0 +1,8 @@
+{
+  "name": "Birch Apple Tree",
+  "condition": {
+    "map": 2196,
+    "trigger": "eventAction",
+    "value": "5"
+  }
+}

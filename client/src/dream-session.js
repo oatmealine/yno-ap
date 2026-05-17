@@ -51,9 +51,9 @@ export function isSessionValid() {
 export function invalidateSession(reason) {
   if (!sessionIsValid) return;
 
-  sessionIsValid = false;
+  //sessionIsValid = false;
   showToastMessage(`This dream session was invalidated! <b>${text(reason)}</b><br>Wake up to resume check collection.`, 'archipelago', undefined, undefined, true);
-  document.querySelector('#ap-session-warning').style.display = 'block';
+  //document.querySelector('#ap-session-warning').style.display = 'block';
 }
 
 function revalidateSession() {

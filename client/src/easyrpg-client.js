@@ -109,10 +109,10 @@ function trackEvent(evID, actionEvent) {
   const set = actionEvent ? trackedActionEvents : trackedEvents;
   if (set.has(evID)) return;
   set.add(evID);
-  sendPacket('sev', [actionEvent ? 1 : 0]);
+  sendPacket('sev', [evID, actionEvent ? 1 : 0]);
 }
 export function waitForEvent(evID, actionEvent) {
-  trackEvent(evID);
+  trackEvent(evID, actionEvent);
   const listeners = actionEvent ? actionEventListeners : eventListeners;
   const aborts = actionEvent ? actionEventAborts : eventAborts;
   return new Promise((resolve, reject) => {
@@ -147,6 +147,8 @@ export function getPos() {
 function onSwitch(swID, value) {
   switchState[swID] = value;
 
+  sessionHandleSwitch(parseInt(swID), value);
+
   const listeners = switchListeners[swID];
   if (listeners) {
     for (const callback of listeners)
@@ -154,8 +156,6 @@ function onSwitch(swID, value) {
     listeners.length = 0; 
     switchAborts[swID].length = 0;
   }
-
-  sessionHandleSwitch(parseInt(swID), value);
 }
 
 function onVariable(varID, value) {

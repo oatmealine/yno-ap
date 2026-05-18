@@ -89,11 +89,18 @@ export function patchWebsocketClass() {
   WebSocket.prototype.send = new Proxy(WebSocket.prototype.send, {
     apply: (target, thisArg, argumentsList) => {
       if (isRelevantURL(thisArg.url)) {
-        const newPacket = onPacketData(argumentsList[0]);
-        if (newPacket !== null)
+        let newPacket;
+        try {
+          newPacket = onPacketData(argumentsList[0]);
+        } catch(err) {
+          console.error('[websocket-intercept] error while handling packet:', err);
+        }
+        if (newPacket === undefined)
+          return target.call(thisArg, ...argumentsList);
+        else if (newPacket !== null)
           return target.call(thisArg, newPacket);
         else
-          return
+          return;
       }
       return target.call(thisArg, ...argumentsList);
     },

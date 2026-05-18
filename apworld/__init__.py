@@ -721,15 +721,6 @@ class Yume2kkiWorld(World):
     #def generate_early(self):
 
     def create_items(self):
-        possible_starters = self.options.starting_nexus_keys
-        nexus_keys = [
-            item.name for item in item_data if item.name in possible_starters and possible_starters[item.name]
-        ]
-        nexus_key = self.random.choice(nexus_keys)
-
-        self.precollected_items.append("Bike")
-        self.precollected_items.append(nexus_key)
-
         for item in item_data:
             if item.type == Yume2kkiItemType.MINIGAME and self.options.minigame_treatment != MinigameTreatment.option_locations:
                 continue
@@ -737,16 +728,35 @@ class Yume2kkiWorld(World):
                 continue
             if item.type == Yume2kkiItemType.AUTHOR and self.options.author_gating == AuthorGating.option_disable:
                 continue
+            if item.type == Yume2kkiItemType.NEXUS_KEY and not self.options.nexus_keys:
+                continue
 
             self.items.append(item.name)
         
+        self.precollected_items.append("Bike")
+
+        if self.options.nexus_keys:
+            possible_starters = self.options.starting_nexus_keys
+            nexus_keys = [
+                item.name for item in item_data if item.name in possible_starters and possible_starters[item.name]
+            ]
+            nexus_key = self.random.choice(nexus_keys)
+
+            self.precollected_items.append(nexus_key)
+
         if self.options.author_gating != AuthorGating.option_disable:
-            for world_name in ["Urotsuki's Room", "Nexus", nexus_key]:
+            req_worlds = ["Urotsuki's Room", "Nexus"]
+            if self.options.nexus_keys:
+                req_worlds.append(nexus_key)
+            for world_name in req_worlds:
                 world = next(w for w in world_data if w["title"] == world_name)
                 for author in world["author"].split(", "):
                     author_name = sanitize_author_name(author)
                     if author_name not in self.precollected_items:
                         self.precollected_items.append(author_name)
+
+        if not self.options.text_events:
+            self.precollected_items.append("Text Events")
 
         logger.debug(f"Yume 2kki: {self.player_name}: precollected_items = {self.precollected_items}")
 
@@ -964,7 +974,7 @@ class Yume2kkiWorld(World):
                     continue
 
                 # nexus key check
-                if region.name == "Nexus" and target_region.name != "Urotsuki's Room" and target_region.name in self.items:
+                if self.options.nexus_keys and region.name == "Nexus" and target_region.name != "Urotsuki's Room" and target_region.name in self.items:
                     rules.append(lambda state, item_name=target_region.name: state.has(item_name, self.player))
 
                 # author gating check
@@ -1029,6 +1039,10 @@ class Yume2kkiWorld(World):
                 location.progress_type = LocationProgressType.EXCLUDED
             if data.name == "Bleak Future" and self.options.chance_threshold/100 < 1/64:
                 location.progress_type = LocationProgressType.EXCLUDED
+            
+            if data.split_effect is not None:
+                if data.split_effect != self.options.split_effects:
+                    continue
 
             region.locations.append(location)
             locations[location_name] = location
@@ -1054,12 +1068,12 @@ class Yume2kkiWorld(World):
             "Slot": self.multiworld.player_name[self.player],
             "TotalLocations": len(self.locations),
 
-            "client_mode": self.options.client_mode,
+            "client_mode": int(self.options.client_mode),
 
             "endings": 
                 [location for location in self.locations if location in self.options.ending_list and self.options.ending_list[location]],
             "goal":
-                self.options.goal,
+                int(self.options.goal),
         }
 
         return slot_data

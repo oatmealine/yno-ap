@@ -1,0 +1,16 @@
+{
+  "name": "Lantern",
+  "conditions": [{
+    "map": 72,
+    "trigger": "coords",
+    "mapX1": 53,
+    "mapY1": 25,
+    "mapX2": 55,
+    "mapY2": 27
+  }, {
+    "map": 3471,
+    "trigger": "eventAction",
+    "values": ["11", "15", "16"]
+  }],
+  "conditionsCount": 1
+}

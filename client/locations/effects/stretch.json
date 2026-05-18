@@ -1,0 +1,14 @@
+{
+  "name": "Stretch",
+  "conditions": [{
+    "map": 139,
+    "trigger": "coords",
+    "mapX1": 15,
+    "mapY1": 1,
+    "mapX2": 16,
+    "mapY2": 1
+  }, {
+    "map": 2192
+  }],
+  "conditionsCount": 1
+}

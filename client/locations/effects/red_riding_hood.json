@@ -1,0 +1,16 @@
+{
+  "name": "Red Riding Hood",
+  "conditions": [{
+    "map": 287,
+    "trigger": "coords",
+    "mapX1": 88,
+    "mapY1": 190,
+    "mapX2": 91,
+    "mapY2": 192
+  }, {
+    "map": 2196,
+    "trigger": "eventAction",
+    "value": "5"
+  }],
+  "conditionsCount": 1
+}

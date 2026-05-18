@@ -1,0 +1,19 @@
+{
+  "name": "Glasses",
+  "conditions": [{
+    "map": 3654,
+    "trigger": "coords",
+    "mapX1": 40,
+    "mapY1": 83,
+    "mapX2": 42,
+    "mapY2": 85
+  }, {
+    "map": 3654,
+    "trigger": "coords",
+    "mapX1": 40,
+    "mapY1": 83,
+    "mapX2": 42,
+    "mapY2": 85
+  }],
+  "conditionsCount": 1
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Tissue",
+  "conditions": [{
+    "map": 310,
+    "trigger": "coords",
+    "mapX1": 70,
+    "mapY1": 95,
+    "mapX2": 74,
+    "mapY2": 98
+  }, {
+    "map": 3376
+  }],
+  "conditionsCount": 1
+}

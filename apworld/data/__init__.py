@@ -176,6 +176,7 @@ class Yume2kkiLocationData(NamedTuple):
     type: Yume2kkiLocationType
     region: str
     logic: Optional[Callable]
+    split_effect: Optional[bool]
 Yume2kkiLocationData.__new__.__defaults__ = (None,) * len(Yume2kkiLocationData._fields)
 
 locations: List[Yume2kkiLocationData] = []
@@ -212,63 +213,110 @@ locations += [
         logic=lambda state, self: state.count_from_list((item.name for item in items if item.type == Yume2kkiItemType.EFFECT), self.player) >= 24),
 
     # https://yume.wiki/2kki/Effects
+    # bike; found in either of 2 places
     Yume2kkiLocationData(name="Bike Item", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Urotsuki's Room",
         logic=lambda state, self: state.can_reach_region("Garden World", self.player) or state.can_reach_region("Portrait Purgatory", self.player)),
+    # boy
     Yume2kkiLocationData(name="Boy Outline", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Geometry World"),
+    # chainsaw
     Yume2kkiLocationData(name="Chainsaw Item", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Hospital"),
-    # found in 2 places
-    Yume2kkiLocationData(name="Lantern Cave", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Forest World"),
-    Yume2kkiLocationData(name="Large Lantern", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Rural Starflower Field"),
+    # lantern; found in 2 places
+    Yume2kkiLocationData(name="Lantern Cave", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Forest World"),
+    Yume2kkiLocationData(name="Large Lantern", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Rural Starflower Field"),
+    Yume2kkiLocationData(name="Lantern", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=False, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Forest World", self.player) or state.can_reach_region("Rural Starflower Field", self.player)),
+    # fairy
     Yume2kkiLocationData(name="Sprite", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Black Building"),
+    # spacesuit
     Yume2kkiLocationData(name="Spacesuit Helmet", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Flying Fish World"),
-    # found in 2 places
-    Yume2kkiLocationData(name="Glasses Pedestal", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Dark Museum",
+    # glasses; found in 2 places
+    Yume2kkiLocationData(name="Glasses Pedestal", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Dark Museum",
         logic=lambda state, self: state.has("Lantern", self.player)), # technically not required, but it's really annoying w/o it
-    Yume2kkiLocationData(name="Glasses Splatter", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Night-Lost Atelier"),
+    Yume2kkiLocationData(name="Glasses Splatter", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Night-Lost Atelier"),
+    Yume2kkiLocationData(name="Glasses", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=False, region="Urotsuki's Room",
+        logic=lambda state, self: 
+            (state.can_reach_region("Dark Museum", self.player) and state.has("Lantern", self.player)) or
+            state.can_reach_region("Night-Lost Atelier", self.player)
+    ),
+    # rainbow
     Yume2kkiLocationData(name="Rainbow", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Theatre World"),
+    # wolf
     Yume2kkiLocationData(name="Ōkami", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Teleport Maze"),
+    # eyeball bomb
     Yume2kkiLocationData(name="Medabomb", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Mini-Maze"),
+    # telephone
     Yume2kkiLocationData(name="Pet Telephone", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Dark Room"),
+    # maiko
     Yume2kkiLocationData(name="Maiko Ghost", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Shinto Shrine"),
+    # twintails
     Yume2kkiLocationData(name="Pole Man", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Deciding Street",
         logic=lambda state, self: state.has("Telephone", self.player)),
-    # this is the exact same location as the penguin game location, so i'm naming it differently even if it's wrong
+    # penguin
     Yume2kkiLocationData(name="Penguin", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Penguin Game"),
+    # insect
     Yume2kkiLocationData(name="Bagefu", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Scenic Outlook"),
+    # spring
     Yume2kkiLocationData(name="Bane Jack", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Apartments"),
+    # invisible
     Yume2kkiLocationData(name="Silhouette", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Invisible Maze"),
+    # school boy
     Yume2kkiLocationData(name="Gakuran-kun", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Monochrome Feudal Japan"),
-    Yume2kkiLocationData(name="Heishi-kun", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Japan Town"),
-    Yume2kkiLocationData(name="Setsudan Kanja", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Blissful Clinic"),
-    Yume2kkiLocationData(name="Dead Figure", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Graffiti Maze"),
-    Yume2kkiLocationData(name="Tall Woman Silhouette", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Bodacious Rotation Station"),
+    # plaster cast; found in 2 places
+    Yume2kkiLocationData(name="Heishi-kun", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Japan Town"),
+    Yume2kkiLocationData(name="Setsudan Kanja", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Blissful Clinic"),
+    Yume2kkiLocationData(name="Plaster Cast", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=False, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Japan Town", self.player) or state.can_reach_region("Blissful Clinic", self.player)),
+    # stretch; found in 2 places
+    Yume2kkiLocationData(name="Dead Figure", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Graffiti Maze"),
+    Yume2kkiLocationData(name="Tall Woman Silhouette", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Bodacious Rotation Station"),
+    Yume2kkiLocationData(name="Stretch", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=False, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Graffiti Maze", self.player) or state.can_reach_region("Bodacious Rotation Station", self.player)),
+    # haniwa
     Yume2kkiLocationData(name="Gray Haniwa", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Haniwa Temple"),
+    # trombone; found in either of 2 places
     Yume2kkiLocationData(name="Flashing Trombonist", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Urotsuki's Room",
         logic=lambda state, self:
-        (state.can_reach_region("Baddies Bar", self.player) and state.has_any(["Lantern", "Chainsaw", "Rainbow"], self.player)) or
-        state.can_reach_region("Acoustic Lounge", self.player)
+            (state.can_reach_region("Baddies Bar", self.player) and state.has_any(["Lantern", "Chainsaw", "Rainbow"], self.player)) or
+            state.can_reach_region("Acoustic Lounge", self.player)
     ),
+    # cake
     Yume2kkiLocationData(name="Shimofuri-tan", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Cutlery World"),
+    # child
     Yume2kkiLocationData(name="Plaid Egg", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Hourglass Desert"),
-    Yume2kkiLocationData(name="Apple Tree", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Fairy Tale Woods"),
-    Yume2kkiLocationData(name="Birch Apple Tree", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Birch Forest"),
-    Yume2kkiLocationData(name="Tower Creature", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="White Fern World"),
-    Yume2kkiLocationData(name="Houtai Ude", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Azure Arm Land"),
+    # red riding hood; found in 2 places
+    Yume2kkiLocationData(name="Apple Tree", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Fairy Tale Woods"),
+    Yume2kkiLocationData(name="Birch Apple Tree", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Birch Forest"),
+    Yume2kkiLocationData(name="Red Riding Hood", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=False, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Fairy Tale Woods", self.player) or state.can_reach_region("Birch Forest", self.player)),
+    # tissue; found in 2 places
+    Yume2kkiLocationData(name="Tower Creature", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="White Fern World"),
+    Yume2kkiLocationData(name="Houtai Ude", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=True, region="Azure Arm Land"),
+    Yume2kkiLocationData(name="Tissue", type=Yume2kkiLocationType.EFFECT_UNLOCK, split_effect=False, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("White Fern World", self.player) or state.can_reach_region("Azure Arm Land", self.player)),
+    # bat
     Yume2kkiLocationData(name="Komorin", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Urotsuki's Room",
         logic=lambda state, self:
         (state.can_reach_region("Tribe Settlement", self.player) and state.has_all(["Teru Teru Bōzu", "Rainbow"], self.player) or state.has_any(["Fairy", "Spacesuit"], self.player)) or
         (state.can_reach_region("FC Basement", self.player) and state.has("Invisible", self.player))
     ),
+    # polygon
     Yume2kkiLocationData(name="Polygon", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Urotsuki's Room",
         logic=lambda state, self: state.can_reach_region("Warehouse", self.player) or state.can_reach_region("The Desktop", self.player)),
+    # teru teru bōzu
     Yume2kkiLocationData(name="Paper Dolls", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Dark Alleys"),
+    # marginal
     Yume2kkiLocationData(name="Marginal Vivid Worker", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Broken Faces Area"),
+    # drum
     Yume2kkiLocationData(name="Oil Drum", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Purple World"),
+    # grave
     Yume2kkiLocationData(name="Walking Grave", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Graveyard World"),
+    # crossing
     Yume2kkiLocationData(name="Railroad Crossing Sign", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Heart World",
         logic=lambda state, self: state.count_from_list((item.name for item in items if item.type == Yume2kkiItemType.EFFECT), self.player) >= 15),
+    # bunny ears
     Yume2kkiLocationData(name="Usamimi", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Eyeball Archives",
         logic=lambda state, self: state.can_reach_region("Library", self.player) and state.has("Glasses", self.player)),
+    # dice
     Yume2kkiLocationData(name="Saikoro-kun", type=Yume2kkiLocationType.EFFECT_UNLOCK, region="Acerola World"),
 
     # https://yume.wiki/Category:Yume_2kki_Characters

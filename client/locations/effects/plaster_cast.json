@@ -1,0 +1,19 @@
+{
+  "name": "Plaster Cast",
+  "conditions": [{
+    "map": 57,
+    "trigger": "coords",
+    "mapX1": 23,
+    "mapY1": 231,
+    "mapX2": 25,
+    "mapY2": 233
+  }, {
+    "map": 3063,
+    "trigger": "coords",
+    "mapX1": 7,
+    "mapY1": 54,
+    "mapX2": 20,
+    "mapY2": 56
+  }],
+  "conditionsCount": 1
+}

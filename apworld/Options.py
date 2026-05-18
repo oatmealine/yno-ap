@@ -49,18 +49,6 @@ class MinigameTreatment(Choice):
     option_hints = 3
     default = 2
 
-blacklisted_starters = [ "Trophy Room" ]
-
-class StartingNexusKeys(OptionDict):
-    """
-    Determines which Nexus keys you can start with. A random one will be selected from this list on world generation.
-
-    You will be able to get all Nexus keys as items, but this determines your initial restricted areas.
-    """
-    display_name = "Starting Nexus Keys"
-    valid_keys = {key.name: True for key in items if key.type == Yume2kkiItemType.NEXUS_KEY}
-    default = {key.name: key.name not in blacklisted_starters for key in items if key.type == Yume2kkiItemType.NEXUS_KEY}
-
 class Goal(Choice):
     """
     Specifies the win condition:
@@ -100,6 +88,7 @@ class ChanceThreshold(Range):
     The "reasonability" threshold for chance-based locations, as a percentage. In other words, your tolerance level of RPG Maker RNG bullshit.
 
     For instance, if set to 25, then any chance checks lower than 25% (1/4) will be excluded, and never required. Succeeding at them anyways will count as out-of-logic or exclusively lead to filler items.
+    Setting this value to 0 removes the threshold entirely.
 
     This affects world connections, the Bleak Future ending and several events.
     """
@@ -119,6 +108,34 @@ class HardNavigation(Toggle):
     This will significantly increase the tediousness of some checks, as there is no limit to how far an alternate path could go on for, and these paths are generally undocumented on the wiki.
     """
     display_name = "Hard Navigation"
+    default = False
+
+class NexusKeys(Toggle):
+    """
+    Turns all Nexus warps into "key" items you must collect to use the warps.
+    
+    This does not prevent you from visiting the location, as any other means of entering it will still work.
+    """
+    display_name = "Nexus Keys"
+    default = False
+
+blacklisted_starters = [ "Trophy Room" ]
+
+class StartingNexusKeys(OptionDict):
+    """
+    Determines which Nexus keys you can start with. A random one will be selected from this list on world generation.
+
+    You will be able to get all Nexus keys as items, but this determines your initial restricted areas.
+    """
+    display_name = "Starting Nexus Keys"
+    valid_keys = {key.name: True for key in items if key.type == Yume2kkiItemType.NEXUS_KEY}
+    default = {key.name: key.name not in blacklisted_starters for key in items if key.type == Yume2kkiItemType.NEXUS_KEY}
+
+class TextEvents(Toggle):
+    """
+    Toggling text events requires an item.
+    """
+    display_name = "Text Events"
     default = False
 
 class AuthorGating(Choice):
@@ -141,6 +158,13 @@ class AuthorGating(Choice):
     # TODO: requires refactoring everything to use wrapper.yume.wiki data
     option_contributing_authors = 3
     default = 1
+
+class SplitEffects(Toggle):
+    """
+    Effects that can be gotten from two different NPCs will be split into two independent locations.
+    """
+    display_name = "Split Effects"
+    default = False
 
 # TODO
 class Masksanity(Toggle):
@@ -259,13 +283,17 @@ class Yume2kkiOptions(PerGameCommonOptions):
     client_mode: ClientMode
 
     goal: Goal
-    starting_nexus_keys: StartingNexusKeys
     minigame_treatment: MinigameTreatment
     ending_list: EndingList
     chance_threshold: ChanceThreshold
     hard_navigation: HardNavigation
+
+    nexus_keys: NexusKeys
+    starting_nexus_keys: StartingNexusKeys
+    text_events: TextEvents
     author_gating: AuthorGating
 
+    split_effects: SplitEffects
     npcsanity: NPCSanity
     eventsanity: Eventsanity
     masksanity: Masksanity
@@ -288,7 +316,14 @@ option_groups: Dict[str, List[Any]] = {
     #    ChanceThreshold,
     #    HardNavigation,
     #],
+    "Item Options": [
+        NexusKeys,
+        StartingNexusKeys,
+        TextEvents,
+        AuthorGating,
+    ],
     "Location Options": [
+        SplitEffects,
         NPCSanity,
         Eventsanity,
         Masksanity,

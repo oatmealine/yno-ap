@@ -3,7 +3,6 @@ import * as fs from 'node:fs/promises';
 import { join } from 'node:path';
 import { execSync } from 'node:child_process';
 
-const Op = z.enum(['=', '<', '>', '<=', '>=', '!=', '>=<']);
 const Trigger = z.enum(['', 'event', 'eventAction', 'picture', 'coords', 'teleport', 'prevMap']);
 
 const Condition = z.intersection(
@@ -33,12 +32,16 @@ const Condition = z.intersection(
           varId: z.int(),
           varValue: z.int(),
           varValue2: z.optional(z.int()),
-          varOp: z.optional(Op),
+          varOp: z.optional(
+            z.enum(['=', '<', '>', '<=', '>=', '!=', '>=<'])
+          ),
         }),
         z.object({
           varIds: z.array(z.int()),
           varValues: z.array(z.int()),
-          varOps: z.optional(z.array(Op)),
+          varOps: z.optional(z.array(
+            z.enum(['=', '<', '>', '<=', '>=', '!='])
+          )),
         }),
       ]),
       z.object({
@@ -105,6 +108,7 @@ from data import locations
 print(json.dumps([location.name for location in locations]))"`);
 
 const knownLocations = JSON.parse(pythonOutput.toString('utf8'));
+let seenLocations = [];
 
 const locationsPath = join(import.meta.dirname, '../client/locations/');
 
@@ -146,6 +150,11 @@ for (const dir of rootDirs) {
         if (!knownLocations.includes(data.name)) {
           hasWarnings = true;
           warn(`${filename}: unknown location \`${data.name}\``);
+        }
+        if (seenLocations.includes(data.name)) {
+          warn(`${filename}: duplicate location \`${data.name}\``);
+        } else {
+          seenLocations.push(data.name);
         }
 
         const conditions = data.conditions ?? [data.condition];

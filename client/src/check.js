@@ -1,12 +1,33 @@
-import locations from '../locations/**/*.json';
-import { checkLocations } from './archipelago-client';
+import locationsRaw from '../locations/**/*.json';
+
+import { checkLocations, client as apClient, Goal, isLocationChecked, slotData } from './archipelago-client';
 import { isSessionValid } from './dream-session';
 import { getPos, getSwitch, getVariable, trackSwitch, waitForEvent, waitForPicture, waitForSwitchChange, waitForVariableChange } from './easyrpg-client';
+import { saveSlot, slotStore } from './store';
+import { showToastMessage } from './ui';
 
-function getLocations() {
-  return Object.values(locations.locations)
-    .flatMap(dir => Object.values(dir))
-}
+/** @type {Location[]} */
+const locations = Object.values(locationsRaw.locations)
+  .flatMap(categoryLocations =>
+    Object.entries(categoryLocations)
+      .map(([filename, location]) => [
+        filename.replace('.json', ''), location
+      ])
+      .map(([filename, location]) => {
+        // since Condition.parent requires a circular reference, this can't be
+        // done in a pure way
+
+        location.filename = filename;
+
+        const conditions = location.conditions ?? singleton(location.condition);
+        for (const [i, condition] of Object.entries(conditions)) {
+          condition.identifier = `${filename}/${i}`;
+          condition.parent = location;
+        }
+
+        return location;
+      })
+  );
 
 // this is structured rather differently than yno-server's badges.go impl - this
 // is mostly just because i like it better this way
@@ -14,6 +35,16 @@ function getLocations() {
 /** 
   see README.md for actual docs
   @typedef {'' | 'event' | 'eventAction' | 'picture' | 'coords' | 'teleport' | 'prevMap'} TriggerType
+
+  @typedef {Object} Location
+
+  @property {string} name
+  @property {Condition} [condition]
+  @property {Condition[]} [conditions]
+  @property {number} [conditionsCount]
+  
+  // non-serialized properties, inherited from the file structure
+  @property {string} filename
 
   @typedef {Object} Condition
   @property {number} [map]
@@ -43,44 +74,118 @@ function getLocations() {
   @property {number} [mapY2]
 
   @property {boolean} [timeTrial]
+
+  // non-serialized properties, inherited from the file structure
+  @property {string} identifier
+  @property {Location} parent
  */
 
-// TODO: make this serializable and move it to slotStore
-/** @type Set<Condition> */
-let completeConditions = new Set();
+/**
+ * locations to not stop listening for, as they are useful for things other than
+ * sending locations
+ * @param {Location} location
+ */
+function shouldAlwaysListenLocation(location) {
+  // neccessary for goal checking
+  if (slotData.endings.includes(location.name))
+    return true;
 
-// locations to not stop listening for, as they are useful for things other than
-// sending locations
-function shouldNeverStoreLocation(location) {
-  return location.category === 'ending';
+  return false;
+}
+
+/**
+ * @param {Condition} condition
+ */
+function isConditionComplete(condition) {
+  return slotStore.completedConditions.includes(condition.identifier);
+}
+
+/**
+ * @param {Location} location
+ */
+function isLocationComplete(location) {
+  const conditions = location.conditions ?? singleton(location.condition);
+  const neededConditionsCount = location.conditionsCount ?? conditions.length;
+  const completedCount = conditions
+    .filter(isConditionComplete)
+    .length;
+
+  return completedCount >= neededConditionsCount;
+}
+
+/**
+ * for special location completion behavior, eg. goaling
+ * @param {Location} location
+ */
+function onLocationComplete(location) {
+  if (slotData.endings.includes(location.name)) {
+    if (!slotStore.completedEndings.includes(location.name)) {
+      slotStore.completedConditions.push(location.name);
+    }
+
+    let canGoal = false;
+    if (slotData.mode === Goal.AllEndings) {
+      const endingsDone = slotData.endings
+        .filter(ending => slotStore.completedConditions.includes(ending))
+        .length;
+      const endingsNeeded = slotData.endings.length;
+      canGoal = endingsDone >= endingsNeeded;
+      showToastMessage(`<b>Goal</b>: ${endingsDone}/${endingsNeeded} endings done`);
+    }
+    if (slotData.mode === Goal.AnyEnding) {
+      canGoal = true;
+    }
+
+    if (canGoal) {
+      apClient.goal();
+    }
+  }
+}
+
+/**
+ * @param {Location} location
+ * @param {boolean} routine
+ */
+function updateLocationCompletion(location, routine = false) {
+  if (isLocationComplete(location)) {
+    console.log('[yno-ap-client] all conditions met: ', location.filename);
+    
+    checkLocations(location.name);
+    if (!routine) onLocationComplete(location);
+
+    // just for the sake of optimizing away checking them unneccessarily
+    const conditions = location.conditions ?? singleton(location.condition);
+    for (let condition of conditions)
+      if (!isConditionComplete(condition))
+        slotStore.completedConditions.push(condition.identifier);
+    saveSlot();
+  }
+}
+
+export function updateLocationCompletions() {
+  for (const location of locations)
+    updateLocationCompletion(location, true);
 }
 
 /**
  * @param {Condition} condition
  */
 function markConditionAsComplete(condition) {
+  console.log('[yno-ap-client] condition complete: ', condition);
+
   if (!isSessionValid()) return;
 
-  completeConditions.add(condition);
-
-  for (const location of getLocations()) {
-    const conditions = location.conditions ?? singleton(location.condition);
-    const neededConditionsCount = location.conditionsCount ?? conditions.length;
-    const completedCount = conditions
-      .filter(cond => completeConditions.has(cond))
-      .length;
-    
-    if (completedCount >= neededConditionsCount) {
-      console.log('[yno-ap-client] all conditions met: ', location);
-      checkLocations(location.name);
-      // just for the sake of optimizing away checking them unneccessarily
-      conditions.forEach(cond => completeConditions.add(cond));
-    }
+  if (!isConditionComplete(condition)) {
+    slotStore.completedConditions.push(condition.identifier);
+    saveSlot();
   }
+
+  updateLocationCompletion(condition.parent);
 }
 
 /**
  * @param {Condition} condition 
+ * @returns {boolean}
  */
 function checkConditionCoords(condition) {
   const [x, y] = getPos();
@@ -101,6 +206,11 @@ function checkConditionCoords(condition) {
   return true;
 }
 
+/**
+ * @template A
+ * @param {A} item
+ * @returns {A[]}
+ */
 function singleton(item) {
   if (item !== undefined && item !== null)
     return [item];
@@ -109,6 +219,7 @@ function singleton(item) {
 
 /**
  * @param {Condition} condition
+ * @returns {Promise<boolean>}
  */
 async function switchCheck(condition) {
   const switchIds = condition.switchIds ?? singleton(condition.switchId);
@@ -124,6 +235,7 @@ async function switchCheck(condition) {
 
 /**
  * @param {Condition} condition
+ * @returns {Promise<boolean>}
  */
 async function variableCheck(condition) {
   const varIds = condition.varIds ?? singleton(condition.varId);
@@ -255,12 +367,19 @@ async function checkCondition(condition, trigger, value) {
 
 /**
  * @param {number} mapId
+ * @returns {Condition[]}
  */
 function getRelevantConditions(mapId) {
-  return getLocations()
+  return locations
     .flatMap(location => location.conditions ?? singleton(location.condition))
     .filter(condition => !condition.map || condition.map === mapId)
-    .filter(condition => !completeConditions.has(condition));
+    .filter(condition =>
+      shouldAlwaysListenLocation(condition.parent) ||
+      !(
+        isConditionComplete(condition) ||
+        isLocationChecked(condition.parent.name)
+      )
+    );
 }
 
 /**

@@ -224,6 +224,15 @@ export function onMessage(message, author) {
  * @param {string | import("archipelago.js").MessageNode[]} message 
  */
 export function onToastMessage(message) {
+  const currentToasts =
+    document.querySelectorAll('#toastContainer > .toast.ap').length;
+
+  if (currentToasts >= 10) return;
+  if (currentToasts >= 9) {
+    showToastMessage('..further toasts omitted..', 'archipelago', undefined, undefined, true);
+    return;
+  }
+
   let contents;
   if (typeof message === 'string') {
     contents = span('', message.trim());

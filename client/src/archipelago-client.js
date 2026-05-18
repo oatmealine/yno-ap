@@ -1,6 +1,7 @@
 import { Client, itemsHandlingFlags, PlayerMessageNode, TextualMessageNode } from 'archipelago.js';
 import { onMessage, onToastMessage, setConnected, showToastMessage } from './ui';
 import { globalStore, loadSlot, saveGlobal, saveSlot, slotStore } from './store';
+import { updateLocationCompletions } from './check';
 
 export const client = new Client();
 
@@ -26,6 +27,9 @@ export const slotData = {
   goal: Goal.AllEndings,
 };
 
+/** @type {import('archipelago.js').PackageMetadata?} */
+let pkg;
+
 export async function connect(host, password, slot) {  
   const remoteSlotData = await client.login(host, slot, GAME_NAME, {
     password,
@@ -33,11 +37,22 @@ export async function connect(host, password, slot) {
     tags: [ 'Client' ],
     slotData: true,
   });
-  setConnected(true);
-  showToastMessage('Connected to Archipelago server successfully', 'archipelago', false, undefined);
+  
+  loadSlot(client.room.seedName, slot);
+  console.log('[yno-ap-client] loaded slot store: ', slotStore);
+
+  if (globalStore.dataPackage)
+    client.package.importPackage(globalStore.dataPackage);
+
+  await client.package.fetchPackage([client.game], true);
+  pkg = client.package.findPackage(client.game);
+
+  globalStore.dataPackage = client.package.exportPackage();
+  saveGlobal();
   
   checkLocationsRaw(...slotStore.locationQueue);
   slotStore.locationQueue = [];
+  saveSlot();
 
   if (remoteSlotData.client_mode !== undefined)
     // @ts-ignore
@@ -48,9 +63,13 @@ export async function connect(host, password, slot) {
   if (remoteSlotData.goal !== undefined)
     // @ts-ignore
     slotData.goal = remoteSlotData.goal;
-
-  loadSlot(client.room.seedName, slot);
+    
   console.log('[yno-ap-client] loaded slot data: ', slotData);
+
+  updateLocationCompletions();
+  
+  setConnected(true);
+  showToastMessage('Connected to Archipelago server successfully', 'archipelago', false, undefined);
 }
 
 client.socket.on('disconnected', () => {
@@ -125,14 +144,17 @@ export async function sendMessage(content) {
   await client.messages.say(content);
 }
 
+export function isLocationChecked(locationName) {
+  if (!pkg) return false;
+  const id = pkg.locationTable[locationName];
+  if (!id) return false;
+  return client.room.checkedLocations.includes(id);
+}
+
 /**
  * @param {string[]} locationNames
  */
 async function checkLocationsRaw(...locationNames) {
-  let pkg = client.package.findPackage(client.game);
-  if (!pkg)
-    pkg = await client.package.fetchPackage([client.game], true)[client.game];
-
   const ids = locationNames.map(loc => pkg.locationTable[loc]);
   if (ids.length === 0) return;
 
@@ -143,7 +165,7 @@ async function checkLocationsRaw(...locationNames) {
  * @param {string[]} locationNames
  */
 export async function checkLocations(...locationNames) {
-  if (!client.socket.connected) {
+  if (!client.socket.connected || !pkg) {
     slotStore.locationQueue.push(...locationNames);
     saveSlot();
     return;

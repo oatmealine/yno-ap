@@ -3,6 +3,10 @@ let slotStoreSlotName = null;
 export const slotStore = {
   /** @type string[] */
   locationQueue: [],
+  /** @type string[] */
+  completedConditions: [],
+  /** @type string[] */
+  completedEndings: [],
 };
 const defaultSlotStore = JSON.parse(JSON.stringify(slotStore));
 
@@ -17,23 +21,46 @@ export const globalStore = {
 
     autoConnect: false,
   },
+  /** @type {import("archipelago.js").DataPackage?} */
+  dataPackage: { games: {} },
 };
 const defaultGlobalStore = JSON.parse(JSON.stringify(globalStore));
 
-function mergeInto(o1, o2) {
-  for (const key of Object.keys(o1)) {
-    if (!o2[key])
+function mergeIn(base, add) {
+  for (let [key, value] of Object.entries(add)) {
+    if (
+      typeof base[key] === 'object' &&
+      typeof value === 'object' &&
+      !Array.isArray(base[key]) &&
+      !Array.isArray(value) &&
+      base[key] !== null &&
+      value !== null
+    ) {
+      mergeIn(base[key], value);
+    } else {
+      base[key] = value;
+    }
+  }
+}
+function mergeInStrict(base, add) {
+  for (const key of Object.keys(base)) {
+    if (!add[key])
       continue;
-    if (typeof o1[key] !== typeof o2[key])
+    if (typeof base[key] !== typeof add[key])
       continue;
 
-    if (typeof o1[key] !== 'object' || Array.isArray(o1[key])) {
-      o1[key] = o2[key];
+    if (typeof base[key] !== 'object' || Array.isArray(base[key])) {
+      base[key] = add[key];
       continue;
     }
       
-    mergeInto(o1[key], o2[key]);
+    mergeIn(base[key], add[key]);
   }
+}
+
+function clear(obj) {
+  for (let key of Object.keys(obj))
+    delete obj[key];
 }
 
 function getSlotStorageName(roomName, slotName) {
@@ -50,7 +77,8 @@ export function saveSlot() {
   );
 }
 export function loadSlot(roomName, slotName) {
-  mergeInto(slotStore, defaultSlotStore);
+  clear(slotStore);
+  mergeIn(slotStore, defaultSlotStore);
 
   const storage = window.localStorage.getItem(getSlotStorageName(roomName, slotName));
   slotStoreRoomName = roomName;
@@ -67,7 +95,7 @@ export function loadSlot(roomName, slotName) {
     return;
   }
 
-  mergeInto(slotStore, parsed);
+  mergeInStrict(slotStore, parsed);
 }
 
 const GLOBAL_STORE_KEY = 'yno-ap-global';
@@ -76,7 +104,8 @@ export function saveGlobal() {
   window.localStorage.setItem(GLOBAL_STORE_KEY, JSON.stringify(globalStore));
 }
 function loadGlobal() {
-  mergeInto(globalStore, defaultGlobalStore);
+  clear(slotStore);
+  mergeIn(globalStore, defaultGlobalStore);
 
   const storage = window.localStorage.getItem(GLOBAL_STORE_KEY);
 
@@ -91,7 +120,7 @@ function loadGlobal() {
     return;
   }
 
-  mergeInto(globalStore, parsed);
+  mergeInStrict(globalStore, parsed);
 }
 loadGlobal();
 

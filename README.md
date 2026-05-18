@@ -5,10 +5,14 @@ the line?) based on the [YNO Project](https://ynoproject.net/).
 
 ## status
 
-Nowhere near playable; you can check the exact specifics of what's there and
-what's missing in [TODO.md](./TODO.md). There's a working client that connects
-to an Archipelago server, and an apworld that successfully generates, but that's
-about it
+Somewhat playable! A minimal config with only effect items and effect NPC
+locations is playable to completion. This is far from the full scope of this
+implementation, however, so I'd advise against playing it currently unless
+you're really eager to test it or are simply not interested in the extra
+locations and items.
+
+You can check the exact specifics of what's there and
+what's missing in [TODO.md](./TODO.md).
 
 ## how to run
 

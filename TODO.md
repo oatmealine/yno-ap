@@ -81,4 +81,4 @@ Client:
   - [ ] Award location on NPC
   - [x] Award location on ending
   - [x] Award location on effect unlock
-  - [ ] Goal whenever prerequisites are met
+  - [x] Goal whenever prerequisites are met

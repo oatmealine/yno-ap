@@ -1,7 +1,15 @@
 // ==UserScript==
-// @name     yno AP client
-// @version  0.0.0
-// @grant    none
-// @match    https://ynoproject.net/*
-// @run-at   document-end
+// @name         YNO Archipelago Client
+// @namespace    zone.oat.yno-ap
+// @version      0.1.0
+// @author       moonstruck.nectar
+// @description  Client for the YNO Archipelago impelementation (Yume 2kki)
+// @icon         https://raw.githubusercontent.com/oatmealine/yno-ap/refs/heads/main/common/ap-2kki.png
+// @homepage     https://github.com/oatmealine/yno-ap
+// @homepageURL  https://github.com/oatmealine/yno-ap
+// @downloadURL  https://github.com/oatmealine/yno-ap/releases/download/latest/yno-ap-client.user.js
+// @updateURL    https://github.com/oatmealine/yno-ap/releases/download/latest/yno-ap-client.user.js
+// @match        https://ynoproject.net/2kki/
+// @grant        none
+// @run-at       document-end
 // ==/UserScript==

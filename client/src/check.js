@@ -120,19 +120,19 @@ function isLocationComplete(location) {
 function onLocationComplete(location) {
   if (slotData.endings.includes(location.name)) {
     if (!slotStore.completedEndings.includes(location.name)) {
-      slotStore.completedConditions.push(location.name);
+      slotStore.completedEndings.push(location.name);
     }
 
     let canGoal = false;
-    if (slotData.mode === Goal.AllEndings) {
+    if (slotData.goal === Goal.AllEndings) {
       const endingsDone = slotData.endings
-        .filter(ending => slotStore.completedConditions.includes(ending))
+        .filter(ending => slotStore.completedEndings.includes(ending))
         .length;
       const endingsNeeded = slotData.endings.length;
       canGoal = endingsDone >= endingsNeeded;
       showToastMessage(`<b>Goal</b>: ${endingsDone}/${endingsNeeded} endings done`);
     }
-    if (slotData.mode === Goal.AnyEnding) {
+    if (slotData.goal === Goal.AnyEnding) {
       canGoal = true;
     }
 
@@ -390,7 +390,7 @@ function getRelevantConditions(mapId) {
 export function processTrigger(mapId, trigger, value) {
   if (!isSessionValid()) return;
   const conds = getRelevantConditions(mapId);
-  console.log(`[yno-ap-client] processing trigger ${trigger}; relevant conditions: `, conds);
+  //console.log(`[yno-ap-client] processing trigger ${trigger}; relevant conditions: `, conds);
   Promise.all(conds.map(cond => checkCondition(cond, trigger, value)));
 }
 

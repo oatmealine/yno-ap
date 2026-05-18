@@ -39,9 +39,9 @@ class MinigameTreatment(Choice):
 
     **Ignore:** Minigames have no bearing on the world; just a fun side distraction
 
-    **Locations:** Completing certain tasks in minigames complete locations (eg. getting 2,500 score in FUJI), and the minigames themselves count as items
+    **Locations:** _(Currently unimplemented)_ Completing certain tasks in minigames complete locations (eg. getting 2,500 score in FUJI), and the minigames themselves count as items
 
-    **Hints:** Minigames are hint games that drop random hints when playing
+    **Hints:** _(Currently unimplemented)_  Minigames are hint games that drop random hints when playing
     """
     display_name = "Minigame Treatment"
     option_ignore = 1
@@ -100,6 +100,8 @@ class ChanceThreshold(Range):
 # TODO
 class HardNavigation(Toggle):
     """
+    _(Currently unimplemented; defaults to hard navigation)_
+
     Determines when a region is counted as in logic.
 
     When disabled, a region will be counted as in logic if the shortest path is accessible. When enabled, a region will be counted as in logic if any path to it is available.
@@ -112,6 +114,8 @@ class HardNavigation(Toggle):
 
 class NexusKeys(Toggle):
     """
+    _(Currently unimplemented on the client)_
+
     Turns all Nexus warps into "key" items you must collect to use the warps.
     
     This does not prevent you from visiting the location, as any other means of entering it will still work.
@@ -133,6 +137,8 @@ class StartingNexusKeys(OptionDict):
 
 class TextEvents(Toggle):
     """
+    _(Currently unimplemented on the client)_
+
     Toggling text events requires an item.
     """
     display_name = "Text Events"
@@ -140,6 +146,8 @@ class TextEvents(Toggle):
 
 class AuthorGating(Choice):
     """
+    _(Currently unimplemented on the client)_
+
     Creates associated items from authors. In order to enter a world, you will need to have that world's primary author as an item.
 
     This will create ~120 additional items and will help with the item-location balance without making navigation annoying, as authors' paths will remain only either wholly accessible or inaccessible.
@@ -150,7 +158,7 @@ class AuthorGating(Choice):
 
     **Primary Author:** Every world's primary author will be turned into an item. In order to access a world, you'll need to have collected the author.
 
-    **Contributing Authors:** Every contributor to every world will be turned into an item. In order to access a world, you'll need to have collected any of the contributors.
+    **Contributing Authors:** _(Currently unimplemented)_ Every contributor to every world will be turned into an item. In order to access a world, you'll need to have collected any of the contributors.
     """
     display_name = "Author Gating"
     option_disable = 1
@@ -169,6 +177,8 @@ class SplitEffects(Toggle):
 # TODO
 class Masksanity(Toggle):
     """
+    _(Currently unimplemented)_
+
     Buying masks from the Mask Shop will count as locations.
     """
     display_name = "Masksanity"
@@ -176,6 +186,8 @@ class Masksanity(Toggle):
 
 class Eventsanity(Toggle):
     """
+    _(Currently unimplemented on the client)_
+
     Triggering certain events will count as locations.
     The events that count for this are generally the ones the Yume 2kki wiki considers as events: https://yume.wiki/2kki/Events
     """
@@ -185,6 +197,8 @@ class Eventsanity(Toggle):
 # TODO
 class Wallpapersanity(Choice):
     """
+    _(Currently unimplemented)_
+
     Whether to include getting wallpapers as locations.
 
     **Ignore:** Wallpapers do not do anything.
@@ -202,6 +216,8 @@ class Wallpapersanity(Choice):
 # TODO
 class KuraPuzzlesanity(Choice):
     """
+    _(Currently unimplemented)_
+
     Whether to include getting Kura Puzzles as locations.
 
     **Ignore:** Kura Puzzles do not do anything.
@@ -218,6 +234,8 @@ class KuraPuzzlesanity(Choice):
 
 class NPCSanity(Toggle):
     """
+    _(Currently unimplemented on the client)_ 
+
     Interacting with certain NPCs will count as locations.
     The NPCs that count for this are generally the ones the Yume 2kki wiki considers as NPCs: https://yume.wiki/2kki/Minor_Characters#Non-Effect_NPCs
 
@@ -273,6 +291,8 @@ class LocationsanityPercentage(Range):
 # TODO
 class ExpeditionMode(Toggle):
     """
+    _(Currently unimplemented)_
+
     Changes the Locationsanity location spread method to be more like YNO expeditions - a select few high depth locations are selected, and the stops to the shortest route to that location all also get included as locations. Results in a lot less scattered locations.
     """
     display_name = "Expedition Mode"

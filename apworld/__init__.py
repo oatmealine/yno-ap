@@ -1074,6 +1074,8 @@ class Yume2kkiWorld(World):
                 [location for location in self.locations if location in self.options.ending_list and self.options.ending_list[location]],
             "goal":
                 int(self.options.goal),
+
+            "use_nexus_keys": bool(self.options.nexus_keys),
         }
 
         return slot_data

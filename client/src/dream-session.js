@@ -1,9 +1,10 @@
-import { client as ap } from './archipelago-client';
-import { trackSwitch } from './easyrpg-client';
+import { client as ap, slotData } from './archipelago-client';
+import { trackEvent, trackSwitch } from './easyrpg-client';
 import { div, text } from './html';
 import { showToastMessage } from './ui';
 
 let sessionIsValid = true;
+let usedItems = [];
 
 // a map of effect name -> switch id
 const EFFECTS = {
@@ -44,6 +45,36 @@ const EFFECTS = {
   'Dice': 158,
 };
 
+// a map of nexus world -> associated warp event id
+const NEXUS_EVENTS = {
+  //'Urotsuki's Room': 6,
+  'Library': 2,
+  'Graveyard World': 3,
+  'Geometry World': 4,
+  'Garden World': 9,
+  'Marijuana Goddess World': 5,
+  'Purple World': 7,
+  'Forest World': 8,
+  'Pudding World': 21,
+  'Portrait Purgatory': 22,
+  'Rock World': 23,
+  'Ornamental Plains': 30,
+  'Cipher Keyboard': 19,
+  'Toy World': 10,
+  'Urotsuki\'s Dream Apartments': 11,
+  'Deep Red Wilds': 33,
+  'Red Streetlight World': 13,
+  'Mushroom World': 15,
+  'Heart World': 12,
+  'Lamp Puddle World': [34, 36],
+  'Blue Eyes World': 17,
+  'Lemonade Edifice': 40,
+  'Night World': 14,
+  'Trophy Room': 16,
+  'Abstract Corrosions': 31,
+  'Usugurai Residence': 32,
+};
+
 export function isSessionValid() {
   return sessionIsValid;
 }
@@ -63,8 +94,24 @@ function revalidateSession() {
   document.querySelector('#ap-session-warning').style.display = 'none';
 }
 
+export function updateSessionValidity() {
+  if (!ap.socket.connected) return;
+
+  const forbiddenItems =
+    usedItems.filter(itemName =>
+      !ap.items.received.find(item => item.name === itemName)
+    );
+
+  if (forbiddenItems.length > 0) {
+    invalidateSession(`Used ${forbiddenItems.join(', ')}, which ${forbiddenItems.length === 1 ? 'is' : 'are'} not unlocked.`);
+  } else {
+    revalidateSession();
+  }
+}
+
 export function handleMapSwitch(mapID) {
   if (mapID === 2) {
+    usedItems = [];
     revalidateSession();
     return;
   }
@@ -73,17 +120,34 @@ export function handleMapSwitch(mapID) {
 
   for (const swID of Object.values(EFFECTS))
     trackSwitch(swID);
+
+  if (mapID === 10 && slotData.useNexusKeys) {
+    for (const evIDs of Object.values(NEXUS_EVENTS))
+      for (const evID of Array.isArray(evIDs) ? evIDs : [evIDs])
+        trackEvent(evID, true);
+  }
 }
 
 export function handleSwitch(id, value) {
   if (!isSessionValid()) return;
   for (const [effectName, effectSwitchID] of Object.entries(EFFECTS)) {
     if (effectSwitchID === id && value) {
-      if (!ap.items.received.find(item => item.name === effectName)) {
-        invalidateSession(`Used effect ${effectName}, which is not unlocked.`);
-      }
+      usedItems.push(effectName);
     } 
   }
+  updateSessionValidity();
+}
+
+export function handleActionEvent(id) {
+  if (!isSessionValid()) return;
+  for (const [nexusKey, evIDs] of Object.entries(NEXUS_EVENTS)) {
+    for (const evID of Array.isArray(evIDs) ? evIDs : [evIDs]) {
+      if (id === evID) {
+        usedItems.push(nexusKey);
+      }
+    }
+  }
+  updateSessionValidity();
 }
 
 export function addWarningElement() {

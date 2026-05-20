@@ -8,7 +8,7 @@
 
 import { checkLocations } from './archipelago-client';
 import { handleMapSwitch as checksHandleMapSwitch, processTrigger } from './check';
-import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch } from './dream-session';
+import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch, handleActionEvent as sessionHandleActionEvent } from './dream-session';
 import { sendClientPackets } from './websocket-intercept';
 
 let prevMapID = 0;
@@ -48,25 +48,36 @@ let trackedEvents = new Set();
 let trackedActionEvents = new Set();
 let trackedPictures = new Set();
 
+/**
+ * @param {number} swID
+ */
 export function getCachedSwitch(swID) {
   return switchState[swID] ?? false;
 }
 /**
  * @param {number} swID 
- * @returns Promise<boolean>
+ * @returns {Promise<boolean>}
  */
 export async function getSwitch(swID) {
   if (trackedSwitches.has(swID)) return getCachedSwitch(swID);
   
   sendPacket('ss', [swID, 0]);
-  await waitForSwitchChange(swID);
+  return await waitForSwitchChange(swID);
 }
 
+/**
+ * @param {number} swID
+ * @param {boolean} [alsoFetchCurrentValue]
+ */
 export function trackSwitch(swID, alsoFetchCurrentValue) {
   trackedSwitches.add(swID);
   sendPacket('ss', [swID, alsoFetchCurrentValue ? 2 : 1]);
 }
 
+/**
+ * @param {number} swID
+ * @returns {Promise<boolean>}
+ */
 export function waitForSwitchChange(swID) {
   return new Promise((resolve, reject) => {
     switchListeners[swID] ??= [];
@@ -76,13 +87,16 @@ export function waitForSwitchChange(swID) {
   });
 }
 
+/**
+ * @param {number} varID
+ */
 export function getCachedVariable(varID) {
   return varState[varID] ?? 0;
 }
 
 /**
  * @param {number} varID
- * @returns Promise<number>
+ * @returns {Promise<number>}
  */
 export async function getVariable(varID) {
   if (trackedVariables.has(varID)) return getCachedVariable(varID);
@@ -93,11 +107,19 @@ export async function getVariable(varID) {
   return getCachedVariable(varID);
 }
 
+/**
+ * @param {number} varID
+ * @param {boolean} [alsoFetchCurrentValue]
+ */
 export function trackVariable(varID, alsoFetchCurrentValue) {
   trackedSwitches.add(varID);
   sendPacket('sv', [varID, alsoFetchCurrentValue ? 2 : 1]);
 }
 
+/**
+ * @param {number} varID
+ * @returns {Promise<number>}
+ */
 export function waitForVariableChange(varID) {
   return new Promise((resolve, reject) => {
     varListeners[varID] ??= [];
@@ -107,12 +129,21 @@ export function waitForVariableChange(varID) {
   });
 }
 
-function trackEvent(evID, actionEvent) {
+/**
+ * @param {number} evID 
+ * @param {boolean} actionEvent
+ */
+export function trackEvent(evID, actionEvent) {
   const set = actionEvent ? trackedActionEvents : trackedEvents;
   if (set.has(evID)) return;
   set.add(evID);
   sendPacket('sev', [evID, actionEvent ? 1 : 0]);
 }
+/**
+ * @param {number} evID 
+ * @param {boolean} actionEvent
+ * @returns {Promise<>}
+ */
 export function waitForEvent(evID, actionEvent) {
   trackEvent(evID, actionEvent);
   const listeners = actionEvent ? actionEventListeners : eventListeners;
@@ -126,11 +157,18 @@ export function waitForEvent(evID, actionEvent) {
   });
 }
 
-function trackPicture(pictureName) {
+/**
+ * @param {string} pictureName 
+ */
+export function trackPicture(pictureName) {
   if (trackedPictures.has(pictureName)) return;
   trackedPictures.add(pictureName);
   sendPacket('sp', [pictureName]);
 }
+/**
+ * @param {string} pictureName
+ * @returns {Promise<>}
+ */
 export function waitForPicture(pictureName) {
   trackPicture(pictureName);
   return new Promise((resolve, reject) => {
@@ -146,10 +184,14 @@ export function getPos() {
   return [x, y];
 }
 
+/**
+ * @param {number} swID
+ * @param {boolean} value
+ */
 function onSwitch(swID, value) {
   switchState[swID] = value;
 
-  sessionHandleSwitch(parseInt(swID), value);
+  sessionHandleSwitch(swID, value);
 
   const listeners = switchListeners[swID];
   if (listeners) {
@@ -160,8 +202,12 @@ function onSwitch(swID, value) {
   }
 }
 
+/**
+ * @param {number} varID
+ * @param {number} value
+ */
 function onVariable(varID, value) {
-  varState[varID] = parseInt(value);
+  varState[varID] = value;
 
   const listeners = varListeners[varID];
   if (listeners) {
@@ -179,17 +225,19 @@ function onVariable(varID, value) {
  */
 export function onPacket(type, args) {
   if (type === 'ss') {
-    onSwitch(args[0], args[1] === '1');
+    onSwitch(parseInt(args[0]), args[1] === '1');
   } else if (type === 'sv') {
-    onVariable(args[0], parseInt(args[1]))
+    onVariable(parseInt(args[0]), parseInt(args[1]))
   } else if (type === 'm' || type === 'tp' || type === 'jmp') {
     x = parseInt(args[0]);
     y = parseInt(args[1]);
     if (type === 'tp') processTrigger(mapID, 'teleport');
     processTrigger(mapID, 'coords');
   } else if (type === 'sev') {
-    const listeners = (args[1] !== '0' ? actionEventListeners : eventListeners)[args[0]];
-    const aborts = (args[1] !== '0' ? actionEventAborts : eventAborts)[args[0]];
+    const actionEvent = args[1] !== '0';
+    const listeners = (actionEvent ? actionEventListeners : eventListeners)[args[0]];
+    const aborts = (actionEvent ? actionEventAborts : eventAborts)[args[0]];
+    if (actionEvent) sessionHandleActionEvent(parseInt(args[0]));
     if (!listeners) return;
     for (const callback of listeners)
       callback();

@@ -2,6 +2,7 @@ import { Client, itemsHandlingFlags, PlayerMessageNode, TextualMessageNode } fro
 import { onMessage, onToastMessage, setConnected, showToastMessage } from './ui';
 import { globalStore, loadSlot, saveGlobal, saveSlot, slotStore } from './store';
 import { updateLocationCompletions } from './check';
+import { updateSessionValidity } from './dream-session';
 
 export const client = new Client();
 
@@ -25,6 +26,7 @@ export const slotData = {
   mode: ClientMode.Automatic,
   endings: [ 'Ending #-1', 'Ending #?', 'Ending #1', 'Ending #2', 'Ending #3' ],
   goal: Goal.AllEndings,
+  useNexusKeys: false,
 };
 
 /** @type {import('archipelago.js').PackageMetadata?} */
@@ -63,10 +65,14 @@ export async function connect(host, password, slot) {
   if (remoteSlotData.goal !== undefined)
     // @ts-ignore
     slotData.goal = remoteSlotData.goal;
+  if (remoteSlotData.use_nexus_keys !== undefined)
+    // @ts-ignore
+    slotData.useNexusKeys = remoteSlotData.use_nexus_keys;
     
   console.log('[yno-ap-client] loaded slot data: ', slotData);
 
   updateLocationCompletions();
+  updateSessionValidity();
   
   setConnected(true);
   showToastMessage('Connected to Archipelago server successfully', 'archipelago', false, undefined);

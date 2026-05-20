@@ -56,7 +56,7 @@ Client:
     - [ ] Prevent them from being usable?
     - [ ] [AU] Award items when given them
   - Nexus key items
-    - [ ] Invalidate a dream session when using a forbidden connection
+    - [x] Invalidate a dream session when using a forbidden connection
     - [ ] Show a fake player to render it as inaccessible in-game
     - [ ] [AU] Wake up / abort if using it if possible?
   - [ ] Minigame items

@@ -438,8 +438,8 @@ locations += [
     Yume2kkiLocationData(name="Clowns at the Circus", type=Yume2kkiLocationType.EVENT, region="Circus"),
     Yume2kkiLocationData(name="The Colossus of Rhomb", type=Yume2kkiLocationType.EVENT, region="Square-Square World",
         logic=lambda state, self:
-            state.can_reach_location("Flying Fish World", self.player) or
-            (state.can_reach_location("Cog Maze", self.player) and (state.can_reach_location("Japan Town", self.player) or True))), # TODO: replace True with unknown chance check
+            state.can_reach_region("Flying Fish World", self.player) or
+            (state.can_reach_region("Cog Maze", self.player) and (state.can_reach_region("Japan Town", self.player) or True))), # TODO: replace True with unknown chance check
     Yume2kkiLocationData(name="Corrupted Nexus", type=Yume2kkiLocationType.EVENT, region="Nexus",
         # TODO: needs menu themes to be implemented
         # TODO: 1/1011 chance check
@@ -448,11 +448,11 @@ locations += [
     Yume2kkiLocationData(name="Creatures of the Power Plant", type=Yume2kkiLocationType.EVENT, region="Power Plant"),
     Yume2kkiLocationData(name="The Cursed Corridor", type=Yume2kkiLocationType.EVENT, region="Execution Ground",
         logic=lambda state, self:
-            state.can_reach_location("Atelier", self.player) and
+            state.can_reach_region("Atelier", self.player) and
             state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="Decapitation", type=Yume2kkiLocationType.EVENT, region="Realistic Beach",
         logic=lambda state, self:
-            (state.can_reach_location("Teleport Maze", self.player) or
+            (state.can_reach_region("Teleport Maze", self.player) or
             state.has_any(["Child", "Fairy", "Grave", "Dice"], self.player)) and
             state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="DECK RAVE", type=Yume2kkiLocationType.EVENT, region="Smiley Face DECK"),
@@ -463,7 +463,7 @@ locations += [
         logic=lambda state, self: state.has("Trombone", self.player)),
     Yume2kkiLocationData(name="Duet with the Piano Girl", type=Yume2kkiLocationType.EVENT, region="Picture Book",
         logic=lambda state, self:
-            state.can_reach_location("Rainy Docks", self.player) and
+            state.can_reach_region("Rainy Docks", self.player) and
             state.has_any(["Fairy", "Spacesuit"], self.player) and
             state.has_any(["Spring", "Bat"], self.player) and
             state.has("Haniwa", self.player) and

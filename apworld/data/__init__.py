@@ -170,6 +170,7 @@ class Yume2kkiLocationType(enum.Enum):
     NPC = "NPC"
     ENDING = "Ending"
     EFFECT_UNLOCK = "Effect Unlock"
+    MENU_THEME = "Menu Theme"
 
 class Yume2kkiLocationData(NamedTuple):
     name: str
@@ -441,9 +442,8 @@ locations += [
             state.can_reach_region("Flying Fish World", self.player) or
             (state.can_reach_region("Cog Maze", self.player) and (state.can_reach_region("Japan Town", self.player) or True))), # TODO: replace True with unknown chance check
     Yume2kkiLocationData(name="Corrupted Nexus", type=Yume2kkiLocationType.EVENT, region="Nexus",
-        # TODO: needs menu themes to be implemented
         # TODO: 1/1011 chance check
-        #logic=lambda state, self: state.can_reach_location("Menu Theme #52", self.player)),
+        logic=lambda state, self: state.can_reach_location("Menu Theme #52", self.player)
     ),
     Yume2kkiLocationData(name="Creatures of the Power Plant", type=Yume2kkiLocationType.EVENT, region="Power Plant"),
     Yume2kkiLocationData(name="The Cursed Corridor", type=Yume2kkiLocationType.EVENT, region="Execution Ground",
@@ -520,7 +520,7 @@ locations += [
     Yume2kkiLocationData(name="Photorealistic Event", type=Yume2kkiLocationType.EVENT, region="Fused Faces World"),
     Yume2kkiLocationData(name="Possessed by Yourself", type=Yume2kkiLocationType.EVENT, region="Static Noise Hell"),
     Yume2kkiLocationData(name="Resentment", type=Yume2kkiLocationType.EVENT, region="Crescent Tile World",
-        logic=lambda state, self: state.has("Lantern", self.player)),
+        logic=lambda state, self: state.has("Lantern", self.player)), # TODO or 1/64 chance
     Yume2kkiLocationData(name="Retaliation", type=Yume2kkiLocationType.EVENT, region="Gemstone Cave",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="Rise and Shine!", type=Yume2kkiLocationType.EVENT, region="Pop Tiles Maze"),
@@ -568,7 +568,137 @@ locations += [
     # https://yume.wiki/2kki/Kura_Puzzles
     # TODO
     # https://yume.wiki/2kki/Menu_Themes
-    # TODO
+    Yume2kkiLocationData(name="Menu Theme #6", type=Yume2kkiLocationType.MENU_THEME, region="Urotsuki's Dream Apartments",
+        logic=lambda state, self: state.can_reach_location("Bleak Future", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #7", type=Yume2kkiLocationType.MENU_THEME, region="Urotsuki's Dream Apartments",
+        logic=lambda state, self: state.can_reach_location("Bleak Future", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #8", type=Yume2kkiLocationType.MENU_THEME, region="Hidden Shoal"),
+    Yume2kkiLocationData(name="Menu Theme #9", type=Yume2kkiLocationType.MENU_THEME, region="Forest Pier"),
+    Yume2kkiLocationData(name="Menu Theme #10", type=Yume2kkiLocationType.MENU_THEME, region="Planetarium"),
+    Yume2kkiLocationData(name="Menu Theme #11", type=Yume2kkiLocationType.MENU_THEME, region="Industrial Maze"),
+    Yume2kkiLocationData(name="Menu Theme #12", type=Yume2kkiLocationType.MENU_THEME, region="Rose Church"),
+    Yume2kkiLocationData(name="Menu Theme #13", type=Yume2kkiLocationType.MENU_THEME, region="Bioluminescent Cavern"),
+    Yume2kkiLocationData(name="Menu Theme #14", type=Yume2kkiLocationType.MENU_THEME, region="Depths"),
+    Yume2kkiLocationData(name="Menu Theme #15", type=Yume2kkiLocationType.MENU_THEME, region="Depths"),
+    Yume2kkiLocationData(name="Menu Theme #16", type=Yume2kkiLocationType.MENU_THEME, region="Guts World"),
+    Yume2kkiLocationData(name="Menu Theme #17", type=Yume2kkiLocationType.MENU_THEME, region="Maple Shrine"),
+    Yume2kkiLocationData(name="Menu Theme #18", type=Yume2kkiLocationType.MENU_THEME, region="Pencil World",
+        logic=lambda state, self: state.has("Rainbow", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #19", type=Yume2kkiLocationType.MENU_THEME, region="Chocolate World",
+        logic=lambda state, self: state.has("Cake", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #20", type=Yume2kkiLocationType.MENU_THEME, region="Blue Cactus Islands"),
+    Yume2kkiLocationData(name="Menu Theme #21", type=Yume2kkiLocationType.MENU_THEME, region="Stone Towers"),
+    Yume2kkiLocationData(name="Menu Theme #22", type=Yume2kkiLocationType.MENU_THEME, region="Constellation World"),
+    Yume2kkiLocationData(name="Menu Theme #23", type=Yume2kkiLocationType.MENU_THEME, region="Blob Desert"),
+    Yume2kkiLocationData(name="Menu Theme #24", type=Yume2kkiLocationType.MENU_THEME, region="Cipher Keyboard",
+        logic=lambda state, self: state.has_all(["Child", "Stretch"], self.player)),
+    Yume2kkiLocationData(name="Menu Theme #25", type=Yume2kkiLocationType.MENU_THEME, region="Viridian Wetlands"),
+    Yume2kkiLocationData(name="Menu Theme #26", type=Yume2kkiLocationType.MENU_THEME, region="Polluted Swamp"),
+    Yume2kkiLocationData(name="Menu Theme #27", type=Yume2kkiLocationType.MENU_THEME, region="Snowy Village"),
+    Yume2kkiLocationData(name="Menu Theme #28", type=Yume2kkiLocationType.MENU_THEME, region="Decrepit Dwellings"),
+    Yume2kkiLocationData(name="Menu Theme #29", type=Yume2kkiLocationType.MENU_THEME, region="Verdant Promenade"),
+    Yume2kkiLocationData(name="Menu Theme #30", type=Yume2kkiLocationType.MENU_THEME, region="Black Ink World"),
+    Yume2kkiLocationData(name="Menu Theme #31", type=Yume2kkiLocationType.MENU_THEME, region="Forgotten Megalopolis"),
+    Yume2kkiLocationData(name="Menu Theme #32", type=Yume2kkiLocationType.MENU_THEME, region="Tomb of Velleities"),
+    Yume2kkiLocationData(name="Menu Theme #33", type=Yume2kkiLocationType.MENU_THEME, region="Ocular Spacecraft"),
+    Yume2kkiLocationData(name="Menu Theme #34", type=Yume2kkiLocationType.MENU_THEME, region="Data Stream"),
+    Yume2kkiLocationData(name="Menu Theme #35", type=Yume2kkiLocationType.MENU_THEME, region="Lavender Waters"),
+    Yume2kkiLocationData(name="Menu Theme #36", type=Yume2kkiLocationType.MENU_THEME, region="Originator Garden",
+        logic=lambda state, self: state.can_reach_region("Second Nexus", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #37", type=Yume2kkiLocationType.MENU_THEME, region="Fluorescent Halls"),
+    Yume2kkiLocationData(name="Menu Theme #38", type=Yume2kkiLocationType.MENU_THEME, region="Ahogeko's House",
+        logic=lambda state, self: state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #40", type=Yume2kkiLocationType.MENU_THEME, region="Monochrome GB World"),
+    Yume2kkiLocationData(name="Menu Theme #41", type=Yume2kkiLocationType.MENU_THEME, region="Smiley Signs World"),
+    Yume2kkiLocationData(name="Menu Theme #42", type=Yume2kkiLocationType.MENU_THEME, region="Urotsuki's Room",
+        logic=lambda state, self: state.can_reach_region("Lovesick World", self.player) or state.can_reach_region("Second Nexus", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #43", type=Yume2kkiLocationType.MENU_THEME, region="Corrupted Love World"),
+    Yume2kkiLocationData(name="Menu Theme #44", type=Yume2kkiLocationType.MENU_THEME, region="Pastel Chalk World"),
+    Yume2kkiLocationData(name="Menu Theme #45", type=Yume2kkiLocationType.MENU_THEME, region="Luminous Lake"),
+    Yume2kkiLocationData(name="Menu Theme #46", type=Yume2kkiLocationType.MENU_THEME, region="Monochrome GB World"),
+    Yume2kkiLocationData(name="Menu Theme #47", type=Yume2kkiLocationType.MENU_THEME, region="Snowman World"), # TODO: 1/4 chance
+    Yume2kkiLocationData(name="Menu Theme #48", type=Yume2kkiLocationType.MENU_THEME, region="Sunset Hill"),
+    Yume2kkiLocationData(name="Menu Theme #49", type=Yume2kkiLocationType.MENU_THEME, region="Horror Maze"),
+    Yume2kkiLocationData(name="Menu Theme #50", type=Yume2kkiLocationType.MENU_THEME, region="Blue Restaurant",
+        logic=lambda state, self:
+            all(state.can_reach_region(region, self.player) for region in [
+                "T-Folk World", "Crazed Faces Maze", "Red Monastery", "Fused Faces World",
+                "Fused Faces World", "Holiday Hell", "Blue House Road", "Ice Cream Islands",
+                "Flooded Buildings"
+            ])
+    ),
+    Yume2kkiLocationData(name="Menu Theme #51", type=Yume2kkiLocationType.MENU_THEME, region="Domino Constructions"),
+    Yume2kkiLocationData(name="Menu Theme #52", type=Yume2kkiLocationType.MENU_THEME, region="Glitch Hell"),
+    Yume2kkiLocationData(name="Menu Theme #53", type=Yume2kkiLocationType.MENU_THEME, region="Sakura Forest",
+        logic=lambda state, self: state.has("Bunny Ears", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #54", type=Yume2kkiLocationType.MENU_THEME, region="Sunset Savannah"),
+    Yume2kkiLocationData(name="Menu Theme #55", type=Yume2kkiLocationType.MENU_THEME, region="Bishop Cathedral"),
+    Yume2kkiLocationData(name="Menu Theme #56", type=Yume2kkiLocationType.MENU_THEME, region="Fish Person Shoal"),
+    Yume2kkiLocationData(name="Menu Theme #57", type=Yume2kkiLocationType.MENU_THEME, region="Six-Layer Terminal",
+        logic=lambda state, self:
+            state.has("Chainsaw", self.player)
+    ),
+    Yume2kkiLocationData(name="Menu Theme #58", type=Yume2kkiLocationType.MENU_THEME, region="Colorless Rose Garden"),
+    Yume2kkiLocationData(name="Menu Theme #59", type=Yume2kkiLocationType.MENU_THEME, region="Shadow Lady Estate"),
+    Yume2kkiLocationData(name="Menu Theme #60", type=Yume2kkiLocationType.MENU_THEME, region="Flicker Trail"),
+    Yume2kkiLocationData(name="Menu Theme #61", type=Yume2kkiLocationType.MENU_THEME, region="Rainbow Snow Plateau"),
+    Yume2kkiLocationData(name="Menu Theme #62", type=Yume2kkiLocationType.MENU_THEME, region="Pitch Black Plateau"),
+    Yume2kkiLocationData(name="Menu Theme #63", type=Yume2kkiLocationType.MENU_THEME, region="Pitch Black Plateau"),
+    Yume2kkiLocationData(name="Menu Theme #64", type=Yume2kkiLocationType.MENU_THEME, region="Pollution District"),
+    Yume2kkiLocationData(name="Menu Theme #65", type=Yume2kkiLocationType.MENU_THEME, region="Sweet Medical Utopia"),
+    Yume2kkiLocationData(name="Menu Theme #66", type=Yume2kkiLocationType.MENU_THEME, region="Runic Ruins"),
+    Yume2kkiLocationData(name="Menu Theme #67", type=Yume2kkiLocationType.MENU_THEME, region="Rainy Sundial",
+        logic=lambda state, self: state.has("Rainbow", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #68", type=Yume2kkiLocationType.MENU_THEME, region="Paraffin Embedding Ruins"),
+    Yume2kkiLocationData(name="Menu Theme #69", type=Yume2kkiLocationType.MENU_THEME, region="Fragmented Station - Partial",
+        logic=lambda state, self: state.can_reach_region("Snowfall Pier", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #70", type=Yume2kkiLocationType.MENU_THEME, region="Snow Black"),
+    Yume2kkiLocationData(name="Menu Theme #71", type=Yume2kkiLocationType.MENU_THEME, region="Turquoise Cityscape"),
+    Yume2kkiLocationData(name="Menu Theme #72", type=Yume2kkiLocationType.MENU_THEME, region="Scattered Sky Fields"),
+    Yume2kkiLocationData(name="Menu Theme #73", type=Yume2kkiLocationType.MENU_THEME, region="Megalith Grove"),
+    Yume2kkiLocationData(name="Menu Theme #74", type=Yume2kkiLocationType.MENU_THEME, region="English Thundershower"),
+    Yume2kkiLocationData(name="Menu Theme #75", type=Yume2kkiLocationType.MENU_THEME, region="Crescent Tile World",
+        logic=lambda state, self: state.has("Lantern", self.player)), # TODO or 1/64 chance
+    Yume2kkiLocationData(name="Menu Theme #76", type=Yume2kkiLocationType.MENU_THEME, region="Shaded Hallways"),
+    Yume2kkiLocationData(name="Menu Theme #77", type=Yume2kkiLocationType.MENU_THEME, region="Alto"),
+    Yume2kkiLocationData(name="Menu Theme #78", type=Yume2kkiLocationType.MENU_THEME, region="Dream Tropics"),
+    Yume2kkiLocationData(name="Menu Theme #79", type=Yume2kkiLocationType.MENU_THEME, region="Black Dust Desert"),
+    Yume2kkiLocationData(name="Menu Theme #80", type=Yume2kkiLocationType.MENU_THEME, region="City of Revival"),
+    Yume2kkiLocationData(name="Menu Theme #81", type=Yume2kkiLocationType.MENU_THEME, region="Stone World"),
+    Yume2kkiLocationData(name="Menu Theme #82", type=Yume2kkiLocationType.MENU_THEME, region="Verdant Promenade"),
+    Yume2kkiLocationData(name="Menu Theme #83", type=Yume2kkiLocationType.MENU_THEME, region="Domino Maze",
+        logic=lambda state, self: state.has_all(["Chainsaw", "Fairy"], self.player)), # TODO 1/4 chance
+    Yume2kkiLocationData(name="Menu Theme #84", type=Yume2kkiLocationType.MENU_THEME, region="Domino Maze",
+        logic=lambda state, self: state.has("Chainsaw", self.player)), # TODO 1/4*1/7 chance OR 1/48 chance w/ Fairy
+    Yume2kkiLocationData(name="Menu Theme #85", type=Yume2kkiLocationType.MENU_THEME, region="Quarter Flats - Partial",
+        logic=lambda state, self: state.can_reach_region("Somber Establishment", self.player) and state.can_reach_region("Pulsating Yellow Passage", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #86", type=Yume2kkiLocationType.MENU_THEME, region="Quarter Flats - Partial",
+        logic=lambda state, self: state.can_reach_region("Expanded Corridors", self.player) and state.can_reach_region("Blue Sanctuary", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #87", type=Yume2kkiLocationType.MENU_THEME, region="Quarter Flats - Partial",
+        logic=lambda state, self: state.can_reach_region("Fish Person Shoal", self.player) and state.can_reach_region("Somber Waterfront", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #88", type=Yume2kkiLocationType.MENU_THEME, region="The Desktop"),
+    Yume2kkiLocationData(name="Menu Theme #89", type=Yume2kkiLocationType.MENU_THEME, region="Yellow Geometries"),
+    Yume2kkiLocationData(name="Menu Theme #90", type=Yume2kkiLocationType.MENU_THEME, region="Neon Highway"),
+    Yume2kkiLocationData(name="Menu Theme #91", type=Yume2kkiLocationType.MENU_THEME, region="Highway"), # TODO: 1/6 chance
+    Yume2kkiLocationData(name="Menu Theme #92", type=Yume2kkiLocationType.MENU_THEME, region="Sushi Roll Swamp"),
+    Yume2kkiLocationData(name="Menu Theme #93", type=Yume2kkiLocationType.MENU_THEME, region="Spirit Capital"),
+    Yume2kkiLocationData(name="Menu Theme #94", type=Yume2kkiLocationType.MENU_THEME, region="Twisted Cone World"),
+    Yume2kkiLocationData(name="Menu Theme #95", type=Yume2kkiLocationType.MENU_THEME, region="Retro Cartridge Game"),
+    Yume2kkiLocationData(name="Menu Theme #96", type=Yume2kkiLocationType.MENU_THEME, region="Bleeding Sorrows"),
+    Yume2kkiLocationData(name="Menu Theme #97", type=Yume2kkiLocationType.MENU_THEME, region="ASCII Symbol Zone"),
+    Yume2kkiLocationData(name="Menu Theme #98", type=Yume2kkiLocationType.MENU_THEME, region="Dizzy Spirals World"),
+    Yume2kkiLocationData(name="Menu Theme #99", type=Yume2kkiLocationType.MENU_THEME, region="Radiant Waters"),
+    Yume2kkiLocationData(name="Menu Theme #100", type=Yume2kkiLocationType.MENU_THEME, region="Glitched Digits"),
+    Yume2kkiLocationData(name="Menu Theme #101", type=Yume2kkiLocationType.MENU_THEME, region="Calico Forest"),
+    Yume2kkiLocationData(name="Menu Theme #102", type=Yume2kkiLocationType.MENU_THEME, region="New Japan Town"),
+    Yume2kkiLocationData(name="Menu Theme #103", type=Yume2kkiLocationType.MENU_THEME, region="Duck Depths"),
+    Yume2kkiLocationData(name="Menu Theme #104", type=Yume2kkiLocationType.MENU_THEME, region="Frozen Stratosphere"),
+    Yume2kkiLocationData(name="Menu Theme #105", type=Yume2kkiLocationType.MENU_THEME, region="Garden Festival"),
+    Yume2kkiLocationData(name="Menu Theme #106", type=Yume2kkiLocationType.MENU_THEME, region="Painted Landscape",
+        logic=lambda state, self: state.can_reach_region("Underground Color Facility", self.player) and state.has("Chainsaw", self.player)),
+    Yume2kkiLocationData(name="Menu Theme #107", type=Yume2kkiLocationType.MENU_THEME, region="Abyss"),
+    Yume2kkiLocationData(name="Menu Theme #108", type=Yume2kkiLocationType.MENU_THEME, region="Edifices"),
+    Yume2kkiLocationData(name="Menu Theme #109", type=Yume2kkiLocationType.MENU_THEME, region="Kaleidoscope"),
 ]
 
 # location locations

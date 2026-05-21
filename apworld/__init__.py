@@ -394,14 +394,10 @@ text_condition_logic = {
     "Visit Art Gallery at least once and have the Child effect in your inventory":
         lambda state, self: state.has("Child", self.player) and state.can_reach_region("Art Gallery", self.player),
     "Obtain Menu Theme #21 in Stone Towers":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #21", self.player),
-        True,
+        lambda state, self: state.can_reach_location("Menu Theme #21", self.player),
     "Boutique-ko to be alive": True,
     "Obtain Menu Theme #38":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #38", self.player),
-        True,
+        lambda state, self: state.can_reach_location("Menu Theme #38", self.player),
     "Can be accessed with the Spacesuit effect, in a 5% Chance or coming from Chocolate World":
         # TODO or 5% chance
         lambda state, self: state.can_reach_region("Chocolate World", self.player),
@@ -544,13 +540,9 @@ text_condition_logic = {
     "Interacting with a tube with a green antenna in Copper Tube Desert":
         lambda state, self: state.has("Lantern", self.player) and state.can_reach_region("Copper Tube Desert", self.player),
     "Obtain Menu Theme 52":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #52", self.player),
-        True,
+        lambda state, self: state.can_reach_location("Menu Theme #52", self.player),
     "After obtaining Menu Theme 52":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #52", self.player),
-        True,
+        lambda state, self: state.can_reach_location("Menu Theme #52", self.player),
     "If Pink Life World was not entered from Miso Soup Dungeon":
         lambda state, self: state.can_reach_region("Warzone", self.player) or state.can_reach_region("Witch Heaven", self.player),
     "If Pink Life World was entered from Miso Soup Dungeon":
@@ -637,9 +629,7 @@ text_condition_logic = {
             ] if state.can_reach_region(region, self.player)]) >= 2,
     "One-way unless Fluorescent City has been visited at least once": True,
     "Obtain Menu Theme #96":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #96", self.player),
-        True,
+        lambda state, self: state.can_reach_location("Menu Theme #96", self.player),
     "Available if this area is entered through Crazy Pink House. One-way if entered from the opposite area":
         True,
     "Clear the hard mode in Obstacle Course 2":
@@ -649,9 +639,7 @@ text_condition_logic = {
     "Have the Crossing effect":
         lambda state, self: state.has("Crossing", self.player),
     "Must have obtained Menu Theme #78 and pay 150夢 to the fisherman each time":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #78", self.player),
-        True,
+        lambda state, self: state.can_reach_location("Menu Theme #78", self.player),
     "Interact with the mouth of the painting monster three times after getting all pieces of food":
         True,
     "Light up all four lanterns of the teleporter area": True,
@@ -678,18 +666,14 @@ text_condition_logic = {
         lambda state, self: state.can_reach_region("Quarter Flats", self.player),
     "Only one can be active from the rest": True, # technically possible even w/o dice
     "Obtain Menu Theme #57 and make sure text events are on":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #21", self.player) and state.has("Text Events", self.player),
-        lambda state, self: state.has("Text Events", self.player),
+        lambda state, self: state.can_reach_location("Menu Theme #21", self.player) and state.has("Text Events", self.player),
     "Isolated if the season is spring": True, # TODO: 75% chance
     "After touching certain lamps in a specific manner, then using the rare variant of the Polygon effect once inside the alternative entrance":
         lambda state, self: state.has("Polygon", self.player), # TODO 1/32 chance
     "If the red switch in Hospital has been activated in the current dream session":
         lambda state, self: state.can_reach_region("Hospital", self.player),
     "1夢 or the Spring effect, and Menu Themes 6 and 7 must be unlocked":
-        # TODO: menu themes have to be implemented first
-        #lambda state, self: state.can_reach_location("Menu Theme #6", self.player) and state.can_reach_location("Menu Theme #7", self.player),
-        True,
+        lambda state, self: state.can_reach_location("Menu Theme #6", self.player) and state.can_reach_location("Menu Theme #7", self.player),
     "If this world was reached via Promnesic Terminal":
         lambda state, self: state.can_reach_entrance("Promnesic Terminal -> Solemn Meadow", self.player),
     "If this world was reached via Mystery Zone":

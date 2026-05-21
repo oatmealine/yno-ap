@@ -1,0 +1,29 @@
+name: validate-locations
+
+on:
+  push:
+    paths:
+      - 'client/locations/**'
+      
+permissions: {}
+    
+jobs:
+  validate:
+    name: 'Client: Validate location JSONs'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 'latest'
+          cache: 'npm'
+          cache-dependency-path: scripts/package-lock.json
+      - name: Install npm deps
+        run: |
+          cd scripts/
+          npm install
+      - name: Validate
+        run: |
+          cd scripts/
+          ! node validate_locations.mjs | grep -F 'ERROR'

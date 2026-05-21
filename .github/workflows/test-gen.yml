@@ -1,0 +1,46 @@
+name: test-gen
+
+on:
+  push:
+    paths:
+      - 'apworld/**'
+
+permissions: {}
+
+jobs:
+  gen:
+    name: 'APWorld: Test generation'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Archipelago
+      uses: actions/checkout@v6
+      with:
+        repository: 'ArchipelagoMW/Archipelago'
+        ref: '0.6.7'
+    - name: Checkout yno-ap
+      uses: actions/checkout@v6
+      with:
+        path: yno-ap
+    - name: Move APWorld into Archipelago install
+      run: |
+        cp -r yno-ap/apworld worlds/yume2kki
+        rm -rf yno-ap
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+    - name: Install Archipelago dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ci-requirements.txt
+        python ModuleUpdate.py --yes --force
+        #python ModuleUpdate.py --yes --force --append "WebHostLib/requirements.txt"
+        #python Launcher.py --update_settings  # make sure host.yaml exists for tests
+    - name: Generate template options
+      run: |
+        python Launcher.py 'Generate Template Options' -- --skip_open_folder
+        cp Players/Templates/Yume\ 2kki.yaml Players/
+    - name: Generate multiworld
+      run: |
+        python Launcher.py 'Generate' -- --player_files_path Players

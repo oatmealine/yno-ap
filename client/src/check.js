@@ -1,4 +1,5 @@
-import locationsRaw from '../locations/**/*.json';
+// see build.mjs for importing logic
+import locationsRaw from '@locations';
 
 import { checkLocations, client as apClient, Goal, isLocationChecked, slotData } from './archipelago-client';
 import { isSessionValid } from './dream-session';
@@ -7,27 +8,14 @@ import { saveSlot, slotStore } from './store';
 import { showToastMessage } from './ui';
 
 /** @type {Location[]} */
-const locations = Object.values(locationsRaw.locations)
-  .flatMap(categoryLocations =>
-    Object.entries(categoryLocations)
-      .map(([filename, location]) => [
-        filename.replace('.json', ''), location
-      ])
-      .map(([filename, location]) => {
-        // since Condition.parent requires a circular reference, this can't be
-        // done in a pure way
-
-        location.filename = filename;
-
-        const conditions = location.conditions ?? singleton(location.condition);
-        for (const [i, condition] of Object.entries(conditions)) {
-          condition.identifier = `${filename}/${i}`;
-          condition.parent = location;
-        }
-
-        return location;
-      })
-  );
+const locations = locationsRaw
+  .map(location => {
+    const conditions = location.conditions ?? singleton(location.condition);
+    for (const condition of conditions) {
+      condition.parent = location;
+    }
+    return location;
+  })
 
 // this is structured rather differently than yno-server's badges.go impl - this
 // is mostly just because i like it better this way

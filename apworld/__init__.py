@@ -179,7 +179,7 @@ text_condition_logic = {
         lambda state, self:
             # the route is: Home Within Nowhere → Pure White Lands → Lamplit Stones → Adabana Gardens/Field of Cosmos → Bubble World → Red Sewers → Wooded Lakeside A → Oblique Hell → Wooded Lakeside B
             all(state.can_reach_region(region, self.player) for region in [
-                "Home Within Nowhere", "Pure White Lands", "Lamplit Stones", "Bubble World", "Rew Sewers", "Wooded Lakeside A", "Oblique Hell"
+                "Home Within Nowhere", "Pure White Lands", "Lamplit Stones", "Bubble World", "Red Sewers", "Wooded Lakeside A", "Oblique Hell"
             ]) and
             (state.can_reach_region("Adabana Gardens", self.player) or state.can_reach_region("Field of Cosmos", self.player)),
     "Enter all four transition hallways. The entrance will be in the last one": True,
@@ -677,7 +677,7 @@ text_condition_logic = {
     "If this world was reached via Promnesic Terminal":
         lambda state, self: state.can_reach_entrance("Promnesic Terminal -> Solemn Meadow", self.player),
     "If this world was reached via Mystery Zone":
-        lambda state, self: state.can_reach_entrance("Promnesic Terminal -> Mystery Zone", self.player),
+        lambda state, self: state.can_reach_entrance("Mystery Zone -> Solemn Meadow", self.player),
 }
 
 class Yume2kkiWorld(World):

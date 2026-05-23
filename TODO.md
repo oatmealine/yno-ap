@@ -7,6 +7,8 @@ Common:
   - [ ] Minigame goals
 
 APWorld:
+  - [ ] Try switching to rule builder, maybe
+  - [ ] Exclude any associated can_reach_location-reliant checks if the given location is excluded
   - [ ] Figure out how to make chance threshold more granular
   - [x] Vending machines
     - [x] Logic (kind of? needs testing)
@@ -15,6 +17,9 @@ APWorld:
     - [ ] Logic
   - [x] Events
     - [x] Logic
+  - [x] Menu themes
+    - [x] Logic
+    - [ ] Toggleable (probably would just mean excluding them and associated locations)
   - [ ] Minigame goals
   - [x] Wallpapers
     - [ ] Logic
@@ -73,6 +78,8 @@ Client:
   - [ ] Award location on mask purchase
   - [ ] Award location on event trigger
   - [ ] Award location on minigame goal
+  - [ ] Award location on menu theme
+    - [ ] [AU] Turn menu themes into items, maybe
   - [ ] Minigames as hint games
   - [ ] Award location on Kura Puzzle
     - [ ] Implement solve mode

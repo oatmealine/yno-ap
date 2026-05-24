@@ -600,8 +600,6 @@ locations += [
 
     # https://yume.wiki/2kki/Masks
     # TODO
-    # https://yume.wiki/2kki/Kura_Puzzles
-    # TODO
     # https://yume.wiki/2kki/Menu_Themes
     Yume2kkiLocationData(name="Menu Theme #6", type=Yume2kkiLocationType.MENU_THEME, region="Urotsuki's Dream Apartments",
         logic=lambda state, self: state.can_reach_location("Bleak Future", self.player)),
@@ -768,6 +766,19 @@ for wallpaper in wallpaper_data:
         name=f"Wallpaper #{wallpaper["id"]}: {wallpaper["title"]}",
         type=Yume2kkiLocationType.WALLPAPER,
         region="Wallpapers"
+    ))
+
+# kura puzzle locations
+
+for kura_puzzle in kura_puzzle_data:
+    # TODO logic
+    name = f"Kura Puzzle #{kura_puzzle["id"]}"
+    if kura_puzzle["title"]:
+        name += ": " + kura_puzzle["title"]
+    locations.append(Yume2kkiLocationData(
+        name=name,
+        type=Yume2kkiLocationType.KURA_PUZZLE,
+        region="Kura Puzzles"
     ))
 
 # VM locations

@@ -749,7 +749,7 @@ class Yume2kkiWorld(World):
         if self.options.eventsanity:
             logger.warning(f"Yume 2kki: Eventsanity is not implemented on the client. Generated world may be impossible to complete.")
         if self.options.kura_puzzlesanity != KuraPuzzlesanity.option_ignore:
-            logger.warning(f"Yume 2kki: Kura Puzzlesanity is not implemented. No locations will be added.")
+            logger.warning(f"Yume 2kki: Kura Puzzlesanity is not implemented. Generated world may be impossible.")
         if self.options.npcsanity:
             logger.warning(f"Yume 2kki: NPCSanity is not implemented on the client. Generated world may be impossible to complete.")
         if self.options.expedition_mode:

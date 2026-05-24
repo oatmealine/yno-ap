@@ -41,7 +41,7 @@ class MinigameTreatment(Choice):
 
     **Locations:** _(Currently unimplemented)_ Completing certain tasks in minigames complete locations (eg. getting 2,500 score in FUJI), and the minigames themselves count as items
 
-    **Hints:** _(Currently unimplemented)_  Minigames are hint games that drop random hints when playing
+    **Hints:** _(Currently unimplemented on the client)_ Minigames are hint games that drop random hints when playing
     """
     display_name = "Minigame Treatment"
     option_ignore = 1
@@ -114,8 +114,6 @@ class HardNavigation(Toggle):
 
 class NexusKeys(Toggle):
     """
-    _(Currently unimplemented on the client)_
-
     Turns all Nexus warps into "key" items you must collect to use the warps.
     
     This does not prevent you from visiting the location, as any other means of entering it will still work.
@@ -176,6 +174,8 @@ class SplitEffects(Toggle):
 
 class MenuThemes(Toggle):
     """
+    _(Currently unimplemented on the client)_
+
     Picking up menu themes will count as locations.
 
     If disabled, menu themes will be excluded from receiving progression items. Any locations relying on menu themes for logic will also be excluded.

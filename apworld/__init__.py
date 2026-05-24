@@ -2,11 +2,12 @@ import logging
 import math
 
 from BaseClasses import MultiWorld, Item, Tutorial, Location, Region, ItemClassification, LocationProgressType
+from Options import OptionError
 from worlds.AutoWorld import World, CollectionState, WebWorld
 from worlds.generic.Rules import add_rule
 from typing import Dict, List, Callable
 
-from .Options import Yume2kkiOptions, MinigameTreatment, KuraPuzzlesanity, Wallpapersanity, Goal, AuthorGating, create_option_groups
+from .Options import Yume2kkiOptions, MinigameTreatment, KuraPuzzlesanity, Wallpapersanity, Goal, AuthorGating, ClientMode, create_option_groups
 from .data import items as item_data, locations as location_data, item_ids, location_ids, world_data, Yume2kkiItemData, Yume2kkiLocationData, Yume2kkiItemType, Yume2kkiLocationType, ConnType, sanitize_author_name
 
 logger = logging.getLogger("Yume 2kki")
@@ -704,7 +705,41 @@ class Yume2kkiWorld(World):
         self.precollected_items = []
         self.inaccessible_locations = []
 
-    #def generate_early(self):
+    def generate_early(self):
+        if self.options.client_mode == ClientMode.option_automatic:
+            logger.warning("Yume 2kki: Automatic mode is not implemented.")
+        if self.options.minigame_treatment == MinigameTreatment.option_locations:
+            logger.warning("Yume 2kki: Minigame Treatment: Locations is not implemented. No new locations will be added.")
+        if self.options.minigame_treatment == MinigameTreatment.option_hints:
+            logger.warning(f"Yume 2kki: Minigame Treatment: Hints is not implemented on the client.")
+        if "Ending #---" in self.options.ending_list:
+            logger.warning(f"Yume 2kki: Ending List: Logic for Ending #--- is not implemented. Generated world may be impossible.")
+        if "Ending #..." in self.options.ending_list:
+            logger.warning(f"Yume 2kki: Ending List: Logic for Ending #... is not implemented. Generated world may be impossible.")
+        if not self.options.hard_navigation:
+            logger.warning(f"Yume 2kki: Hard Navigation: False is not implemented. Will default to hard navigation.")
+        if self.options.text_events:
+            logger.warning(f"Yume 2kki: Text Events are not implemented on the client.")
+        if self.options.author_gating == AuthorGating.option_primary_author:
+            logger.warning(f"Yume 2kki: Author Gating is not implemented on the client.")
+        if self.options.author_gating == AuthorGating.option_contributing_authors:
+            logger.warning(f"Yume 2kki: Author Gating: Contributing Authors is not implemented.")
+        if self.options.menu_themes:
+            logger.warning(f"Yume 2kki: Menu Themes are not implemented on the client. Generated world may be impossible to complete.")
+        if self.options.masksanity:
+            logger.warning(f"Yume 2kki: Masksanity is not implemented. No locations will be added.")
+        if self.options.eventsanity:
+            logger.warning(f"Yume 2kki: Eventsanity is not implemented on the client. Generated world may be impossible to complete.")
+        if self.options.wallpapersanity != Wallpapersanity.option_ignore:
+            logger.warning(f"Yume 2kki: Wallpapersanity is not implemented. Generated world may be impossible.")
+        if self.options.eventsanity:
+            logger.warning(f"Yume 2kki: Eventsanity is not implemented on the client. Generated world may be impossible to complete.")
+        if self.options.kura_puzzlesanity != KuraPuzzlesanity.option_ignore:
+            logger.warning(f"Yume 2kki: Kura Puzzlesanity is not implemented. No locations will be added.")
+        if self.options.npcsanity:
+            logger.warning(f"Yume 2kki: NPCSanity is not implemented on the client. Generated world may be impossible to complete.")
+        if self.options.expedition_mode:
+            logger.warning(f"Yume 2kki: Expedition Mode is not implemented. No changes will be made to Locationsanity spread.")
 
     def create_items(self):
         for item in item_data:

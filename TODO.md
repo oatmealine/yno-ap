@@ -26,7 +26,7 @@ APWorld:
   - [ ] Minigame goals
   - [x] Wallpapers
     - [ ] Logic
-  - [ ] Kura Puzzles
+  - [x] Kura Puzzles
     - [ ] Logic
   - [x] NPCs
     - [x] Logic
@@ -36,9 +36,10 @@ APWorld:
   - [x] Effect unlocks
     - [x] Logic
   - [x] Author gating
-    - [ ] Contributing author gating
+    - [x] Contributing author gating
   - [x] Worlds (Locationsanity)
     - [x] Logic
+      - [ ] Move logic to data/ for consistency's sake
     - [ ] Expedition mode
     - World connection miscellanea
       - [x] Seasonal connections
@@ -47,7 +48,19 @@ APWorld:
       - Explicitly specify conditions
         - [x] Specify all explicit conditions
         - [x] Fake Apartments edgecase
-        - [ ] Check that the following regions are truly inaccessible: ['Maiden Outlook', "Unknown Child's Room", 'Deserted Center', 'Cocoa Trap Streets', 'Grayscale Mountain Ring', 'Gallery of Me', 'Ironashi Coast', 'Live Idol World', 'Emotional Stones']
+        - [ ] Check that the following regions are truly inaccessible:
+          - Cocoa Trap Streets
+          - Deserted Center
+          - Draft/Domino Maze
+          - Draft/Tomato Hole
+          - Emotional Stones
+          - False Guardians' Trials
+          - Gallery of Me
+          - Grayscale Mountain Ring
+          - Ironashi Coast
+          - Live Idol World
+          - Maiden Outlook
+          - Unknown Child's Room
       - [ ] Double-triple-quadruple check the dataset is good and correct
         - This probably just requires testing it a bunch
 

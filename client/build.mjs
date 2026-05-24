@@ -1,6 +1,7 @@
 import esbuild from 'esbuild';
 import fs from 'node:fs/promises';
 import { join } from 'node:path';
+import packageJson from './package.json' with { type: 'json' };
 
 const locationImporter = {
   name: 'location-importer',
@@ -49,7 +50,7 @@ const config = {
   entryPoints: [ 'src/index.user.js' ],
   outdir: 'dist/',
   bundle: true,
-  banner: { js: await fs.readFile('src/index.header.js', 'utf8') },
+  banner: { js: (await fs.readFile('src/index.header.js', 'utf8')).replace('{VERSION}', packageJson.version) },
   plugins: [
     locationImporter,
   ],

@@ -6,14 +6,6 @@ import { addWarningElement, updateCanvasOverlays as sessionUpdateCanvasOverlays 
 import { globalStore, saveGlobal } from './store';
 import { connect } from './archipelago-client';
 
-/*
-  name: 'yno AP client',
-  match: [ 'https://ynoproject.net/*' ],
-  version: pkg.version,
-  grant: 'none',
-  runAt: 'document-end',
-*/
-
 console.log('[yno-ap-client] hello from yno AP client \\o/');
 
 patchWebsocketClass();

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YNO Archipelago Client
 // @namespace    zone.oat.yno-ap
-// @version      0.1.0
+// @version      {VERSION}
 // @author       moonstruck.nectar
 // @description  Client for the YNO Archipelago impelementation (Yume 2kki)
 // @icon         https://raw.githubusercontent.com/oatmealine/yno-ap/refs/heads/main/common/ap-2kki.png

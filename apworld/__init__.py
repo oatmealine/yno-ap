@@ -8,7 +8,7 @@ from worlds.generic.Rules import add_rule
 from typing import Dict, List, Callable
 
 from .Options import Yume2kkiOptions, MinigameTreatment, KuraPuzzlesanity, Wallpapersanity, Goal, AuthorGating, ClientMode, create_option_groups
-from .data import items as item_data, locations as location_data, item_ids, location_ids, world_data, Yume2kkiItemData, Yume2kkiLocationData, Yume2kkiItemType, Yume2kkiLocationType, ConnType, sanitize_author_name
+from .data import items as item_data, locations as location_data, item_ids, location_ids, world_data, connection_data, Yume2kkiItemData, Yume2kkiLocationData, Yume2kkiItemType, Yume2kkiLocationType, ConnType, sanitize_author_name
 
 logger = logging.getLogger("Yume 2kki")
 
@@ -682,6 +682,19 @@ text_condition_logic = {
         lambda state, self: state.can_reach_entrance("Promnesic Terminal -> Solemn Meadow", self.player),
     "If this world was reached via Mystery Zone":
         lambda state, self: state.can_reach_entrance("Mystery Zone -> Solemn Meadow", self.player),
+    "🔐✨☠️ If Katana Man was chainsawed in Scribbled Worksite, from a chaser that can trap you in the opposite side / (↩️/⛔) Supposed to be to an isolated section, however by an issue it could be one-way to the main area of this location":
+        False,
+    "🚷 From a chaser in the opposite area / 🔐✨(🚩/➡️) If Katana Man was chainsawed in Scribbled Worksite, supposed to lead to an isolated section, however by an issue it could be one-way to the main area":
+        lambda state, self: state.has("Chainsaw", self.player) and state.can_reach_region("Scribbled Worksite", self.player),
+    # TODO: disconnect Scribbled Worksite - Partial from the full version, then change the origin of this to the Partial ver. requires a refactor
+    "⛔ From the main area / ↩️➡️ From the isolated section of this area through Crazy Pink House":
+        True,
+    "With 1000夢 the most or 0夢 the least, depending on how many flowers Urotsuki earned in Obstacle Course's hard mode":
+        True,
+    "✨➡️ With the Chainsaw effect, one-way to main area / ⛔ From the isolated section of Scribbled Worksite through Crazy Pink House":
+        lambda state, self: state.has("Chainsaw", self.player),
+    "Earning all three flowers in Obstacle Course's hard mode":
+        lambda state, self: state.can_reach_region("Obstacle Course", self.player),
 }
 
 class Yume2kkiWorld(World):
@@ -773,8 +786,8 @@ class Yume2kkiWorld(World):
             if self.options.nexus_keys:
                 req_worlds.append(nexus_key)
             for world_name in req_worlds:
-                world = next(w for w in world_data if w["title"] == world_name)
-                for author in world["author"].split(", "):
+                world = next(w for w in world_data if w["name"] == world_name)
+                for author in world["primaryAuthors"]:
                     author_name = sanitize_author_name(author)
                     if author_name not in self.precollected_items:
                         self.precollected_items.append(author_name)
@@ -890,13 +903,15 @@ class Yume2kkiWorld(World):
         regions["Kura Puzzles"] = Region("Kura Puzzles", self.player, self.multiworld)
 
         for world in world_data:
-            if world["title"] in forbidden_worlds:
+            if world["name"] in forbidden_worlds:
                 continue
 
-            region = Region(world["title"], self.player, self.multiworld)
+            region = Region(world["name"], self.player, self.multiworld)
             regions[region.name] = region
-            region_partial = Region(world["title"] + " - Partial", self.player, self.multiworld)
+            region_partial = Region(world["name"] + " - Partial", self.player, self.multiworld)
             regions[region_partial.name] = region_partial
+
+            region.connect(region_partial, f"{world["name"]} (Full -> Partial)")
         
         # win condition
 
@@ -928,121 +943,109 @@ class Yume2kkiWorld(World):
         regions["Game Console"].connect(regions["Kura Puzzles"], "Game Console -> Kura Puzzles")
 
         # location connection & logic
-        for world in world_data:
-            if world["title"] not in regions:
+        for connection in connection_data:
+            if connection["from"] in forbidden_worlds or connection["to"] in forbidden_worlds:
                 continue
 
-            region = regions[world["title"]]
-            connections = world["connections"]
+            world = next((world for world in world_data if world["name"] == connection["from"]), None)
+            if not world:
+                continue
+            target_world = next((world for world in world_data if world["name"] == connection["to"]), None)
+            if not target_world:
+                continue
 
-            for connection in connections:
-                target_id = connection["targetId"]
-                target_world = next((world for world in world_data if world["id"] == target_id), None)
-                if target_world is None:
-                    logger.warning(f"Yume 2kki: Could not find world from ID {target_id}")
+            region = regions[world["name"]]
+            target_region = regions[target_world["name"]]
+
+            is_dead_end = False
+            is_exit_point = False
+            rules = []
+            name = f"{world["name"]} -> {target_world["name"]}"
+
+            if not self.options.hard_navigation:
+                # using the wiki/explorer depths is unreliable
+                #if world["depth"] > target_world["depth"] and world["minDepth"] > target_world["minDepth"] and name not in hard_navigation_whitelist:
+                #    continue
+                # TODO come up with an alt solution
+                if False:
                     continue
-                if target_world["title"] not in regions:
-                    continue
-                target_region = regions[target_world["title"]]
 
-                is_dead_end = False
-                is_exit_point = False
-                rules = []
-                name = f"{world["title"]} -> {target_world["title"]}"
+            t = connection["type"]
 
-                if not self.options.hard_navigation:
-                    # using the wiki/explorer depths is unreliable
-                    #if world["depth"] > target_world["depth"] and world["minDepth"] > target_world["minDepth"] and name not in hard_navigation_whitelist:
-                    #    continue
-                    # TODO come up with an alt solution
-                    if False:
+            # wiki marks all trophy room connections as dead-ends, but for our purposes they're fully accessible, just one-way
+            if target_region.name == "Trophy Room":
+                t = 0
+
+            if t & ConnType.NO_ENTRY.value:
+                continue
+            if t & ConnType.LOCKED.value:
+                rules.append(lambda state, target_region_name=target_region.name: state.can_reach_region(target_region_name, self.player))
+            if t & ConnType.DEAD_END.value and target_region.name != "Lamplit Stones": # TODO temp data fix
+                is_dead_end = True
+            if t & ConnType.ISOLATED.value:
+                continue
+            if t & ConnType.EFFECT.value:
+                effects = connection["params"][str(ConnType.EFFECT.value)]
+                for effect in effects:
+                    item = next((item for item in item_data if item.name == effect), None)
+                    if item is None:
+                        logger.warning(f"Yume 2kki: unknown effect used for {name} connection: {effect}")
+                
+                rules.append(lambda state, effects=effects: state.has_all(effects, self.player))
+            if t & ConnType.CHANCE.value:
+                chance = connection["params"][str(ConnType.CHANCE.value)]
+                if chance == "0%":
+                    logger.warning(f"Yume 2kki: {world["name"]} -> {target_world["name"]} - chance for connection unknown")
+                    if self.options.chance_threshold == 100:
                         continue
-
-                t = connection["type"]
-
-                # wiki marks all trophy room connections as dead-ends, but for our purposes they're fully accessible, just one-way
-                if target_region.name == "Trophy Room":
-                    t = 0
-
-                if t & ConnType.NO_ENTRY.value:
+                elif not self.can_roll(float(chance[:-1]) / 100):
                     continue
-                if t & ConnType.LOCKED.value:
-                    rules.append(lambda state, target_region_name=target_region.name: state.can_reach_region(target_region_name, self.player))
-                if t & ConnType.DEAD_END.value:
-                    is_dead_end = True
-                if t & ConnType.ISOLATED.value:
-                    continue
-                if t & ConnType.EFFECT.value:
-                    effect_names = connection["typeParams"][str(ConnType.EFFECT.value)]["params"]
-                    # fix inconsistencies
-                    effect_names = effect_names.replace('Teru Teru Bozu', 'Teru Teru Bōzu')
-                    effect_names = effect_names.replace('&comma;', ',')
-                    effect_names = effect_names.replace(';', ',')
-                    effect_names = effect_names.replace('Gakuran', 'School Boy')
-                    effects = [effect.strip() for effect in effect_names.split(',')]
-                    for effect in effects:
-                        item = next((item for item in item_data if item.name == effect), None)
-                        if item is None:
-                            logger.warning(f"Yume 2kki: unknown effect used for {name} connection: {effect}")
-                    
-                    rules.append(lambda state, effects=effects: state.has_all(effects, self.player))
-                if t & ConnType.CHANCE.value:
-                    chance = connection["typeParams"][str(ConnType.CHANCE.value)]["params"]
-                    if chance == "0%":
-                        logger.warning(f"Yume 2kki: {world["title"]} -> {target_world["title"]} - chance for connection unknown")
-                        if self.options.chance_threshold == 100:
-                            continue
-                    elif not self.can_roll(float(chance[:-1]) / 100):
+            if t & ConnType.LOCKED_CONDITION.value:
+                condition = connection["params"][str(ConnType.LOCKED_CONDITION.value)]
+                if condition in text_condition_logic:
+                    condition_logic = text_condition_logic[condition]
+                    if condition_logic == False:
                         continue
-                if t & ConnType.LOCKED_CONDITION.value:
-                    condition = connection["typeParams"][str(ConnType.LOCKED_CONDITION.value)]["params"]
-                    if condition in text_condition_logic:
-                        condition_logic = text_condition_logic[condition]
-                        if condition_logic == False:
-                            continue
-                        elif condition_logic != True:
-                            rules.append(lambda state, logic=condition_logic: logic(state, self))
-                    else:
-                        logger.warning(f"Yume 2kki: {world["title"]} -> {target_world["title"]} - stub; cond unimplemented ({condition})")
-                        continue
-                if t & ConnType.EXIT_POINT.value:
-                    is_exit_point = True
-                if t & ConnType.SEASONAL.value:
-                    # TODO: fix for multiple possible seasons
-                    if not self.can_roll(1/4):
-                        continue
-                if t & ConnType.INACCESSIBLE.value:
+                    elif condition_logic != True:
+                        rules.append(lambda state, logic=condition_logic: logic(state, self))
+                else:
+                    logger.warning(f"Yume 2kki: {world["name"]} -> {target_world["name"]} - stub; cond unimplemented ({condition})")
                     continue
-                if t & ConnType.TRACKED.value:
-                    logger.warning(f"Yume 2kki: {world["title"]} -> {target_world["title"]} - tracked stub")
+            if t & ConnType.EXIT_POINT.value:
+                is_exit_point = True
+            if t & ConnType.SEASONAL.value:
+                seasons = connection["params"][str(ConnType.SEASONAL.value)]
+                if not self.can_roll(len(seasons)/4):
                     continue
+            #if t & ConnType.INACCESSIBLE.value:
+            #    continue
+            #if t & ConnType.TRACKED.value:
+            #    logger.warning(f"Yume 2kki: {world["name"]} -> {target_world["name"]} - tracked stub")
+            #    continue
 
-                # nexus key check
-                if self.options.nexus_keys and region.name == "Nexus" and target_region.name != "Urotsuki's Room" and target_region.name in self.items:
-                    rules.append(lambda state, item_name=target_region.name: state.has(item_name, self.player))
+            # nexus key check
+            if self.options.nexus_keys and region.name == "Nexus" and target_region.name != "Urotsuki's Room" and target_region.name in self.items:
+                rules.append(lambda state, item_name=target_region.name: state.has(item_name, self.player))
 
-                # author gating check
-                if self.options.author_gating != AuthorGating.option_disable:
-                    authors = map(sanitize_author_name, target_world["author"].split(", "))
-                    rules.append(lambda state, authors=authors: state.has_all(authors, self.player))
+            # author gating check
+            if self.options.author_gating != AuthorGating.option_disable:
+                authors = map(sanitize_author_name, target_world["primaryAuthors"])
+                rules.append(lambda state, authors=authors: state.has_all(authors, self.player))
 
-                # this is made with the foolish assumption that all dead ends in
-                # a given location will connect, but not making this assumption
-                # results in much more false negatives, leading to fill errors
-                region_entrance = region
-                region_exit = target_region
-                if is_exit_point:
-                    region_entrance = regions[world["title"] + " - Partial"]
-                if is_dead_end:
-                    region_exit = regions[target_world["title"] + " - Partial"]
+            # this is made with the foolish assumption that all dead ends in
+            # a given location will connect, but not making this assumption
+            # results in much more false negatives, leading to fill errors
+            region_entrance = region
+            region_exit = target_region
+            if is_exit_point:
+                region_entrance = regions[world["name"] + " - Partial"]
+            if is_dead_end:
+                region_exit = regions[target_world["name"] + " - Partial"]
 
-                entrance = region_entrance.connect(region_exit, name)
+            entrance = region_entrance.connect(region_exit, name)
 
-                for rule in rules:
-                    add_rule(entrance, rule)
-
-            if world["title"] + " - Partial" in regions:
-                region.connect(regions[world["title"] + " - Partial"], f"{world["title"]} (Full -> Partial)")
+            for rule in rules:
+                add_rule(entrance, rule)
 
         # trim off inaccessible regions
         # does a flood fill type thing

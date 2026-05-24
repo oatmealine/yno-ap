@@ -47,8 +47,6 @@ ask if anything's unclear.
 
 ### scripts
 
-- `scripts/wrapper_dl.py`: Downloads `wrapper.yume.wiki` data and stores it as a
-single JSON. Instructions in script.
 - `scripts/validate_locations.mjs`: Validates `client/locations/` locations.
 This will parse the JSON, validate the schema, and look for common pitfalls.
 Requires `python3` to be in path, as it evaluates `apworld/data/__init__.py` to

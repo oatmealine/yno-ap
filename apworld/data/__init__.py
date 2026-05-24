@@ -7,16 +7,21 @@ if TYPE_CHECKING:
 from collections import defaultdict
 
 world_data = []
-wallpaper_data = []
+connection_data = []
 vm_data = []
+wallpaper_data = []
+kura_puzzle_data = []
 
-with files().joinpath("data.json").open() as file:
-    data = json.load(file)
-    world_data = data["worldData"]
-    wallpaper_data = data["wallpaperData"]
-
+with files().joinpath("worlds.json").open() as file:
+    world_data = json.load(file)
+with files().joinpath("connections.json").open() as file:
+    connection_data = json.load(file)
 with files().joinpath("vms.json").open() as file:
     vm_data = json.load(file)
+with files().joinpath("wallpapers.json").open() as file:
+    wallpaper_data = json.load(file)
+with files().joinpath("kura_puzzles.json").open() as file:
+    kura_puzzle_data = json.load(file)
 
 class Yume2kkiItemType(enum.Enum):
     EFFECT = "Effect"
@@ -55,11 +60,11 @@ class ConnType(enum.Enum):
     EXIT_POINT = 1024
     """Exit Point - ???"""
     SEASONAL = 2048
-    """Seasonal - only accessible during a certain season (???)"""
-    INACCESSIBLE = 4096
-    """Inaccessible - take a guess"""
-    TRACKED = 8192
-    """Tracked - ???"""
+    """Seasonal - only accessible during a certain season"""
+    #INACCESSIBLE = 4096
+    #"""Inaccessible - take a guess"""
+    #TRACKED = 8192
+    #"""Tracked - ???"""
 
 items: List[Yume2kkiItemData] = []
 
@@ -144,7 +149,7 @@ items += [
 authors = set()
 
 for world in world_data:
-    for author in world["author"].split(", "):
+    for author in world["primaryAuthors"]:
         authors.add(author)
 
 def sanitize_author_name(author):
@@ -154,7 +159,6 @@ def sanitize_author_name(author):
 
 for author in sorted(authors):
     author_name = sanitize_author_name(author)
-
     items.append(
         Yume2kkiItemData(name=author_name, type=Yume2kkiItemType.AUTHOR)
     )
@@ -736,21 +740,21 @@ locationsanity_blacklist = [
 ]
 
 for world in world_data:
-    if world["title"] in locationsanity_blacklist:
+    if world["name"] in locationsanity_blacklist:
         continue
 
     # logic handled by root apworld
     locations.append(Yume2kkiLocationData(
-        name=world["title"],
+        name=world["name"],
         type=Yume2kkiLocationType.LOCATION,
-        region=world["title"] + " - Partial"
+        region=world["name"] + " - Partial"
     ))
 
 # wallpaper locations
 for wallpaper in wallpaper_data:
     # TODO logic
     locations.append(Yume2kkiLocationData(
-        name=f"WP{wallpaper["wallpaperId"]} - {wallpaper["name"]}",
+        name=f"Wallpaper #{wallpaper["id"]}: {wallpaper["title"]}",
         type=Yume2kkiLocationType.WALLPAPER,
         region="Wallpapers"
     ))

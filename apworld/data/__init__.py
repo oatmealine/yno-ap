@@ -177,6 +177,7 @@ class Yume2kkiLocationData(NamedTuple):
     type: Yume2kkiLocationType
     region: str
     logic: Optional[Callable]
+    exclude_if: Optional[Callable]
     split_effect: Optional[bool]
 Yume2kkiLocationData.__new__.__defaults__ = (None,) * len(Yume2kkiLocationData._fields)
 
@@ -200,16 +201,20 @@ locations += [
     Yume2kkiLocationData(name="Ending #2", type=Yume2kkiLocationType.ENDING, region="Trophy Room", logic=has_all_effects),
     Yume2kkiLocationData(name="Ending #3", type=Yume2kkiLocationType.ENDING, region="Trophy Room", logic=has_all_effects),
     Yume2kkiLocationData(name="Ending #4", type=Yume2kkiLocationType.ENDING, region="Trophy Room",
-        logic=lambda state, self: has_all_effects(state, self) and can_get_500_wallpapers(state, self)),
+        logic=lambda state, self: has_all_effects(state, self) and can_get_500_wallpapers(state, self),
+        exclude_if=lambda self: self.options.wallpapersanity == 1), # TODO wallpapersanity hardcoded enum sucks here too
     Yume2kkiLocationData(name="Ending #-1", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Room",
         logic=lambda state, self: has_all_effects(state, self)
             and state.can_reach_region("Flying Fish World", self.player)
             and state.can_reach_region("Rough Ash World", self.player)
             and state.can_reach_region("Green Neon World", self.player)),
     # logic for these is really difficult to implement
-    #Yume2kkiLocationData(name="Ending #---", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Room"),
-    #Yume2kkiLocationData(name="Ending #...", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Room"),
-    Yume2kkiLocationData(name="Bleak Future", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Dream Apartments"),
+    Yume2kkiLocationData(name="Ending #---", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Room",
+        exclude_if=lambda self: True),
+    Yume2kkiLocationData(name="Ending #...", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Room",
+        exclude_if=lambda self: True),
+    Yume2kkiLocationData(name="Bleak Future", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Dream Apartments",
+        exclude_if=lambda self: not self.can_roll(1/64)),
     Yume2kkiLocationData(name="Ending #?", type=Yume2kkiLocationType.ENDING, region="Urotsuki's Room",
         logic=lambda state, self: state.count_from_list((item.name for item in items if item.type == Yume2kkiItemType.EFFECT), self.player) >= 24),
 
@@ -422,7 +427,8 @@ locations += [
     Yume2kkiLocationData(name="Amusement Park Clown Hell", type=Yume2kkiLocationType.EVENT, region="Underwater Amusement Park"),
     Yume2kkiLocationData(name="Ancient Rave", type=Yume2kkiLocationType.EVENT, region="Ancient Crypt"),
     Yume2kkiLocationData(name="Anetra's Rave", type=Yume2kkiLocationType.EVENT, region="Pinwheel Countryside"),
-    Yume2kkiLocationData(name="Aooh", type=Yume2kkiLocationType.EVENT, region="Ahogeko's House"), # TODO: 1/64 chance
+    Yume2kkiLocationData(name="Aooh", type=Yume2kkiLocationType.EVENT, region="Ahogeko's House",
+        exclude_if=lambda self: not self.can_roll(1/64)),
     Yume2kkiLocationData(name="Big Red", type=Yume2kkiLocationType.EVENT, region="Abandoned Factory"),
     Yume2kkiLocationData(name="Blood Sacrifice", type=Yume2kkiLocationType.EVENT, region="Blood World",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
@@ -430,20 +436,23 @@ locations += [
         logic=lambda state, self: state.can_reach_region("Library", self.player) and state.has("Glasses", self.player)),
     Yume2kkiLocationData(name="Buddha Rave", type=Yume2kkiLocationType.EVENT, region="Marijuana Goddess World"),
     Yume2kkiLocationData(name="Butcher's Wrath", type=Yume2kkiLocationType.EVENT, region="Mutant Pig Farm",
-        logic=lambda state, self: state.has("Marginal", self.player)), # TODO: 1/1024 chance
-    Yume2kkiLocationData(name="Chasers in Urotsuki's Room", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments"), # TODO: 1/64 chance
+        logic=lambda state, self: state.has("Marginal", self.player),
+        exclude_if=lambda self: not self.can_roll(1/1024)),
+    Yume2kkiLocationData(name="Chasers in Urotsuki's Room", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments",
+        exclude_if=lambda self: not self.can_roll(1/64)),
     Yume2kkiLocationData(name="Chasers in the Woods", type=Yume2kkiLocationType.EVENT, region="Fairy Tale Woods"),
     Yume2kkiLocationData(name="The Cloning Room", type=Yume2kkiLocationType.EVENT, region="Red Brick Maze"),
     Yume2kkiLocationData(name="Giant Cloning Room", type=Yume2kkiLocationType.EVENT, region="Red Brick Maze",
-        logic=lambda state, self: state.can_reach_location("Ending #4", self.player)), # TODO: 1/10 chance; exclude if ending #4 is excluded
+        logic=lambda state, self: state.can_reach_location("Ending #4", self.player),
+        exclude_if=lambda self: not self.can_roll(1/10)),
     Yume2kkiLocationData(name="Clowns at the Circus", type=Yume2kkiLocationType.EVENT, region="Circus"),
     Yume2kkiLocationData(name="The Colossus of Rhomb", type=Yume2kkiLocationType.EVENT, region="Square-Square World",
         logic=lambda state, self:
             state.can_reach_region("Flying Fish World", self.player) or
             (state.can_reach_region("Cog Maze", self.player) and (state.can_reach_region("Japan Town", self.player) or True))), # TODO: replace True with unknown chance check
     Yume2kkiLocationData(name="Corrupted Nexus", type=Yume2kkiLocationType.EVENT, region="Nexus",
-        # TODO: 1/1011 chance check
-        logic=lambda state, self: state.can_reach_location("Menu Theme #52", self.player)
+        logic=lambda state, self: state.can_reach_location("Menu Theme #52", self.player),
+        exclude_if=lambda self: not self.can_roll(1/1011) or self.is_excluded("Menu Theme #52")
     ),
     Yume2kkiLocationData(name="Creatures of the Power Plant", type=Yume2kkiLocationType.EVENT, region="Power Plant"),
     Yume2kkiLocationData(name="The Cursed Corridor", type=Yume2kkiLocationType.EVENT, region="Execution Ground",
@@ -467,11 +476,14 @@ locations += [
             state.has_any(["Fairy", "Spacesuit"], self.player) and
             state.has_any(["Spring", "Bat"], self.player) and
             state.has("Haniwa", self.player) and
-            state.has_all(["Chainsaw", "Child"], self.player)), # TODO: 50% chance
+            state.has_all(["Chainsaw", "Child"], self.player),
+        exclude_if=lambda self: self.options.chance_threshold/100 < 0.5),
     Yume2kkiLocationData(name="The Fisherman", type=Yume2kkiLocationType.EVENT, region="School",
         logic=lambda state, self: state.has("Penguin", self.player)),
-    Yume2kkiLocationData(name="Flight", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments"), # TODO: 1/9 chance
-    Yume2kkiLocationData(name="The Flying Whale", type=Yume2kkiLocationType.EVENT, region="Paradise"), # TODO: 1/5 chance
+    Yume2kkiLocationData(name="Flight", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments",
+        exclude_if=lambda self: not self.can_roll(1/9)),
+    Yume2kkiLocationData(name="The Flying Whale", type=Yume2kkiLocationType.EVENT, region="Paradise",
+        exclude_if=lambda self: not self.can_roll(1/5)),
     Yume2kkiLocationData(name="Flower Lady", type=Yume2kkiLocationType.EVENT, region="Apartments",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="Fresh Bait", type=Yume2kkiLocationType.EVENT, region="Blizzard Plains"),
@@ -485,11 +497,13 @@ locations += [
         logic=lambda state, self: state.has("Haniwa", self.player)),
     Yume2kkiLocationData(name="The Haunted Cabinet", type=Yume2kkiLocationType.EVENT, region="Nostalgic House"),
     Yume2kkiLocationData(name="High Priestess", type=Yume2kkiLocationType.EVENT, region="Forest Carnival",
-        logic=lambda state, self: state.has_all(["Chainsaw", "Crossing"], self.player)), # TODO: 1/5 chance
+        logic=lambda state, self: state.has_all(["Chainsaw", "Crossing"], self.player),
+        exclude_if=lambda self: not self.can_roll(1/5)),
     Yume2kkiLocationData(name="Honoring the Dead", type=Yume2kkiLocationType.EVENT, region="Dream Mexico"),
     Yume2kkiLocationData(name="The Hospital Chainsaw Massacre", type=Yume2kkiLocationType.EVENT, region="Hospital"),
     Yume2kkiLocationData(name="Into the Mirror", type=Yume2kkiLocationType.EVENT, region="Jigsaw Puzzle World"),
-    Yume2kkiLocationData(name="It Came From Behind", type=Yume2kkiLocationType.EVENT, region="Neon City"), # TODO: 1/2500 chance
+    Yume2kkiLocationData(name="It Came From Behind", type=Yume2kkiLocationType.EVENT, region="Neon City",
+        exclude_if=lambda self: not self.can_roll(1/2500)),
     Yume2kkiLocationData(name="Japanese Turntables Event", type=Yume2kkiLocationType.EVENT, region="Urban Street Area",
         logic=lambda state, self: state.has("Fairy", self.player)),
     Yume2kkiLocationData(name="Lonely Urotsuki", type=Yume2kkiLocationType.EVENT, region="Underwater Amusement Park"),
@@ -502,14 +516,17 @@ locations += [
     Yume2kkiLocationData(name="Mirror Urotsuki", type=Yume2kkiLocationType.EVENT, region="Day and Night Towers",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="Monochrome Eye", type=Yume2kkiLocationType.EVENT, region="Flying Fish World"),
-    Yume2kkiLocationData(name="Monochromatic Flying Creature", type=Yume2kkiLocationType.EVENT, region="Monochromatic Abyss"), # TODO: 1/2500 chance
+    Yume2kkiLocationData(name="Monochromatic Flying Creature", type=Yume2kkiLocationType.EVENT, region="Monochromatic Abyss",
+        exclude_if=lambda self: not self.can_roll(1/2500)),
     Yume2kkiLocationData(name="Mutation", type=Yume2kkiLocationType.EVENT, region="Parasite Laboratory",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="The Nail Lady", type=Yume2kkiLocationType.EVENT, region="Nail World",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
-    Yume2kkiLocationData(name="Neon Sea Monster", type=Yume2kkiLocationType.EVENT, region="Neon Sea"), # TODO: 1/500 chance
+    Yume2kkiLocationData(name="Neon Sea Monster", type=Yume2kkiLocationType.EVENT, region="Neon Sea",
+        exclude_if=lambda self: not self.can_roll(1/500)),
     Yume2kkiLocationData(name="Nurie Event", type=Yume2kkiLocationType.EVENT, region="Library",
-        logic=lambda state, self: state.can_reach_region("Bishop Cathedral", self.player) and state.has("Child", self.player)), # TODO: 1/48 chance
+        logic=lambda state, self: state.can_reach_region("Bishop Cathedral", self.player) and state.has("Child", self.player),
+        exclude_if=lambda self: not self.can_roll(1/48)),
     Yume2kkiLocationData(name="Odorika's Dance", type=Yume2kkiLocationType.EVENT, region="Red Streetlight World",
         logic=lambda state, self: state.has("Maiko", self.player)),
     Yume2kkiLocationData(name="Operator Cyborg (event)", type=Yume2kkiLocationType.EVENT, region="Rusty Urban Complex - Partial",
@@ -520,12 +537,13 @@ locations += [
     Yume2kkiLocationData(name="Photorealistic Event", type=Yume2kkiLocationType.EVENT, region="Fused Faces World"),
     Yume2kkiLocationData(name="Possessed by Yourself", type=Yume2kkiLocationType.EVENT, region="Static Noise Hell"),
     Yume2kkiLocationData(name="Resentment", type=Yume2kkiLocationType.EVENT, region="Crescent Tile World",
-        logic=lambda state, self: state.has("Lantern", self.player)), # TODO or 1/64 chance
+        logic=lambda state, self: state.has("Lantern", self.player) or not self.can_roll(1/64)),
     Yume2kkiLocationData(name="Retaliation", type=Yume2kkiLocationType.EVENT, region="Gemstone Cave",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
     Yume2kkiLocationData(name="Rise and Shine!", type=Yume2kkiLocationType.EVENT, region="Pop Tiles Maze"),
     Yume2kkiLocationData(name="Rooftop", type=Yume2kkiLocationType.EVENT, region="Techno Condominium"),
-    Yume2kkiLocationData(name="Seishonen's Glitched Room", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments"), # TODO: 1/31 chance
+    Yume2kkiLocationData(name="Seishonen's Glitched Room", type=Yume2kkiLocationType.EVENT, region="Urotsuki's Dream Apartments",
+        exclude_if=lambda self: not self.can_roll(1/31)),
     Yume2kkiLocationData(name="Screaming Forest", type=Yume2kkiLocationType.EVENT, region="Bright Forest"),
     Yume2kkiLocationData(name="Shadow Lady Forest", type=Yume2kkiLocationType.EVENT, region="Forest World",
         logic=lambda state, self: state.has("Chainsaw", self.player)),
@@ -557,10 +575,12 @@ locations += [
         logic=lambda state, self: state.has("Dice", self.player)), # TODO: unknown chance
     Yume2kkiLocationData(name="White Drooling Creature", type=Yume2kkiLocationType.EVENT, region="Apartments",
         logic=lambda state, self: state.can_reach_region("Library", self.player)),
-    Yume2kkiLocationData(name="Woman and the Mirror", type=Yume2kkiLocationType.EVENT, region="Ocean Storehouse"), # TODO: 1/11 chance
+    Yume2kkiLocationData(name="Woman and the Mirror", type=Yume2kkiLocationType.EVENT, region="Ocean Storehouse",
+        exclude_if=lambda self: not self.can_roll(1/11)),
     Yume2kkiLocationData(name="Watching and Warning Sign", type=Yume2kkiLocationType.EVENT, region="Foggy Remnants"),
     Yume2kkiLocationData(name="Zalgo (event)", type=Yume2kkiLocationType.EVENT, region="Magnet Room"),
-    Yume2kkiLocationData(name="???-tsuki and the Liar's Vision", type=Yume2kkiLocationType.EVENT, region="Unknown Child's Room"), # TODO: 1/28 chance
+    Yume2kkiLocationData(name="???-tsuki and the Liar's Vision", type=Yume2kkiLocationType.EVENT, region="Unknown Child's Room",
+        exclude_if=lambda self: not self.can_roll(1/28)),
     Yume2kkiLocationData(name="???-tsuki's Descent", type=Yume2kkiLocationType.EVENT, region="Second Nexus"),
 
     # https://yume.wiki/2kki/Masks
@@ -616,7 +636,8 @@ locations += [
     Yume2kkiLocationData(name="Menu Theme #44", type=Yume2kkiLocationType.MENU_THEME, region="Pastel Chalk World"),
     Yume2kkiLocationData(name="Menu Theme #45", type=Yume2kkiLocationType.MENU_THEME, region="Luminous Lake"),
     Yume2kkiLocationData(name="Menu Theme #46", type=Yume2kkiLocationType.MENU_THEME, region="Monochrome GB World"),
-    Yume2kkiLocationData(name="Menu Theme #47", type=Yume2kkiLocationType.MENU_THEME, region="Snowman World"), # TODO: 1/4 chance
+    Yume2kkiLocationData(name="Menu Theme #47", type=Yume2kkiLocationType.MENU_THEME, region="Snowman World",
+        exclude_if=lambda self: not self.can_roll(1/4)),
     Yume2kkiLocationData(name="Menu Theme #48", type=Yume2kkiLocationType.MENU_THEME, region="Sunset Hill"),
     Yume2kkiLocationData(name="Menu Theme #49", type=Yume2kkiLocationType.MENU_THEME, region="Horror Maze"),
     Yume2kkiLocationData(name="Menu Theme #50", type=Yume2kkiLocationType.MENU_THEME, region="Blue Restaurant",
@@ -658,7 +679,8 @@ locations += [
     Yume2kkiLocationData(name="Menu Theme #73", type=Yume2kkiLocationType.MENU_THEME, region="Megalith Grove"),
     Yume2kkiLocationData(name="Menu Theme #74", type=Yume2kkiLocationType.MENU_THEME, region="English Thundershower"),
     Yume2kkiLocationData(name="Menu Theme #75", type=Yume2kkiLocationType.MENU_THEME, region="Crescent Tile World",
-        logic=lambda state, self: state.has("Lantern", self.player)), # TODO or 1/64 chance
+        logic=lambda state, self: state.has("Lantern", self.player),
+        exclude_if=lambda self: not self.can_roll(1/64)),
     Yume2kkiLocationData(name="Menu Theme #76", type=Yume2kkiLocationType.MENU_THEME, region="Shaded Hallways"),
     Yume2kkiLocationData(name="Menu Theme #77", type=Yume2kkiLocationType.MENU_THEME, region="Alto"),
     Yume2kkiLocationData(name="Menu Theme #78", type=Yume2kkiLocationType.MENU_THEME, region="Dream Tropics"),
@@ -667,9 +689,11 @@ locations += [
     Yume2kkiLocationData(name="Menu Theme #81", type=Yume2kkiLocationType.MENU_THEME, region="Stone World"),
     Yume2kkiLocationData(name="Menu Theme #82", type=Yume2kkiLocationType.MENU_THEME, region="Verdant Promenade"),
     Yume2kkiLocationData(name="Menu Theme #83", type=Yume2kkiLocationType.MENU_THEME, region="Domino Maze",
-        logic=lambda state, self: state.has_all(["Chainsaw", "Fairy"], self.player)), # TODO 1/4 chance
+        logic=lambda state, self: state.has_all(["Chainsaw", "Fairy"], self.player),
+        exclude_if=lambda self: not self.can_roll(1/4)),
     Yume2kkiLocationData(name="Menu Theme #84", type=Yume2kkiLocationType.MENU_THEME, region="Domino Maze",
-        logic=lambda state, self: state.has("Chainsaw", self.player)), # TODO 1/4*1/7 chance OR 1/48 chance w/ Fairy
+        logic=lambda state, self: state.has("Chainsaw", self.player),
+        exclude_if=lambda self: not self.can_roll(1/28)),
     Yume2kkiLocationData(name="Menu Theme #85", type=Yume2kkiLocationType.MENU_THEME, region="Quarter Flats - Partial",
         logic=lambda state, self: state.can_reach_region("Somber Establishment", self.player) and state.can_reach_region("Pulsating Yellow Passage", self.player)),
     Yume2kkiLocationData(name="Menu Theme #86", type=Yume2kkiLocationType.MENU_THEME, region="Quarter Flats - Partial",
@@ -679,7 +703,8 @@ locations += [
     Yume2kkiLocationData(name="Menu Theme #88", type=Yume2kkiLocationType.MENU_THEME, region="The Desktop"),
     Yume2kkiLocationData(name="Menu Theme #89", type=Yume2kkiLocationType.MENU_THEME, region="Yellow Geometries"),
     Yume2kkiLocationData(name="Menu Theme #90", type=Yume2kkiLocationType.MENU_THEME, region="Neon Highway"),
-    Yume2kkiLocationData(name="Menu Theme #91", type=Yume2kkiLocationType.MENU_THEME, region="Highway"), # TODO: 1/6 chance
+    Yume2kkiLocationData(name="Menu Theme #91", type=Yume2kkiLocationType.MENU_THEME, region="Highway",
+        exclude_if=lambda self: not self.can_roll(1/6)),
     Yume2kkiLocationData(name="Menu Theme #92", type=Yume2kkiLocationType.MENU_THEME, region="Sushi Roll Swamp"),
     Yume2kkiLocationData(name="Menu Theme #93", type=Yume2kkiLocationType.MENU_THEME, region="Spirit Capital"),
     Yume2kkiLocationData(name="Menu Theme #94", type=Yume2kkiLocationType.MENU_THEME, region="Twisted Cone World"),

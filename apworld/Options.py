@@ -174,6 +174,15 @@ class SplitEffects(Toggle):
     display_name = "Split Effects"
     default = False
 
+class MenuThemes(Toggle):
+    """
+    Picking up menu themes will count as locations.
+
+    If disabled, menu themes will be excluded from receiving progression items. Any locations relying on menu themes for logic will also be excluded.
+    """
+    display_name = "Menu Themes"
+    default = False
+
 # TODO
 class Masksanity(Toggle):
     """
@@ -314,6 +323,7 @@ class Yume2kkiOptions(PerGameCommonOptions):
     author_gating: AuthorGating
 
     split_effects: SplitEffects
+    menu_themes: MenuThemes
     npcsanity: NPCSanity
     eventsanity: Eventsanity
     masksanity: Masksanity
@@ -344,6 +354,7 @@ option_groups: Dict[str, List[Any]] = {
     ],
     "Location Options": [
         SplitEffects,
+        MenuThemes,
         NPCSanity,
         Eventsanity,
         Masksanity,

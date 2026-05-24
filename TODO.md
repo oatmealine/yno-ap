@@ -8,8 +8,11 @@ Common:
 
 APWorld:
   - [ ] Try switching to rule builder, maybe
-  - [ ] Exclude any associated can_reach_location-reliant checks if the given location is excluded
+  - [x] Exclude any associated can_reach_location-reliant checks if the given location is excluded
+    - [ ] Do the same for region connections
   - [ ] Figure out how to make chance threshold more granular
+  - [x] Exclude locations if chance threshold should make them inaccessible
+  - [ ] Remove regions if chance threshold should make them inaccessible
   - [x] Vending machines
     - [x] Logic (kind of? needs testing)
     - [x] Vending Machinesanity Filter

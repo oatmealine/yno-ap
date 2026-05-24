@@ -695,12 +695,14 @@ class Yume2kkiWorld(World):
     items: List[str]
     locations: List[str]
     precollected_items: List[str]
+    inaccessible_locations: List[str]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.items = []
         self.locations = []
         self.precollected_items = []
+        self.inaccessible_locations = []
 
     #def generate_early(self):
 
@@ -764,6 +766,26 @@ class Yume2kkiWorld(World):
     
     def create_filler(self) -> Yume2kkiItem:
         return self.create_item("Filler") # TODO
+
+    def can_roll(self, chance: float) -> bool:
+        return chance >= self.options.chance_threshold/100
+
+    def is_excluded(self, name: str) -> bool:
+        if name in self.inaccessible_locations:
+            return True
+
+        data = next((i for i in location_data if i.name == name), None)
+        if not data:
+            return True
+
+        if data.type == Yume2kkiLocationType.ENDING and not (data.name in self.options.ending_list and self.options.ending_list[data.name]):
+            return True
+        if data.type == Yume2kkiLocationType.MENU_THEME and not self.options.menu_themes:
+            return True
+        if data.exclude_if is not None:
+            return data.exclude_if(self)
+        
+        return False
 
     @staticmethod
     def item_type_to_classification(t: Yume2kkiItemType) -> ItemClassification:
@@ -932,7 +954,7 @@ class Yume2kkiWorld(World):
                         logger.warning(f"Yume 2kki: {world["title"]} -> {target_world["title"]} - chance for connection unknown")
                         if self.options.chance_threshold == 100:
                             continue
-                    elif float(chance[:-1]) < self.options.chance_threshold:
+                    elif not self.can_roll(float(chance[:-1]) / 100):
                         continue
                 if t & ConnType.LOCKED_CONDITION.value:
                     condition = connection["typeParams"][str(ConnType.LOCKED_CONDITION.value)]["params"]
@@ -949,7 +971,7 @@ class Yume2kkiWorld(World):
                     is_exit_point = True
                 if t & ConnType.SEASONAL.value:
                     # TODO: fix for multiple possible seasons
-                    if self.options.chance_threshold >= 25:
+                    if not self.can_roll(1/4):
                         continue
                 if t & ConnType.INACCESSIBLE.value:
                     continue
@@ -996,19 +1018,26 @@ class Yume2kkiWorld(World):
 
         walk(regions["Urotsuki's Room"])
 
-        remove_regions = [region.name for region in regions.values() if region not in visited_regions]
+        inaccessible_regions = [region.name for region in regions.values() if region not in visited_regions]
 
-        logger.info(f"Yume 2kki: removed inaccessible regions: {remove_regions}")
-
-        for region in remove_regions:
-            del regions[region]
+        if len(inaccessible_regions) > 0:
+            logger.warning(f"Yume 2kki: inaccessible regions: \n- {str.join("\n- ", inaccessible_regions)}")
 
         # add region to location associations
 
+        # initial exclusion pass
+        # TODO: doesn't work like i want it to since excluded locations are still neccessary for the accessibility check
+        #for location_name in self.locations:
+        #    data = next(i for i in location_data if i.name == location_name)
+        #    if data.region in inaccessible_regions:
+        #        logger.warning(f"Yume 2kki: {data.name} inaccessible because {data.region} is inaccessible; excluding")
+        #        self.inaccessible_locations.append(data.name)
+
         for location_name in self.locations:
             data = next(i for i in location_data if i.name == location_name)
-            if not data.region in regions:
-                logger.warning(f"Yume 2kki: {data.name} inaccessible because {data.region} is inaccessible; removing")
+
+            if data.region in inaccessible_regions:
+                logger.warning(f"Yume 2kki: {data.name} inaccessible because region {data.region} is inaccessible; removing")
                 continue
 
             region = regions[data.region]
@@ -1017,11 +1046,7 @@ class Yume2kkiWorld(World):
             if data.type == Yume2kkiLocationType.EFFECT_UNLOCK:
                 location.progress_type = LocationProgressType.PRIORITY
 
-            if data.type == Yume2kkiLocationType.ENDING and not (data.name in self.options.ending_list and self.options.ending_list[data.name]):
-                location.progress_type = LocationProgressType.EXCLUDED
-            if data.name == "Ending #4" and self.options.wallpapersanity == Wallpapersanity.option_ignore:
-                location.progress_type = LocationProgressType.EXCLUDED
-            if data.name == "Bleak Future" and self.options.chance_threshold/100 < 1/64:
+            if self.is_excluded(data.name):
                 location.progress_type = LocationProgressType.EXCLUDED
             
             if data.split_effect is not None:
@@ -1030,7 +1055,6 @@ class Yume2kkiWorld(World):
 
             region.locations.append(location)
             locations[location_name] = location
-                
 
         # location specific logic
 

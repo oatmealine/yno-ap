@@ -3,6 +3,8 @@
 Archipelago world and client implementation for Yume 2kki (and maybe more down
 the line?) based on the [YNO Project](https://ynoproject.net/).
 
+See the [info page](./apworld/docs/en_Yume_2kki.md) for more information.
+
 ## status
 
 Somewhat playable! A minimal config with only effect items and effect NPC
@@ -14,16 +16,13 @@ locations and items.
 You can check the exact specifics of what's there and
 what's missing in [TODO.md](./TODO.md).
 
-## how to run
+## how to play
+
+See the [setup page](./apworld/docs/setup_en.md).
+
+## development
 
 ### apworld
-
-Follow standard Archipelago apworld installation instructions. Copy `apworld` in
-your Archipelago folder, into `archipelago/worlds/`. Generate a YAML through the
-launcher, customize it to your heart's content, then generate a multiworld as
-usual.
-
-#### development
 
 My personal preferred way to work on this is by symlinking `apworld` into a
 development copy of Archielago cloned directly from the source. You can then
@@ -32,61 +31,15 @@ quickly check if the apworld generates with `archipelago/Launcher.py 'Generate'
 
 ### client
 
-#### compilation
+Go into `client`, run `npm install` to install the dependencies. Run
+`npm run dev`, drag the built file from `dist/` into Violentmonkey and tick
+"Track external edits". This'll update the script whenever you edit any file.
+_(note: changes in location JSONs are not tracked and require rerunning the
+command)_
 
-In the `client` folder (`cd client`), install dependencies (`npm install`), then
-build (`npm run build`). You should be left with a `index.user.js` in your
-`dist/` folder. Install [Violentmonkey](https://violentmonkey.github.io) (or
-euiqvalent), open its dashboard, then drag the script in.
+If you just want to build the file once, you can use `npm run build`.
 
-#### development
-
-Follow the same steps as above, except run `npm run dev` instead of `npm run
-build` and tick "Track external edits". This'll update the script whenever you
-edit any file.
-
-#### use
-
-Switch to the newly-created AP tab in the chat panel. Fill in your details as
-needed. **Do note that due to browser security context reasons, you cannot
-connect to insecure websockets (ws://).** You can override this in your browser
-settings, see:
-[Allowing insecure WebSocket connections](https://www.damirscorner.com/blog/posts/20210528-AllowingInsecureWebsocketConnections.html)
-
-## how to play
-
-The YNO implementation has 2 modes of play, decided in the APWorld options:
-
-- On **automatic mode** _(currently unimplemented)_, the client will hook deep
-into the game, physically preventing you from doing actions not allowed by your
-items. It will also physically give you items whenever you obtain them. This is
-the most fluent way to play, and is the "standard" experience.
-
-  Automatic mode should be played on a new save to prevent altering your main
-save.
-
-- On **manual mode** _(currently the only implemented mode)_, the client cannot
-and will not alter your game state or save. It will only be able to peform basic
-checks if you're "cheating" by using items you're not meant to have access to
-(effects, etc.). This means that ideally you should play this on a **save that
-has every effect**, as this mode will expect you to have the effect in you save
-when it is given to you by another location.
-
-  This may be the preferred way to play if you want the Archipelago to act more
-like a motivator for you to further your main YNO save's completion.
-
-Modes will not impact logic, but may change filler item behavior.
-
-### location notes
-
-Most effect locations, some events and NPCs are only possible once per save.
-Because of this, the code that checks for locations will usually be overly
-lenient, in many cases only requiring you to be in the right place, rather than
-interacting with the needed object. This prevents softlocks if the client isn't
-loaded when the one-time event happens and makes manual mode possible without
-save trickery.
-
-## developer documentation
+### developer documentation
 
 Most documentation about the inner workings of this is stored in the relevant
 folders; make sure to check for `readme` files around. Otherwise, feel free to

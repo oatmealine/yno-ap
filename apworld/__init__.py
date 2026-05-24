@@ -26,6 +26,9 @@ class Yume2kkiWeb(WebWorld):
 
     option_groups = create_option_groups()
 
+    rich_text_options_doc = True
+    bug_report_page = "https://github.com/oatmealine/yno-ap/issues"
+
 class Yume2kkiLocation(Location):
     game = "Yume2kki"
 

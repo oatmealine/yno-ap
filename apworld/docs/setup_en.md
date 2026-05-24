@@ -1,32 +1,37 @@
-# Your game here!
+# Yume 2kki Setup Guide
 
-## Required Software
+## 0. Generating a multiworld
 
-- A legally obtained copy of the game your are randomizing. Include the version if it needs to be specific (IE: NTSC/NA/Steam/Whatever else)
-- Anything else!
-    - You can use [this syntax to add hyperlinks to emulators or other web pages](https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/)
-    - Be specific! Include versions! You'll still get asked why it's broken and it'll be a versioning issue but hey you can try
-- The built-in Archipelago client, which can be installed [here](https://github.com/ArchipelagoMW/Archipelago/releases)
+If you're generating or hosting a game, you must download and install the
+APWorld.
 
-## Configuring your YAML file
+Follow standard Archipelago APWorld installation instructions. Download the
+[`.apworld` from the latest release](https://github.com/oatmealine/yno-ap/releases).
+Move it to your Archipelago folder, into `archipelago/worlds/`.
 
-### What is a YAML file and why do I need one?
+## 1. Creating a player YAML options file
 
-You can leave this alone since it will be the same for every game so just delete this! I'm just here for explanations.
+You can grab a YAML template from
+[the latest release](https://github.com/oatmealine/yno-ap/releases).
+Alternatively, you can install the APWorld (see above) and use the "Generate
+Template Options" entry in the launcher to create a YAML.
 
-Your YAML file contains a set of configuration options which provide the generator with information about how it should
-generate your game. Each player of a multiworld will provide their own YAML file. This setup allows each player to enjoy
-an experience customized for their taste, and different players in the same multiworld can all have different options.
+The YAML should have sufficient documentation for each option in the comments.
 
-### Where do I get a YAML file?
+## 2. Installing the YNO userscript
 
-You can customize your options by visiting the [Your Game Here Options Page](/games/Your%20Game%20Here/player-options).
+First, you must install a userscript extension for your browser. The recommended
+extension is [Violentmonkey](https://violentmonkey.github.io), but any
+equivalent (Tampermonkey, Greasemonkey, ...) will likely work.
 
-Another hyperlink to the options page. The %20 in the link is a space. Make sure it matches the name you put for the your_game_here for the en_your_game_here.md doc.
+Open [yno-ap-client.user.js](https://github.com/oatmealine/yno-ap/releases/latest/download/yno-ap-client.user.js)
+in your browser and click "Install". Afterwards, you should see a new "AP" tab
+on YNO in the chat panel.
 
-### Connect to the MultiServer
+## 3. Connecting and playing
 
-1. Just describe how to get it connected
-
-2. Include any optional steps
-    - You can use this syntax to add sub steps
+Switch to the newly-created "AP" tab. Fill in your details as
+needed. **Do note that due to browser security context reasons, you cannot
+connect to insecure websockets (ws://).** You can override this in your browser
+settings, see:
+[Allowing insecure WebSocket connections](https://www.damirscorner.com/blog/posts/20210528-AllowingInsecureWebsocketConnections.html)

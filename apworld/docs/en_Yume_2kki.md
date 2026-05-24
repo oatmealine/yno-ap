@@ -56,7 +56,7 @@ game host to cheat them in.
 
 ## Where can I report issues?
 
-In the Archieplago Discord server, navigate to
+In the Archipelago Discord server, navigate to
 [#future-game-design > Yume 2kki \[YNO\]](https://discord.com/channels/731205301247803413/1483567293886763120)
 to ask for help or report issues.
 Alternatively, you may report issues on the [yno-ap GitHub repo.](https://github.com/oatmealine/yno-ap)

@@ -25,7 +25,7 @@ See the [setup page](./apworld/docs/setup_en.md).
 ### apworld
 
 My personal preferred way to work on this is by symlinking `apworld` into a
-development copy of Archielago cloned directly from the source. You can then
+development copy of Archipelago cloned directly from the source. You can then
 quickly check if the apworld generates with `archipelago/Launcher.py 'Generate'
 -- --player_files_path 'archipelago/Players'`.
 

@@ -29,6 +29,7 @@ class Yume2kkiItemType(enum.Enum):
     NEXUS_KEY = "Nexus Key"
     MINIGAME = "Minigame"
     AUTHOR = "Author"
+    CONTRIBUTOR = "Contributor"
     FILLER = "Filler" # TODO: figure out what filler should be
 
 class Yume2kkiItemData(NamedTuple):
@@ -147,10 +148,15 @@ items += [
 
 # author gating
 authors = set()
+contributors = set()
 
 for world in world_data:
     for author in world["primaryAuthors"]:
         authors.add(author)
+for world in world_data:
+    for author in world["contributingAuthors"]:
+        if author not in authors:
+            contributors.add(author)
 
 def sanitize_author_name(author):
     if author.isdigit():
@@ -161,6 +167,11 @@ for author in sorted(authors):
     author_name = sanitize_author_name(author)
     items.append(
         Yume2kkiItemData(name=author_name, type=Yume2kkiItemType.AUTHOR)
+    )
+for author in sorted(contributors):
+    author_name = sanitize_author_name(author)
+    items.append(
+        Yume2kkiItemData(name=author_name, type=Yume2kkiItemType.CONTRIBUTOR)
     )
 
 class Yume2kkiLocationType(enum.Enum):

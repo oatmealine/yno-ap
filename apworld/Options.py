@@ -156,7 +156,7 @@ class AuthorGating(Choice):
 
     **Primary Author:** Every world's primary author will be turned into an item. In order to access a world, you'll need to have collected the author.
 
-    **Contributing Authors:** _(Currently unimplemented)_ Every contributor to every world will be turned into an item. In order to access a world, you'll need to have collected any of the contributors.
+    **Contributing Authors:** Every contributor to every world will be turned into an item. In order to access a world, you'll need to have collected any of the contributors.
     """
     display_name = "Author Gating"
     option_disable = 1

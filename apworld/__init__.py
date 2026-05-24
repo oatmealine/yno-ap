@@ -738,8 +738,6 @@ class Yume2kkiWorld(World):
             logger.warning(f"Yume 2kki: Text Events are not implemented on the client.")
         if self.options.author_gating == AuthorGating.option_primary_author:
             logger.warning(f"Yume 2kki: Author Gating is not implemented on the client.")
-        if self.options.author_gating == AuthorGating.option_contributing_authors:
-            logger.warning(f"Yume 2kki: Author Gating: Contributing Authors is not implemented.")
         if self.options.menu_themes:
             logger.warning(f"Yume 2kki: Menu Themes are not implemented on the client. Generated world may be impossible to complete.")
         if self.options.masksanity:
@@ -764,6 +762,8 @@ class Yume2kkiWorld(World):
             if item.type == Yume2kkiItemType.FILLER:
                 continue
             if item.type == Yume2kkiItemType.AUTHOR and self.options.author_gating == AuthorGating.option_disable:
+                continue
+            if item.type == Yume2kkiItemType.CONTRIBUTOR and self.options.author_gating != AuthorGating.option_contributing_authors:
                 continue
             if item.type == Yume2kkiItemType.NEXUS_KEY and not self.options.nexus_keys:
                 continue
@@ -846,7 +846,7 @@ class Yume2kkiWorld(World):
             return ItemClassification.progression
         if t == Yume2kkiItemType.FILLER:
             return ItemClassification.filler
-        if t == Yume2kkiItemType.MINIGAME:
+        if t == Yume2kkiItemType.MINIGAME or t == Yume2kkiItemType.CONTRIBUTOR:
             return ItemClassification.useful
 
     def create_item(self, name: str) -> Yume2kkiItem:
@@ -1029,8 +1029,13 @@ class Yume2kkiWorld(World):
 
             # author gating check
             if self.options.author_gating != AuthorGating.option_disable:
-                authors = map(sanitize_author_name, target_world["primaryAuthors"])
-                rules.append(lambda state, authors=authors: state.has_all(authors, self.player))
+                if self.options.author_gating == AuthorGating.option_primary_author:
+                    authors = map(sanitize_author_name, target_world["primaryAuthors"])
+                    rules.append(lambda state, authors=authors: state.has_all(authors, self.player))
+                else:
+                    authors = map(sanitize_author_name, target_world["primaryAuthors"])
+                    contributors = map(sanitize_author_name, target_world["contributingAuthors"])
+                    rules.append(lambda state, authors=authors, contributors=contributors: state.has_all(authors, self.player) or state.has_any(contributors, self.player))
 
             # this is made with the foolish assumption that all dead ends in
             # a given location will connect, but not making this assumption

@@ -36,7 +36,7 @@ jobs:
         #python Launcher.py --update_settings  # make sure host.yaml exists for tests
     - name: Create .apworld file
       run: |
-        python Launcher.py 'Build APWorlds' -- 'Yume 2kki' --skip_open_folder
+        python Launcher.py 'Build APWorlds' -- 'Yume 2kki'
     - uses: actions/upload-artifact@v7.0.1
       with:
         path: build/apworlds/yume2kki.apworld

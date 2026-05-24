@@ -1,1 +1,1 @@
-{"name":"Vending Machine - Chocolate Tower II","condition":{"map":1318,"trigger":"eventAction","values":["244","247"],"varId":10000,"varValue":100,"varOp":">="}}
+{"name":"Vending Machine - Chocolate Tower II","condition":{"map":1318,"trigger":"eventAction","values":["247","244"],"varId":10000,"varValue":100,"varOp":">="}}

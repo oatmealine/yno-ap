@@ -1,1 +1,1 @@
-{"name":"Vending Machine - Dream Park","condition":{"map":1065,"trigger":"eventAction","values":["70","73"],"varId":10000,"varValue":100,"varOp":">="}}
+{"name":"Vending Machine - Dream Park","condition":{"map":1065,"trigger":"eventAction","values":["73","70"],"varId":10000,"varValue":100,"varOp":">="}}

@@ -1,0 +1,1 @@
+{"name":"Vending Machine - Blasted Cliffs","condition":{"map":3886,"trigger":"eventAction","values":["268"],"varId":10000,"varValue":100,"varOp":">="}}

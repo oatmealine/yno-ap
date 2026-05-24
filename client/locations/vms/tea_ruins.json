@@ -1,1 +1,1 @@
-{"name":"Vending Machine - Tea Ruins","condition":{"map":2567,"trigger":"eventAction","values":["320","321"],"varId":10000,"varValue":100,"varOp":">="}}
+{"name":"Vending Machine - Tea Ruins","condition":{"map":2567,"trigger":"eventAction","values":["321","320"],"varId":10000,"varValue":100,"varOp":">="}}

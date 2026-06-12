@@ -10,8 +10,8 @@ import re
 
 API_BASE = "https://yume.wiki/api.php"
 FETCH_LIMIT = 500
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
-CF_CLEARANCE = "L5C89HJrqGhsAzRLugR3SfNkv3SpHK3sHCMdG6oJoAA-1779564936-1.2.1.1-UiItgRberic27eNFZKD_dGng.8WeTpowPNiBEIHmGWOVM29zLSqJUTieeZ1fpNmGu9NFU5bxP_VYLGruzJuV8sRGEIWMafv5cLmAda8HGbYLtfOs9yqrf2zkIdXNhZP_r_8ZQEy13_Yv_rei_iFr2MuuHTvybIwfg2RlZpHTeR9Dsj5mBCPFvFW.TYSlwBBp4YKH3uXzenH0.V4J3xmGmSWuj4XQ2grHjswqeqeQvMlrwpZ3Yj25XCCrY5lEui6gr4Hw984QC8.At44rV57SCMBQhY8VTtNG7NlZII5llS2NAD.W_2T0OXUQxfh8V9Avuh6aTYIchBdmgyIJWZkm7LTGoTWwIutz0WgW8tlwKw815_wF.mm7cc7wKucdnf66tLfyS4ie.QzTs9xNqbEnuJsPIvVBh6O7e1nipBAbUsc"
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+CF_CLEARANCE = "1X7ZA_PbbZJlaETIKUEiLLZDqwJ7l0rb9Lq1BPkQwes-1781257132-1.2.1.1-1RWauUbNdgxGe.5en.KNQVWBsPXamiWuY4.9uFM7L3UnXahEySWYBBWMmAZr7TgRe29b_C1.HVMWqSU0tkTOZrCwCQWBEd1kTYMo2ckROcY3nORwqLB.HJxT1uIBau_KAx.5bcNwkaiJ1gjAro6rScBdANf3NEGi_KEv1G.pJwvNBBmSNH6.3SgbNa0PzQcqRM81KYwihsy9He80x2vAXh23hgZQZScDD8ihN8DOr8kUc6pndfpaoV.sjWuae2dz1mIGpRkEvmQqgUzd8lWxLtgisjziAN9MhS4EC.cIJloGq0gBvJkkPdl.ixmVGIxa2lmZg2hV06nxJ0CghVXbTiMK4iQKJGD5E4Bd4v_._QthPMpvjDL8lg56ieyLzhBbM2i.ijgANgNrIM4RDSHwKoTPEs5LF.EqCD1PHkuSSmU"
 
 def query(conditions: list[str], printouts: list[str]) -> dict[str, any]:
   i = 0
@@ -155,7 +155,11 @@ def transform_connection(connection: dict[str, any]):
       conn_params[64] = [effect.strip() for effect in effects.split(',')]
     if attribute == "Chance":
       conn_type |= 128
-      conn_params[128] = printouts["Connection/Chance percentage"][0]
+      if len(printouts["Connection/Chance percentage"]):
+        conn_params[128] = printouts["Connection/Chance percentage"][0]
+      else:
+        # TODO just accept it as None at that point
+        conn_params[128] = "0%"
     if attribute == "Conditional":
       conn_type |= 256
       cond_text = printouts["Connection/Unlock conditions"][0]

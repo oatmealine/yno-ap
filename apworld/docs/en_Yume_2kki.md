@@ -40,7 +40,7 @@ should typically be, and visit the specific tile.
 
 ## Which versions of the game does this work with?
 
-This APWorld is compatible with version **0.129b patch 1**.
+This APWorld is compatible with version **0.129c patch 5**.
 
 ## The version on YNO is more recent than the version listed above, what do I do?
 

@@ -79,6 +79,7 @@ text_condition_logic = {
     "Must pay 50夢 to the arcade machine": True,
     "200夢 each visit": True,
     "Must pay 500夢 to the Light Lady each time": True,
+    "With 1000夢 or Chainsaw effect": True,
 
     # simple street
     "Enter the Hand Hub at least once":
@@ -373,6 +374,19 @@ text_condition_logic = {
         lambda state, self: state.can_reach_region("Dreadful City", self.player),
     "Visit Red Desert Ruins at least once":
         lambda state, self: state.can_reach_region("Red Desert Ruins", self.player),
+    "Enter Whirl World at least once":
+        lambda state, self: state.can_reach_region("Whirl World", self.player),
+    "Visit Broken Shoal at least once":
+        lambda state, self: state.can_reach_region("Broken Shoal", self.player),
+    "Visit Red Desert Ruins, Dreadful City, or Collaged Complex B at least once":
+        lambda state, self:
+            state.can_reach_region("Red Desert Ruins", self.player) or
+            state.can_reach_region("Dreadful City", self.player) or
+            state.can_reach_region("Collaged Complex B", self.player),
+    "Visit Container Forest once":
+        lambda state, self: state.can_reach_region("Container Forest", self.player),
+    "Visit the Divergence subarea in Mystery Zone B":
+        lambda state, self: state.can_reach_region("Mystery Zone", self.player),
 
     # random specific ones
     "After seeing the first four endings":
@@ -695,6 +709,27 @@ text_condition_logic = {
         lambda state, self: state.has("Chainsaw", self.player),
     "Earning all three flowers in Obstacle Course's hard mode":
         lambda state, self: state.can_reach_region("Obstacle Course", self.player),
+    "Complicated unlock conditions":
+        lambda state, self:
+            # https://yume.wiki/2kki/Innocent_Dream#Unlock_Conditions
+            state.can_reach_region("Picture Book", self.player) and
+            state.can_reach_region("Red Lily Lake", self.player) and
+            state.has("Chainsaw", self.player) and
+            state.has("Penguin", self.player),
+    "Get a ticket in the third room of the staircases":
+        True,
+    "1/64 chance per interaction with the door of the dollhouse in Sister's Room":
+        # TODO 1/64 chance
+        True,
+    "Accessible under certain conditions (see below)":
+        lambda state, self: state.has_any(["Chainsaw", "Polygon"], self.player),
+    "If Wallpaper #107 has been unlocked, and Variable #44 is currently less than 64":
+        # TODO: 1/2 chance
+        lambda state, self:
+            state.can_reach_region("Ocean Floor", self.player) and
+            state.has_any(["Child", "Glasses", "Stretch"], self.player),
+    "If this world was reached via Auguries of Innocence":
+        lambda state, self: state.can_reach_region("Auguries of Innocence", self.player)
 }
 
 class Yume2kkiWorld(World):
@@ -934,6 +969,16 @@ class Yume2kkiWorld(World):
         )
 
         locations: Dict[str, Yume2kkiLocation] = {}
+
+        # no longer in the wiki, but still a meaningful location for endings
+        regions["Trophy Room"] = Region("Trophy Room", self.player, self.multiworld)
+        regions["Nexus"].connect(
+            regions["Trophy Room"], "Nexus -> Trophy Room",
+            rule=lambda state: state.has("Trophy Room", self.player)
+        )
+        regions["Urotsuki's Dream Apartments"].connect(
+            regions["Trophy Room"], "Urotsuki's Dream Apartments -> Trophy Room"
+        )
 
         # logic time!
 

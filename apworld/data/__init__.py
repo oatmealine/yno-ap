@@ -12,15 +12,15 @@ vm_data = []
 wallpaper_data = []
 kura_puzzle_data = []
 
-with files().joinpath("worlds.json").open() as file:
+with files().joinpath("worlds.json").open(encoding = "utf-8") as file:
     world_data = json.load(file)
-with files().joinpath("connections.json").open() as file:
+with files().joinpath("connections.json").open(encoding = "utf-8") as file:
     connection_data = json.load(file)
-with files().joinpath("vms.json").open() as file:
+with files().joinpath("vms.json").open(encoding = "utf-8") as file:
     vm_data = json.load(file)
-with files().joinpath("wallpapers.json").open() as file:
+with files().joinpath("wallpapers.json").open(encoding = "utf-8") as file:
     wallpaper_data = json.load(file)
-with files().joinpath("kura_puzzles.json").open() as file:
+with files().joinpath("kura_puzzles.json").open(encoding = "utf-8") as file:
     kura_puzzle_data = json.load(file)
 
 class Yume2kkiItemType(enum.Enum):

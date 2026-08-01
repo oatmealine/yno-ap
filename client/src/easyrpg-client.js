@@ -8,7 +8,7 @@
 
 import { checkLocations } from './archipelago-client';
 import { handleMapSwitch as checksHandleMapSwitch, processTrigger } from './check';
-import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch, handleActionEvent as sessionHandleActionEvent } from './dream-session';
+import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch, handleActionEvent as sessionHandleActionEvent, isSessionValid } from './dream-session';
 import { sendClientPackets } from './websocket-intercept';
 
 let prevMapID = 0;
@@ -302,6 +302,7 @@ export function onNewMap(newMapID) {
  * @param {({title: string})[]} locations
  */
 export function onChangeLocation(locations) {
+  if (!isSessionValid()) return;
   checkLocations(...locations.map(loc => loc.title));
 }
 

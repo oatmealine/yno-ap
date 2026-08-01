@@ -1,4 +1,4 @@
-import { client as ap, slotData } from './archipelago-client';
+import { client as ap, enabled, slotData } from './archipelago-client';
 import { getMapID, trackEvent, trackSwitch } from './easyrpg-client';
 import { div, text } from './html';
 import { showToastMessage } from './ui';
@@ -98,7 +98,7 @@ function revalidateSession() {
 }
 
 export function updateSessionValidity() {
-  if (!ap.socket.connected) return;
+  if (!enabled) return;
 
   const forbiddenItems =
     usedItems.filter(itemName =>

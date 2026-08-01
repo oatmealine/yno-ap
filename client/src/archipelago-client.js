@@ -1,10 +1,16 @@
 import { Client, itemsHandlingFlags, PlayerMessageNode, TextualMessageNode } from 'archipelago.js';
-import { onMessage, onToastMessage, setConnected, showToastMessage } from './ui';
+import { hideStatus, onMessage, onToastMessage, setConnected, setConnecting, showToastMessage } from './ui';
 import { globalStore, loadSlot, saveGlobal, saveSlot, slotStore } from './store';
 import { updateLocationCompletions } from './check';
 import { updateSessionValidity } from './dream-session';
 
 export const client = new Client();
+
+// whether location checking and item checking should take place as usual
+//
+// does not indicate whether or not the client is connected; any locations sent
+// while connected but not enabled will be queued
+export let enabled = false;
 
 client.options.maximumMessages = 0;
 
@@ -12,15 +18,15 @@ const GAME_NAME = 'Yume 2kki';
 
 // enums ported over from Options.py
 
-export const ClientMode = {
+export const ClientMode = Object.freeze({
   Automatic: 1,
   Manual: 2,
-}; Object.freeze(ClientMode);
+});
 
-export const Goal = {
+export const Goal = Object.freeze({
   AnyEnding: 1,
   AllEndings: 2,
-}; Object.freeze(Goal);
+});
 
 export const slotData = {
   mode: ClientMode.Automatic,
@@ -32,9 +38,11 @@ export const slotData = {
 /** @type {import('archipelago.js').PackageMetadata?} */
 let pkg;
 
-export async function connect(host, password, slot) {  
+export async function connect(host, password, slot) {
   if (globalStore.dataPackage)
     client.package.importPackage(globalStore.dataPackage);
+  
+  setConnecting();
 
   const remoteSlotData = await client.login(host, slot, GAME_NAME, {
     password,
@@ -52,6 +60,8 @@ export async function connect(host, password, slot) {
   globalStore.dataPackage = client.package.exportPackage();
   saveGlobal();
   
+  enabled = true;
+
   checkLocationsRaw(...slotStore.locationQueue);
   slotStore.locationQueue = [];
   saveSlot();
@@ -75,15 +85,33 @@ export async function connect(host, password, slot) {
   updateSessionValidity();
   
   setConnected(true);
-  showToastMessage('Connected to Archipelago server successfully', 'archipelago', false, undefined);
+  //showToastMessage('Connected to Archipelago server successfully', 'archipelago', false, undefined);
+}
+
+let silenceNextDisconnect = false;
+
+export function disconnect(disableChecks = false, silent = false) {
+  if (disableChecks) {
+    enabled = false;
+    hideStatus();
+  }
+
+  if (silent) silenceNextDisconnect = true;
+  client.socket.disconnect();
+  silenceNextDisconnect = false;
 }
 
 client.socket.on('disconnected', () => {
   setConnected(false);
-  showToastMessage('Archipelago connection closed', 'archipelago', false, undefined);
   globalStore.lastConnection.autoConnect = false;
   saveGlobal();
   saveSlot();
+  
+  if (silenceNextDisconnect) {
+    silenceNextDisconnect = false;
+  } else {
+    showToastMessage('Archipelago connection closed', 'archipelago', false, undefined, true); 
+  }
 });
 
 // hacky
@@ -171,6 +199,8 @@ async function checkLocationsRaw(...locationNames) {
  * @param {string[]} locationNames
  */
 export async function checkLocations(...locationNames) {
+  if (!enabled) return;
+
   if (!client.socket.connected || !pkg) {
     slotStore.locationQueue.push(...locationNames);
     saveSlot();

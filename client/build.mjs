@@ -51,6 +51,9 @@ const config = {
   outdir: 'dist/',
   bundle: true,
   banner: { js: (await fs.readFile('src/index.header.js', 'utf8')).replace('{VERSION}', packageJson.version) },
+  loader: {
+    '.css': 'text',
+  },
   plugins: [
     locationImporter,
   ],

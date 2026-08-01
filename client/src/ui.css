@@ -1,0 +1,99 @@
+#apConnect {
+  padding: 8px;
+}
+#apConnect .formControlRow {
+  display: flex;
+}
+#apConnect .formControlRow > label {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+#apConnect .formControlRow > input {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+#ap #messages .messageWrapper {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+#ap #messages .messageContents {
+  white-space: pre-wrap;
+}
+
+#ap #messages .nameText.server {
+  font-weight: bold;
+  color: #fff;
+}
+
+.ap .format-label {
+  background-image: var(--base-gradient) !important;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(1.5px 1.5px rgb(var(--shadow-color)));
+}
+
+.ap .messageContents .messageSender, .ap .toastMessage .messageSender {
+  float: unset;
+  height: unset;
+  padding-inline-end: unset;
+  display: inline-block;
+}
+
+.ap .messageContents .messageSender.noPunct, .ap .toastMessage .messageSender.noPunct {
+  --base-gradient: var(--alt-gradient);
+}
+
+.ap .iconButton[disabled] {
+  transform: none !important;
+  cursor: default;
+  opacity: 0.65;
+}
+
+.ap #apButtons {
+  display: flex;
+  gap: 4px;
+}
+
+#apStatus {
+  justify-content: space-between;
+  font-size: 0.8em;
+}
+
+#apConnStatusLabel {
+  opacity: 0.5;
+}
+#apConnStatusIcon {
+  display: inline-block;
+  filter: none !important;
+  --svg-base-gradient: url(#ap_disconnected);
+}
+#apConnStatusIcon svg {
+  width: 1em;
+  height: 12px;
+}
+#apConnStatusIcon.connecting {
+  --svg-base-gradient: url(#ap_connecting);
+}
+#apConnStatusIcon.connected {
+  --svg-base-gradient: url(#ap_connected);
+}
+
+#apConnStatusText {
+  margin-inline-end: 2px;
+}
+
+#apReconnectButton.active {
+  animation-name: spin;
+  animation-delay: 0.325s;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+#apReconnectButton.disabled {
+  opacity: 0.625;
+  transform: scale(1);
+  pointer-events: none;
+}

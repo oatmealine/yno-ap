@@ -17,6 +17,30 @@ document.addEventListener('DOMContentLoaded', () => {
   addWarningElement();
 });
 
+async function onYNOLoaded() {
+  console.log('[yno-ap-client] yno scripts done loading');
+  
+  patchChangeLocation();
+
+  const _updateCanvasOverlays = window.updateCanvasOverlays;
+  window.updateCanvasOverlays = () => {
+    sessionUpdateCanvasOverlays();
+    _updateCanvasOverlays();
+  }
+
+  if (globalStore.lastConnection.autoConnect) {
+    const creds = globalStore.lastConnection;
+
+    try {
+      await connect(creds.host, creds.password, creds.slot);
+    } catch (err) {
+      creds.autoConnect = false;
+      saveGlobal();
+      console.error(err);
+    }
+  }
+}
+
 // this is the easiest way to check for when the actual scripts are done loading...
 
 const observer = new MutationObserver(async (mutationList, observer) => {
@@ -24,28 +48,7 @@ const observer = new MutationObserver(async (mutationList, observer) => {
     for (const node of mutation.addedNodes) {
       if (node.nodeName === 'SCRIPT' && node.src?.includes('ynoengine')) {
         observer.disconnect();
-
-        console.log('[yno-ap-client] yno scripts done loading');
-
-        patchChangeLocation();
-
-        const _updateCanvasOverlays = window.updateCanvasOverlays;
-        window.updateCanvasOverlays = () => {
-          sessionUpdateCanvasOverlays();
-          _updateCanvasOverlays();
-        }
-
-        if (globalStore.lastConnection.autoConnect) {
-          const creds = globalStore.lastConnection;
-
-          try {
-            await connect(creds.host, creds.password, creds.slot);
-          } catch (err) {
-            creds.autoConnect = false;
-            saveGlobal();
-            console.error(err);
-          }
-        }
+        onYNOLoaded();
       }
     }
   }

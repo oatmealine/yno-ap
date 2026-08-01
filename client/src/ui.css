@@ -57,8 +57,36 @@
 }
 
 #apStatus {
-  justify-content: space-between;
   font-size: 0.8em;
+  gap: 8px;
+}
+
+#apConnStatus {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+#apSlotInfo {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: right;
+
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+#apSlotLabel {
+  flex: 1 1 0;
+  min-width: 0;
+  
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#apSlotItems {
+  flex: 0 0 auto;
+  max-width: 100%;
 }
 
 #apConnStatusLabel {
@@ -102,13 +130,18 @@
   opacity: 0.5;
 }
 
+.ap-item-count {
+  font-weight: bold;
+}
 .ap-items {
   display: grid;
-  column-gap: 6px;
+  gap: 6px;
   margin: 0.5em 0;
 }
 .ap-items.ap-effects {
   grid-template-columns: 1fr 1fr;
+  row-gap: 0;
+  column-gap: 6px;
 }
 .ap-items.ap-nexus-keys {
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -120,10 +153,12 @@
   justify-content: flex-start;
   text-align: center;
   font-size: 0.75em;
+  line-height: 1.1;
 }
 .ap-items.ap-nexus-keys .item img {
   height: 3em;
   width: auto;
+  margin-bottom: 6px;
 }
 .ap-items .item.missing {
   opacity: 0.5;

@@ -236,12 +236,14 @@ function createStatus() {
       elem('label#apConnStatusText.infoText', 'Disconnected'), '\n',
       reconnectButton,
     ),
-    span('#apSlotInfo.infoLabel.unselectable',
-      span('#apSlotLabel', globalStore.lastConnection.slot ?? ''), '\n',
-      effectsIcon,
-      nexusKeysIcon,
-      textEventsIcon,
-      authorsIcon,
+    span('#apSlotInfo.infoLabel',
+      span('#apSlotLabel', globalStore.lastConnection.slot ?? ''),
+      div('#apSlotItems.unselectable',
+        effectsIcon,
+        nexusKeysIcon,
+        textEventsIcon,
+        authorsIcon,
+      ),
     ),
   );
 
@@ -261,7 +263,7 @@ export function updateItemDisplay() {
 
   effectsTooltip.innerHTML = '';
   effectsTooltip.append(
-    span('', `${Object.keys(EFFECTS).filter(effect => apClient.items.received.some(item => item.name === effect)).length}/${Object.keys(EFFECTS).length} effects`),
+    span('.ap-item-count', `${Object.keys(EFFECTS).filter(effect => apClient.items.received.some(item => item.name === effect)).length}/${Object.keys(EFFECTS).length} Effects`),
     div('.ap-items.ap-effects',
       ...Object.keys(EFFECTS).map(
         effect => span(
@@ -278,7 +280,7 @@ export function updateItemDisplay() {
 
   nexusKeysTooltip.innerHTML = '';
   nexusKeysTooltip.append(
-    span('', `${NEXUS_KEYS.filter(key => apClient.items.received.some(item => item.name === key)).length}/${NEXUS_KEYS.filter(k => k).length} Nexus keys`),
+    span('.ap-item-count', `${NEXUS_KEYS.filter(key => apClient.items.received.some(item => item.name === key)).length}/${NEXUS_KEYS.filter(k => k).length} Nexus Keys`),
     div('.ap-items.ap-nexus-keys',
       ...NEXUS_KEYS.map(key => {
         if (!key) return div('.item.padding');

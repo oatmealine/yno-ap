@@ -196,7 +196,7 @@ function checkConditionCoords(condition) {
 
 /**
  * @template A
- * @param {A} item
+ * @param {A | undefined} item
  * @returns {A[]}
  */
 function singleton(item) {

@@ -1,5 +1,5 @@
 import { client as ap, slotData } from './archipelago-client';
-import { trackEvent, trackSwitch } from './easyrpg-client';
+import { getMapID, trackEvent, trackSwitch } from './easyrpg-client';
 import { div, text } from './html';
 import { showToastMessage } from './ui';
 
@@ -75,6 +75,9 @@ const NEXUS_EVENTS = {
   'Usugurai Residence': 32,
 };
 
+const AWAKE_MAPID = 2;
+const NEXUS_MAPID = 10;
+
 export function isSessionValid() {
   return sessionIsValid;
 }
@@ -110,7 +113,7 @@ export function updateSessionValidity() {
 }
 
 export function handleMapSwitch(mapID) {
-  if (mapID === 2) {
+  if (mapID === AWAKE_MAPID) {
     usedItems = [];
     revalidateSession();
     return;
@@ -121,7 +124,7 @@ export function handleMapSwitch(mapID) {
   for (const swID of Object.values(EFFECTS))
     trackSwitch(swID);
 
-  if (mapID === 10 && slotData.useNexusKeys) {
+  if (mapID === NEXUS_MAPID && slotData.useNexusKeys) {
     for (const evIDs of Object.values(NEXUS_EVENTS))
       for (const evID of Array.isArray(evIDs) ? evIDs : [evIDs])
         trackEvent(evID, true);
@@ -140,13 +143,19 @@ export function handleSwitch(id, value) {
 
 export function handleActionEvent(id) {
   if (!isSessionValid()) return;
-  for (const [nexusKey, evIDs] of Object.entries(NEXUS_EVENTS)) {
-    for (const evID of Array.isArray(evIDs) ? evIDs : [evIDs]) {
-      if (id === evID) {
-        usedItems.push(nexusKey);
+
+  const mapID = getMapID();
+
+  if (mapID === NEXUS_MAPID && slotData.useNexusKeys) {
+    for (const [nexusKey, evIDs] of Object.entries(NEXUS_EVENTS)) {
+      for (const evID of Array.isArray(evIDs) ? evIDs : [evIDs]) {
+        if (id === evID) {
+          usedItems.push(nexusKey);
+        }
       }
     }
   }
+
   updateSessionValidity();
 }
 

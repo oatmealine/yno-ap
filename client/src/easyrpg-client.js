@@ -16,6 +16,10 @@ let mapID = 0;
 let x = 0;
 let y = 0;
 
+export function getMapID() {
+  return mapID;
+}
+
 /** @type Record<number, boolean> */
 let switchState = {};
 /** @type Record<number, number> */
@@ -221,7 +225,7 @@ function onVariable(varID, value) {
 /**
  * @param {C2SPacketType} type 
  * @param {string[]} args
- * @returns {boolean} don't pass packet along to server
+ * @returns {true | undefined} don't pass packet along to server
  */
 export function onPacket(type, args) {
   if (type === 'ss') {

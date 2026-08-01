@@ -33,6 +33,9 @@ export const slotData = {
 let pkg;
 
 export async function connect(host, password, slot) {  
+  if (globalStore.dataPackage)
+    client.package.importPackage(globalStore.dataPackage);
+
   const remoteSlotData = await client.login(host, slot, GAME_NAME, {
     password,
     items: itemsHandlingFlags.all,
@@ -42,9 +45,6 @@ export async function connect(host, password, slot) {
   
   loadSlot(client.room.seedName, slot);
   console.log('[yno-ap-client] loaded slot store: ', slotStore);
-
-  if (globalStore.dataPackage)
-    client.package.importPackage(globalStore.dataPackage);
 
   await client.package.fetchPackage([client.game], true);
   pkg = client.package.findPackage(client.game);

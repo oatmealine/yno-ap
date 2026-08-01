@@ -23,6 +23,7 @@ export const globalStore = {
   },
   /** @type {import("archipelago.js").DataPackage?} */
   dataPackage: { games: {} },
+  hideChatTimestamps: false,
 };
 const defaultGlobalStore = JSON.parse(JSON.stringify(globalStore));
 

@@ -510,7 +510,14 @@ export function addUIElements() {
     timestampButton.classList.toggle('toggled');
     const toggled = timestampButton.classList.contains('toggled');
     messages.classList.toggle('hideTimestamps', toggled);
+    globalStore.hideChatTimestamps = toggled;
+    saveGlobal();
   });
+
+  if (globalStore.hideChatTimestamps) {
+    messages.classList.add('hideTimestamps');
+    timestampButton.classList.add('toggled');
+  }
 
   const disconnectIcon = getSvgIcon('leave').childNodes[0];
   disconnectIcon.setAttribute('width', '15');

@@ -85,7 +85,7 @@ Client:
   - [ ] Author gating
 
   - UI
-    - [ ] Show available effects
+    - [x] Show available effects
     - [ ] Show available minigames
     - [ ] Show possible checks in current area
 

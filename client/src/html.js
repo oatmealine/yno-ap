@@ -55,3 +55,15 @@ export function text(html) {
   e.remove();
   return text;
 }
+
+/**
+ * @param {DOMTokenList} classList
+ * @param {string} name
+ * @param {boolean} value
+ */
+export function toggleClass(classList, name, value) {
+  if (value)
+    classList.add(name);
+  else
+    classList.remove(name);
+}

@@ -1,82 +1,11 @@
 import { client as ap, enabled, slotData } from './archipelago-client';
+import { AWAKE_MAPID, EFFECTS, NEXUS_EVENTS, NEXUS_MAPID } from './const';
 import { getMapID, trackEvent, trackSwitch } from './easyrpg-client';
 import { div, text } from './html';
 import { showToastMessage } from './ui';
 
 let sessionIsValid = true;
 let usedItems = [];
-
-// a map of effect name -> switch id
-const EFFECTS = {
-  'Bike': 132,
-  'Boy': 123,
-  'Chainsaw': 124,
-  'Lantern': 125,
-  'Fairy': 126,
-  'Spacesuit': 127,
-  'Glasses': 128,
-  'Rainbow': 129,
-  'Wolf': 130,
-  'Eyeball Bomb': 131,
-  'Telephone': 122,
-  'Maiko': 133,
-  'Twintails': 134,
-  'Penguin': 135,
-  'Insect': 136,
-  'Spring': 137,
-  'Invisible': 138,
-  'School Boy': 139,
-  'Plaster Cast': 140,
-  'Stretch': 142,
-  'Haniwa': 143,
-  'Trombone': 144,
-  'Cake': 145,
-  'Child': 147,
-  'Red Riding Hood': 148,
-  'Tissue': 149,
-  'Bat': 150,
-  'Polygon': 151,
-  'Teru Teru Bōzu': 152,
-  'Marginal': 153,
-  'Drum': 154,
-  'Grave': 155,
-  'Crossing': 156,
-  'Bunny Ears': 157,
-  'Dice': 158,
-};
-
-// a map of nexus world -> associated warp event id
-const NEXUS_EVENTS = {
-  //'Urotsuki's Room': 6,
-  'Library': 2,
-  'Graveyard World': 3,
-  'Geometry World': 4,
-  'Garden World': 9,
-  'Marijuana Goddess World': 5,
-  'Purple World': 7,
-  'Forest World': 8,
-  'Pudding World': 21,
-  'Portrait Purgatory': 22,
-  'Rock World': 23,
-  'Ornamental Plains': 30,
-  'Cipher Keyboard': 19,
-  'Toy World': 10,
-  'Urotsuki\'s Dream Apartments': 11,
-  'Deep Red Wilds': 33,
-  'Red Streetlight World': 13,
-  'Mushroom World': 15,
-  'Heart World': 12,
-  'Lamp Puddle World': [34, 36],
-  'Blue Eyes World': 17,
-  'Lemonade Edifice': 40,
-  'Night World': 14,
-  'Trophy Room': 16,
-  'Abstract Corrosions': 31,
-  'Usugurai Residence': 32,
-};
-
-const AWAKE_MAPID = 2;
-const NEXUS_MAPID = 10;
 
 export function isSessionValid() {
   return sessionIsValid;

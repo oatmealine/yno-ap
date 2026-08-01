@@ -1,5 +1,6 @@
-import { client as apClient, connect, disconnect, sendMessage } from './archipelago-client';
-import { div, elem, raw, span } from './html';
+import { client as apClient, connect, disconnect, pkg, sendMessage, slotData } from './archipelago-client';
+import { EFFECTS, NEXUS_IMAGES, NEXUS_KEYS } from './const';
+import { div, elem, raw, span, toggleClass } from './html';
 import { globalStore, saveGlobal } from './store';
 import css from './ui.css';
 
@@ -178,6 +179,11 @@ function addGradientDef(id, ...colors) {
   document.querySelector('#svgDefs').append(gradient);
 }
 
+let effectsTooltip = div('.tooltipContent');
+let nexusKeysTooltip = div('.tooltipContent');
+let textEventsTooltip = div('.tooltipContent');
+let authorsTooltip = div('.tooltipContent');
+
 function createStatus() {
   const onlineInfo = document.querySelector('#onlineInfo');
 
@@ -211,6 +217,18 @@ function createStatus() {
     }
   });
 
+  const effectsIcon = span('#apSlotEffects.apSlotIcon', '✨');
+  const nexusKeysIcon = span('#apSlotNexusKeys.apSlotIcon', '🔑');
+  const textEventsIcon = span('#apSlotTextEvents.apSlotIcon', '💬');
+  const authorsIcon = span('#apSlotAuthors.apSlotIcon', '📃');
+
+  window.addTooltip(effectsIcon, effectsTooltip);
+  window.addTooltip(nexusKeysIcon, nexusKeysTooltip, false, false, false, {
+    theme: Math.random() < 0.5 ? 'ap_nexus_1' : 'ap_nexus_2',
+  });
+  window.addTooltip(textEventsIcon, textEventsTooltip);
+  window.addTooltip(authorsIcon, authorsTooltip);
+
   const apStatus = div('#apStatus.info',
     span('#apConnStatus.infoContainer.unselectable',
       span('#apConnStatusLabel', 'AP:'), '\n',
@@ -218,7 +236,13 @@ function createStatus() {
       elem('label#apConnStatusText.infoText', 'Disconnected'), '\n',
       reconnectButton,
     ),
-    span('#apSlotLabel.infoLabel.unselectable', globalStore.lastConnection.slot ?? ''),
+    span('#apSlotInfo.infoLabel.unselectable',
+      span('#apSlotLabel', globalStore.lastConnection.slot ?? ''), '\n',
+      effectsIcon,
+      nexusKeysIcon,
+      textEventsIcon,
+      authorsIcon,
+    ),
   );
 
   apStatus.classList.add('hidden');
@@ -227,6 +251,60 @@ function createStatus() {
   addGradientDef('ap_disconnected', '#b30000', '#800000');
   addGradientDef('ap_connecting', '#b35900', '#804000');
   addGradientDef('ap_connected', '#00b33c', '#00802b');
+}
+
+export function updateItemDisplay() {
+  //const effects = document.querySelector('#apSlotEffects');
+  const nexusKeys = document.querySelector('#apSlotNexusKeys');
+  const textEvents = document.querySelector('#apSlotTextEvents');
+  const authors = document.querySelector('#apSlotAuthors');
+
+  effectsTooltip.innerHTML = '';
+  effectsTooltip.append(
+    span('', `${Object.keys(EFFECTS).filter(effect => apClient.items.received.some(item => item.name === effect)).length}/${Object.keys(EFFECTS).length} effects`),
+    div('.ap-items.ap-effects',
+      ...Object.keys(EFFECTS).map(
+        effect => span(
+          apClient.items.received.some(item => item.name === effect)
+            ? '.infoLabel.item'
+            : '.infoLabel.item.missing',
+          effect
+        ),
+      )
+    )
+  );
+
+  toggleClass(nexusKeys.classList, 'hidden', !slotData.useNexusKeys);
+
+  nexusKeysTooltip.innerHTML = '';
+  nexusKeysTooltip.append(
+    span('', `${NEXUS_KEYS.filter(key => apClient.items.received.some(item => item.name === key)).length}/${NEXUS_KEYS.filter(k => k).length} Nexus keys`),
+    div('.ap-items.ap-nexus-keys',
+      ...NEXUS_KEYS.map(key => {
+        if (!key) return div('.item.padding');
+
+        const img = elem('img');
+        img.src = NEXUS_IMAGES[key];
+
+        return div(
+          (pkg && !pkg.itemTable[key]) ||
+          apClient.items.received.some(item => item.name === key)
+            ? '.item'
+            : '.item.missing',
+          img,
+          span('.infoLabel', key),
+        );
+      })
+    )
+  );
+  
+  toggleClass(textEvents.classList, 'hidden', !slotData.textEvents);
+  toggleClass(textEvents.classList, 'missing', apClient.items.received.some(item => item.name === 'Text Events'));
+
+  toggleClass(authors.classList, 'hidden', !slotData.authorGating);
+
+  authorsTooltip.innerHTML = '';
+  authorsTooltip.append(span('', 'Authors: sorry nothing'));
 }
 
 function showStatus() {
@@ -247,7 +325,10 @@ export function setConnecting() {
 }
 
 export function setConnected(connected) {
-  if (connected) showStatus();
+  if (connected) {
+    showStatus();
+    updateItemDisplay();
+  }
 
   const statusIcon = document.querySelector('#apConnStatusIcon');
   statusIcon.classList.remove('connecting');
@@ -358,9 +439,12 @@ function patchMessageSend() {
     const chatbox = document.querySelector('#chatbox');
     if (!chatbox.classList.contains('apChat'))
       return;
+    const input = document.querySelector('#chatInput');
+    if (input.value.trim() === '')
+      return;
 
-    sendMessage(document.getElementById('chatInput').value.trim());
-    document.getElementById('chatInput').value = '';
+    sendMessage(input.value.trim());
+    input.value = '';
   });
 }
 
@@ -509,7 +593,7 @@ export function addUIElements() {
   timestampButton.addEventListener('click', () => {
     timestampButton.classList.toggle('toggled');
     const toggled = timestampButton.classList.contains('toggled');
-    messages.classList.toggle('hideTimestamps', toggled);
+    toggleClass(messages.classList, 'hideTimestamps', toggled);
     globalStore.hideChatTimestamps = toggled;
     saveGlobal();
   });

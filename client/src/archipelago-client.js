@@ -1,8 +1,9 @@
-import { Client, itemsHandlingFlags, PlayerMessageNode, TextualMessageNode } from 'archipelago.js';
-import { hideStatus, onMessage, onToastMessage, setConnected, setConnecting, showToastMessage } from './ui';
+import { Client, Item, itemsHandlingFlags, PlayerMessageNode, TextualMessageNode } from 'archipelago.js';
+import { hideStatus, onMessage, onToastMessage, setConnected, setConnecting, showToastMessage, updateItemDisplay } from './ui';
 import { globalStore, loadSlot, saveGlobal, saveSlot, slotStore } from './store';
 import { updateLocationCompletions } from './check';
 import { updateSessionValidity } from './dream-session';
+import { GAME_NAME } from './const';
 
 export const client = new Client();
 
@@ -13,8 +14,6 @@ export const client = new Client();
 export let enabled = false;
 
 client.options.maximumMessages = 0;
-
-const GAME_NAME = 'Yume 2kki';
 
 // enums ported over from Options.py
 
@@ -28,15 +27,30 @@ export const Goal = Object.freeze({
   AllEndings: 2,
 });
 
+export const AuthorGating = Object.freeze({
+  Disable: 1,
+  PrimaryAuthor: 2,
+  ContributingAuthors: 3,
+});
+
+export const KuraPuzzlesanity = Object.freeze({
+  Ignore: 1,
+  Unlocking: 2,
+  Solving: 3,
+});
+
 export const slotData = {
   mode: ClientMode.Automatic,
   endings: [ 'Ending #-1', 'Ending #?', 'Ending #1', 'Ending #2', 'Ending #3' ],
   goal: Goal.AllEndings,
   useNexusKeys: false,
+  authorGating: AuthorGating.Disable,
+  textEvents: false,
+  kuraPuzzlesanity: KuraPuzzlesanity.Unlocking,
 };
 
 /** @type {import('archipelago.js').PackageMetadata?} */
-let pkg;
+export let pkg;
 
 export async function connect(host, password, slot) {
   if (globalStore.dataPackage)
@@ -78,6 +92,15 @@ export async function connect(host, password, slot) {
   if (remoteSlotData.use_nexus_keys !== undefined)
     // @ts-ignore
     slotData.useNexusKeys = remoteSlotData.use_nexus_keys;
+  if (remoteSlotData.author_gating !== undefined)
+    // @ts-ignore
+    slotData.authorGating = remoteSlotData.author_gating
+  if (remoteSlotData.text_events !== undefined)
+    // @ts-ignore
+    slotData.textEvents = remoteSlotData.text_events
+  if (remoteSlotData.kura_puzzlesanity !== undefined)
+    // @ts-ignore
+    slotData.kuraPuzzlesanity = remoteSlotData.kura_puzzlesanity
     
   console.log('[yno-ap-client] loaded slot data: ', slotData);
 
@@ -167,12 +190,17 @@ client.messages.on('disconnected', (text, player, nodes) => {
   seen.add(nodes);
 });
 
+/*** @param {Item} item */
+function onItemReceived(item) {
+  updateItemDisplay();
+}
+
 client.messages.on('itemSent', (content, item, nodes) => 
-  item.locationGame === client.game && onToastMessage(nodes));
+  (item.locationGame !== client.game) && (onToastMessage(nodes), onItemReceived(item)));
 client.messages.on('itemHinted', (content, item, found, nodes) =>
   (item.locationGame === client.game || item.game === client.game) && onToastMessage(nodes));
 client.messages.on('itemCheated', (content, item, nodes) =>
-  item.locationGame === client.game && onToastMessage(nodes));
+  item.locationGame === client.game && (onToastMessage(nodes), onItemReceived(item)));
 
 export async function sendMessage(content) {
   await client.messages.say(content);

@@ -1175,6 +1175,9 @@ class Yume2kkiWorld(World):
                 int(self.options.goal),
 
             "use_nexus_keys": bool(self.options.nexus_keys),
+            "author_gating": int(self.options.author_gating),
+            "text_events": bool(self.options.text_events),
+            "kura_puzzlesanity": bool(self.options.kura_puzzlesanity),
         }
 
         return slot_data

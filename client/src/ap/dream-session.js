@@ -1,8 +1,8 @@
-import { client as ap, enabled, slotData } from './archipelago-client';
-import { AWAKE_MAPID, EFFECTS, NEXUS_EVENTS, NEXUS_MAPID } from './const';
-import { getMapID, trackEvent, trackSwitch } from './easyrpg-client';
-import { div, text } from './html';
-import { showToastMessage } from './ui';
+import { client as ap, enabled, slotData } from './client';
+import { AWAKE_MAPID, EFFECTS, NEXUS_EVENTS, NEXUS_MAPID } from '../const';
+import { getMapID, trackEvent, trackSwitch } from '../easyrpg-client';
+import { div, text } from '../lib/html';
+import { showToastMessage } from '../ui/toasts';
 
 let sessionIsValid = true;
 let usedItems = [];
@@ -105,8 +105,8 @@ export function addWarningElement() {
 
 export function updateCanvasOverlays() {
   const warning = document.querySelector('#ap-session-warning');
-  const contentElement = document.getElementById('content');
-  const canvasElement = document.getElementById('canvas');
+  const contentElement = document.querySelector('#content');
+  const canvasElement = document.querySelector('#canvas');
   
   if (document.fullscreenElement) {
     const canvasRect = canvasElement.getBoundingClientRect();

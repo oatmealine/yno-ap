@@ -1,11 +1,12 @@
 // see build.mjs for importing logic
+// @ts-ignore
 import locationsRaw from '@locations';
 
-import { checkLocations, client as apClient, Goal, isLocationChecked, slotData } from './archipelago-client';
+import { checkLocations, client as apClient, Goal, isLocationChecked, slotData } from './client';
 import { isSessionValid } from './dream-session';
-import { getPos, getSwitch, getVariable, trackSwitch, waitForEvent, waitForPicture, waitForSwitchChange, waitForVariableChange } from './easyrpg-client';
-import { saveSlot, slotStore } from './store';
-import { showToastMessage } from './ui';
+import { getPos, getSwitch, getVariable, trackSwitch, waitForEvent, waitForPicture, waitForSwitchChange, waitForVariableChange } from '../easyrpg-client';
+import { saveSlot, slotStore } from '../lib/store';
+import { showToastMessage } from '../ui/toasts';
 
 /** @type {Location[]} */
 const locations = locationsRaw
@@ -179,15 +180,15 @@ function checkConditionCoords(condition) {
   const [x, y] = getPos();
 
   if (condition.mapX1 || condition.mapX2) {
-    if (condition.mapX1 !== -1 && x < condition.mapX1)
+    if (condition.mapX1 !== undefined && condition.mapX1 !== -1 && x < condition.mapX1)
       return false;
-    if (condition.mapX2 !== -1 && x > condition.mapX2)
+    if (condition.mapX2 !== undefined && condition.mapX2 !== -1 && x > condition.mapX2)
       return false;
   }
   if (condition.mapY1 || condition.mapY2) {
-    if (condition.mapY1 !== -1 && y < condition.mapY1)
+    if (condition.mapY1 !== undefined && condition.mapY1 !== -1 && y < condition.mapY1)
       return false;
-    if (condition.mapY2 !== -1 && y > condition.mapY2)
+    if (condition.mapY2 !== undefined && condition.mapY2 !== -1 && y > condition.mapY2)
       return false;
   }
 
@@ -228,7 +229,7 @@ async function switchCheck(condition) {
 async function variableCheck(condition) {
   const varIds = condition.varIds ?? singleton(condition.varId);
   const varValues = condition.varValues ?? singleton(condition.varValue);
-  const varValues2 = [condition.varValue2];
+  const varValues2 = singleton(condition.varValue2);
   const ops = condition.varOps ?? singleton(condition.varOp);
 
   for (const [i, varID] of varIds.entries()) {
@@ -311,6 +312,8 @@ async function passiveCheckCondition(condition) {
     }
   } else if (!condition.trigger) {
     if ((condition.switchId || condition.switchIds) && !condition.varTrigger) {
+      /** @type {number} */
+      // @ts-ignore impossible to be undefined due to above cond
       const switchId = condition.switchIds?.[0] ?? condition.switchId;
 
       trackSwitch(switchId, !condition.switchDelay);
@@ -320,6 +323,8 @@ async function passiveCheckCondition(condition) {
         if (success) break;
       }
     } else if (condition.varId || condition.varIds) {
+      /** @type {number} */
+      // @ts-ignore impossible to be undefined due to above cond
       const varId = condition.varIds?.[0] ?? condition.varId;
       
       while (true) {

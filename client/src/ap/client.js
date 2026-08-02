@@ -1,9 +1,11 @@
-import { Client, Item, itemsHandlingFlags, PlayerMessageNode, TextualMessageNode } from 'archipelago.js';
-import { hideStatus, onMessage, onToastMessage, setConnected, setConnecting, showToastMessage, updateItemDisplay } from './ui';
-import { globalStore, loadSlot, saveGlobal, saveSlot, slotStore } from './store';
+import { Client, Item, itemsHandlingFlags, PlayerMessageNode } from 'archipelago.js';
+import { globalStore, loadSlot, saveGlobal, saveSlot, slotStore } from '../lib/store';
 import { updateLocationCompletions } from './check';
 import { updateSessionValidity } from './dream-session';
-import { GAME_NAME } from './const';
+import { GAME_NAME } from '../const';
+import { hideStatus, setConnected, setConnecting, updateItemDisplay } from '../ui/status';
+import { onToastMessage, showToastMessage } from '../ui/toasts';
+import { onMessage } from '../ui/ap-tab';
 
 export const client = new Client();
 
@@ -17,22 +19,26 @@ client.options.maximumMessages = 0;
 
 // enums ported over from Options.py
 
+/** @enum {number} */
 export const ClientMode = Object.freeze({
   Automatic: 1,
   Manual: 2,
 });
 
+/** @enum {number} */
 export const Goal = Object.freeze({
   AnyEnding: 1,
   AllEndings: 2,
 });
 
+/** @enum {number} */
 export const AuthorGating = Object.freeze({
   Disable: 1,
   PrimaryAuthor: 2,
   ContributingAuthors: 3,
 });
 
+/** @enum {number} */
 export const KuraPuzzlesanity = Object.freeze({
   Ignore: 1,
   Unlocking: 2,
@@ -40,12 +46,16 @@ export const KuraPuzzlesanity = Object.freeze({
 });
 
 export const slotData = {
+  /** @type {ClientMode} */
   mode: ClientMode.Automatic,
   endings: [ 'Ending #-1', 'Ending #?', 'Ending #1', 'Ending #2', 'Ending #3' ],
+  /** @type {Goal} */
   goal: Goal.AllEndings,
   useNexusKeys: false,
+  /** @type {AuthorGating} */
   authorGating: AuthorGating.Disable,
   textEvents: false,
+  /** @type {KuraPuzzlesanity} */
   kuraPuzzlesanity: KuraPuzzlesanity.Unlocking,
 };
 
@@ -160,6 +170,7 @@ function stripAuthor(message, author) {
       message.shift();
       sliced += node.text.length;
     } else {
+      // @ts-ignore doing stupid class hacks for fun
       node.part.text = node.part.text.slice(toSlice - sliced);
       break;
     }
@@ -217,6 +228,9 @@ export function isLocationChecked(locationName) {
  * @param {string[]} locationNames
  */
 async function checkLocationsRaw(...locationNames) {
+  if (!pkg) throw Error('no package loaded?');
+
+  // @ts-ignore checked above
   const ids = locationNames.map(loc => pkg.locationTable[loc]);
   if (ids.length === 0) return;
 

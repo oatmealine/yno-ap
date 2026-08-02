@@ -6,10 +6,10 @@
  * @typedef {'s' | 'ri' | 'ss' | 'sv' | 'ssv' | 'sev' | 'sp' | 'pns' | 'bas' | 'b' | 'c' | 'd' | 'm' | 'jmp' | 'f' | 'spd' | 'spr' | 'fl' | 'rfl' | 'rrfl' | 'tr' | 'h' | 'sys' | 'se' | 'ap' | 'mp' | 'rp' | 'ba' | 'name' | 'cut' | 'cuww'} S2CPacketType
  */
 
-import { checkLocations } from './archipelago-client';
-import { handleMapSwitch as checksHandleMapSwitch, processTrigger } from './check';
-import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch, handleActionEvent as sessionHandleActionEvent, isSessionValid } from './dream-session';
-import { sendClientPackets } from './websocket-intercept';
+import { checkLocations } from './ap/client';
+import { handleMapSwitch as checksHandleMapSwitch, processTrigger } from './ap/check';
+import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch, handleActionEvent as sessionHandleActionEvent, isSessionValid } from './ap/dream-session';
+import { sendClientPackets } from './patches/websocket-intercept';
 
 let prevMapID = 0;
 let mapID = 0;
@@ -304,16 +304,6 @@ export function onNewMap(newMapID) {
 export function onChangeLocation(locations) {
   if (!isSessionValid()) return;
   checkLocations(...locations.map(loc => loc.title));
-}
-
-export function patchChangeLocation() {
-  // somehow the most reliable hook point?
-  window.addChatMapLocation = new Proxy(window.addChatMapLocation, {
-    apply: (target, thisArg, argumentsList) => {
-      onChangeLocation(argumentsList[0]);
-      target(...argumentsList);
-    },
-  });
 }
 
 /**

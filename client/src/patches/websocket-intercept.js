@@ -1,4 +1,4 @@
-import { onPacket, onNewMap } from './easyrpg-client';
+import { onPacket, onNewMap } from '../easyrpg-client';
 
 const SPLIT_PACKET = '￾';
 const SPLIT_ARGS = '￿';

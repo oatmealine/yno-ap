@@ -1,6 +1,6 @@
 import { client as apClient, connect, disconnect, pkg, sendMessage, slotData } from './archipelago-client';
 import { EFFECTS, NEXUS_IMAGES, NEXUS_KEYS } from './const';
-import { div, elem, raw, span, toggleClass } from './html';
+import { addCSS, div, elem, raw, span, toggleClass } from './html';
 import { globalStore, saveGlobal } from './store';
 import css from './ui.css';
 
@@ -430,10 +430,6 @@ export function onToastMessage(message) {
     contents = span('', ...formatMessageNodes(message));
   }
   showToastMessage(contents.innerHTML, 'archipelago', undefined, undefined, true);
-}
-
-function addCSS(css) {
-  document.head.append(elem('style', css));
 }
 
 function patchMessageSend() {

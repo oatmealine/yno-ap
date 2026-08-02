@@ -67,3 +67,8 @@ export function toggleClass(classList, name, value) {
   else
     classList.remove(name);
 }
+
+/** @param {string} css */
+export function addCSS(css) {
+  document.head.append(elem('style', css));
+}

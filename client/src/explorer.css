@@ -1,0 +1,10 @@
+.ap-overlay {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  background-color: #0008;
+  padding: 8px;
+
+  color: rgba(216, 216, 216, 1);
+  text-shadow: 1.5px 1.5px black;
+}

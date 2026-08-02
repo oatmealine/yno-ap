@@ -5,52 +5,63 @@ import { patchChangeLocation } from './easyrpg-client';
 import { addWarningElement, updateCanvasOverlays as sessionUpdateCanvasOverlays } from './dream-session';
 import { globalStore, saveGlobal } from './store';
 import { connect } from './archipelago-client';
+import { loadExplorerClient, loadYNOAPClientBridge } from './explorer';
 
 console.log('[yno-ap-client] hello from yno AP client \\o/');
 
-patchWebsocketClass();
-//patchXMLHTTPRequest(); // gives access to 'ssv' packet, but not particularly useful for now
-
-document.addEventListener('DOMContentLoaded', () => {
-  patchI18N();
-  addUIElements();
-  addWarningElement();
-});
-
-async function onYNOLoaded() {
-  console.log('[yno-ap-client] yno scripts done loading');
+function loadYNOAPClient() {
+  patchWebsocketClass();
+  //patchXMLHTTPRequest(); // gives access to 'ssv' packet, but not particularly useful for now
   
-  patchChangeLocation();
-
-  const _updateCanvasOverlays = window.updateCanvasOverlays;
-  window.updateCanvasOverlays = () => {
-    sessionUpdateCanvasOverlays();
-    _updateCanvasOverlays();
-  }
-
-  if (globalStore.lastConnection.autoConnect) {
-    const creds = globalStore.lastConnection;
-
-    try {
-      await connect(creds.host, creds.password, creds.slot);
-    } catch (err) {
-      creds.autoConnect = false;
-      saveGlobal();
-      console.error(err);
+  document.addEventListener('DOMContentLoaded', () => {
+    patchI18N();
+    addUIElements();
+    addWarningElement();
+  });
+  
+  async function onYNOLoaded() {
+    console.log('[yno-ap-client] yno scripts done loading');
+    
+    patchChangeLocation();
+  
+    const _updateCanvasOverlays = window.updateCanvasOverlays;
+    window.updateCanvasOverlays = () => {
+      sessionUpdateCanvasOverlays();
+      _updateCanvasOverlays();
     }
-  }
-}
-
-// this is the easiest way to check for when the actual scripts are done loading...
-
-const observer = new MutationObserver(async (mutationList, observer) => {
-  for (const mutation of mutationList) {
-    for (const node of mutation.addedNodes) {
-      if (node.nodeName === 'SCRIPT' && node.src?.includes('ynoengine')) {
-        observer.disconnect();
-        onYNOLoaded();
+  
+    if (globalStore.lastConnection.autoConnect) {
+      const creds = globalStore.lastConnection;
+  
+      try {
+        await connect(creds.host, creds.password, creds.slot);
+      } catch (err) {
+        creds.autoConnect = false;
+        saveGlobal();
+        console.error(err);
       }
     }
   }
-});
-observer.observe(document.body, { childList: true });
+  
+  // this is the easiest way to check for when the actual scripts are done loading...
+  
+  const observer = new MutationObserver(async (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeName === 'SCRIPT' && node.src?.includes('ynoengine')) {
+          observer.disconnect();
+          onYNOLoaded();
+        }
+      }
+    }
+  });
+  observer.observe(document.body, { childList: true });
+
+  loadYNOAPClientBridge();
+}
+
+if (location.hostname === 'explorer.yume.wiki') {
+  loadExplorerClient();
+} else {
+  loadYNOAPClient();
+}

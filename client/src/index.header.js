@@ -10,6 +10,7 @@
 // @downloadURL  https://github.com/oatmealine/yno-ap/releases/latest/download/yno-ap-client.user.js
 // @updateURL    https://github.com/oatmealine/yno-ap/releases/latest/download/yno-ap-client.user.js
 // @match        https://ynoproject.net/2kki/
+// @match        https://explorer.yume.wiki/location
 // @grant        none
 // @run-at       document-end
 // ==/UserScript==

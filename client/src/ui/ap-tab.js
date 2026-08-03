@@ -65,7 +65,7 @@ function createConnectForm() {
     passwordLabel, passwordInput
   );
 
-  const slotLabel = label('.unselectable', attr('for', 'connectSlot'));
+  const slotLabel = label('.unselectable', 'Slot', attr('for', 'connectSlot'));
   const slotInput = input('#connectSlot', attr('type', 'text'));
   const slotRow = elem('li.formControlRow',
     slotLabel, slotInput

@@ -45,6 +45,13 @@ export const KuraPuzzlesanity = Object.freeze({
   Solving: 3,
 });
 
+/** @enum {number} */
+export const MinigameTreatment = Object.freeze({
+  Ignore: 1,
+  Locations: 2,
+  Hints: 3,
+});
+
 export const slotData = {
   /** @type {ClientMode} */
   mode: ClientMode.Automatic,
@@ -57,6 +64,8 @@ export const slotData = {
   textEvents: false,
   /** @type {KuraPuzzlesanity} */
   kuraPuzzlesanity: KuraPuzzlesanity.Unlocking,
+  /** @type {MinigameTreatment} */
+  minigameTreatment: MinigameTreatment.Locations,
 };
 
 /** @type {import('archipelago.js').PackageMetadata?} */
@@ -104,13 +113,16 @@ export async function connect(host, password, slot) {
     slotData.useNexusKeys = remoteSlotData.use_nexus_keys;
   if (remoteSlotData.author_gating !== undefined)
     // @ts-ignore
-    slotData.authorGating = remoteSlotData.author_gating
+    slotData.authorGating = remoteSlotData.author_gating;
   if (remoteSlotData.text_events !== undefined)
     // @ts-ignore
-    slotData.textEvents = remoteSlotData.text_events
+    slotData.textEvents = remoteSlotData.text_events;
   if (remoteSlotData.kura_puzzlesanity !== undefined)
     // @ts-ignore
-    slotData.kuraPuzzlesanity = remoteSlotData.kura_puzzlesanity
+    slotData.kuraPuzzlesanity = remoteSlotData.kura_puzzlesanity;
+  if (remoteSlotData.minigame_treatment !== undefined)
+    // @ts-ignore
+    slotData.minigameTreatment = remoteSlotData.minigame_treatment;
     
   console.log('[yno-ap-client] loaded slot data: ', slotData);
 

@@ -1178,6 +1178,7 @@ class Yume2kkiWorld(World):
             "author_gating": int(self.options.author_gating),
             "text_events": bool(self.options.text_events),
             "kura_puzzlesanity": bool(self.options.kura_puzzlesanity),
+            "minigame_treatment": int(self.options.minigame_treatment),
         }
 
         return slot_data

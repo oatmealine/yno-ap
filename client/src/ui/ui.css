@@ -165,6 +165,13 @@
   filter: saturate(50%);
 }
 
+.ap-item-label {
+  --base-gradient: linear-gradient(to bottom, #00b33c, #00802b);
+}
+.ap-item-label.missing {
+  --base-gradient: linear-gradient(to bottom, #b30000, #800000);
+}
+
 .tippy-box[data-theme~='ap_nexus_1'] {
   background-image: url('/data/2kki/Panorama/haikei02.png') !important;
 }

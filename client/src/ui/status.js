@@ -1,4 +1,4 @@
-import { client as apClient, connect, disconnect, pkg, slotData } from '../ap/client';
+import { client as apClient, connect, disconnect, MinigameTreatment, pkg, slotData } from '../ap/client';
 import { EFFECTS, NEXUS_IMAGES, NEXUS_KEYS } from '../const';
 import { a, attr, div, elem, img, label, span, toggleClass } from '../lib/html';
 import { globalStore, saveGlobal } from '../lib/store';
@@ -28,6 +28,7 @@ let effectsTooltip = div('.tooltipContent');
 let nexusKeysTooltip = div('.tooltipContent');
 let textEventsTooltip = div('.tooltipContent');
 let authorsTooltip = div('.tooltipContent');
+let minigamesTooltip = div('.tooltipContent');
 
 export function createStatus() {
   const onlineInfo = document.querySelector('#onlineInfo');
@@ -67,13 +68,24 @@ export function createStatus() {
   const nexusKeysIcon = span('#apSlotNexusKeys.apSlotIcon', '🔑');
   const textEventsIcon = span('#apSlotTextEvents.apSlotIcon', '💬');
   const authorsIcon = span('#apSlotAuthors.apSlotIcon', '📃');
+  const minigamesIcon = span('#apSlotMinigames.apSlotIcon', '🎮');
 
-  window.addTooltip(effectsIcon, effectsTooltip);
+  window.addTooltip(effectsIcon, effectsTooltip, false, false, false, {
+    placement: 'bottom',
+  });
   window.addTooltip(nexusKeysIcon, nexusKeysTooltip, false, false, false, {
     theme: Math.random() < 0.5 ? 'ap_nexus_1' : 'ap_nexus_2',
+    placement: 'bottom',
   });
-  window.addTooltip(textEventsIcon, textEventsTooltip);
-  window.addTooltip(authorsIcon, authorsTooltip);
+  window.addTooltip(textEventsIcon, textEventsTooltip, false, false, false, {
+    placement: 'bottom',
+  });
+  window.addTooltip(authorsIcon, authorsTooltip, false, false, false, {
+    placement: 'bottom',
+  });
+  window.addTooltip(minigamesIcon, minigamesTooltip, false, false, false, {
+    placement: 'bottom',
+  });
 
   const apStatus = div('#apStatus.info',
     span('#apConnStatus.infoContainer.unselectable',
@@ -89,6 +101,7 @@ export function createStatus() {
         nexusKeysIcon,
         textEventsIcon,
         authorsIcon,
+        minigamesIcon,
       ),
     ),
   );
@@ -106,6 +119,7 @@ export function updateItemDisplay() {
   const nexusKeys = document.querySelector('#apSlotNexusKeys');
   const textEvents = document.querySelector('#apSlotTextEvents');
   const authors = document.querySelector('#apSlotAuthors');
+  const minigames = document.querySelector('#apSlotMinigames');
 
   effectsTooltip.innerHTML = '';
   effectsTooltip.append(
@@ -145,13 +159,26 @@ export function updateItemDisplay() {
     )
   );
   
+  const hasTextEvents = apClient.items.received.some(item => item.name === 'Text Events');
   toggleClass(textEvents.classList, 'hidden', !slotData.textEvents);
-  toggleClass(textEvents.classList, 'missing', apClient.items.received.some(item => item.name === 'Text Events'));
+  toggleClass(textEvents.classList, 'missing', hasTextEvents);
+  textEventsTooltip.innerHTML = '';
+  textEventsTooltip.append(
+    span('', 'Has Text Events:'), ' ',
+    hasTextEvents
+      ? label('.ap-item-label', 'YES')
+      : label('.ap-item-label.missing', 'NO'),
+  );
 
   toggleClass(authors.classList, 'hidden', !slotData.authorGating);
 
   authorsTooltip.innerHTML = '';
   authorsTooltip.append(span('', 'Authors: sorry nothing'));
+
+  toggleClass(minigames.classList, 'hidden', slotData.minigameTreatment !== MinigameTreatment.Locations);
+
+  minigamesTooltip.innerHTML = '';
+  minigamesTooltip.append(span('', 'Minigames: sorry nothing'));
 }
 
 function showStatus() {

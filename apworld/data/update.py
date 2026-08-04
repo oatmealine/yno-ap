@@ -7,11 +7,12 @@ import requests
 from urllib.parse import urlencode, quote
 import json
 import re
+from os import getenv
 
 API_BASE = "https://yume.wiki/api.php"
 FETCH_LIMIT = 500
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
-CF_CLEARANCE = "1X7ZA_PbbZJlaETIKUEiLLZDqwJ7l0rb9Lq1BPkQwes-1781257132-1.2.1.1-1RWauUbNdgxGe.5en.KNQVWBsPXamiWuY4.9uFM7L3UnXahEySWYBBWMmAZr7TgRe29b_C1.HVMWqSU0tkTOZrCwCQWBEd1kTYMo2ckROcY3nORwqLB.HJxT1uIBau_KAx.5bcNwkaiJ1gjAro6rScBdANf3NEGi_KEv1G.pJwvNBBmSNH6.3SgbNa0PzQcqRM81KYwihsy9He80x2vAXh23hgZQZScDD8ihN8DOr8kUc6pndfpaoV.sjWuae2dz1mIGpRkEvmQqgUzd8lWxLtgisjziAN9MhS4EC.cIJloGq0gBvJkkPdl.ixmVGIxa2lmZg2hV06nxJ0CghVXbTiMK4iQKJGD5E4Bd4v_._QthPMpvjDL8lg56ieyLzhBbM2i.ijgANgNrIM4RDSHwKoTPEs5LF.EqCD1PHkuSSmU"
+USER_AGENT = getenv("USER_AGENT")
+CF_CLEARANCE = getenv("CF_CLEARANCE")
 
 def query(conditions: list[str], printouts: list[str]) -> dict[str, any]:
   i = 0
@@ -47,7 +48,7 @@ def query(conditions: list[str], printouts: list[str]) -> dict[str, any]:
   Server returned non-200 response; likely a CF block page. See above for more details.
   Try going on the following page and resolving the captcha:
   {url}
-  Afterwards, copy the cf_clearance cookie from your browser, and paste it (alongside with your user agent) at the top of this script.""")
+  Afterwards, set the CF_CLEARANCE envvar to the cf_clearance cookie from your browser, and the USER_AGENT envvar to your browser user agent.""")
 
     data = r.json()
 

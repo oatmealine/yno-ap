@@ -80,6 +80,7 @@ text_condition_logic = {
     "200夢 each visit": True,
     "Must pay 500夢 to the Light Lady each time": True,
     "With 1000夢 or Chainsaw effect": True,
+    "100夢 to enter the bar on the first visit": True,
 
     # simple street
     "Enter the Hand Hub at least once":
@@ -318,6 +319,9 @@ text_condition_logic = {
     "Visit Blue Sanctuary and the main area of Floating Tiled Islands once":
         lambda state, self:
             state.can_reach_region("Blue Sanctuary", self.player) and state.can_reach_region("Floating Tiled Islands", self.player),
+    "Visit Blue Sanctuary and Floating Tiled Islands at least once":
+        lambda state, self:
+                state.can_reach_region("Blue Sanctuary", self.player) and state.can_reach_region("Floating Tiled Islands", self.player),
     "Visit Wooden Block World":
         lambda state, self: state.can_reach_region("Wooden Block World", self.player),
     "Visit Flamelit Wasteland once":
@@ -387,6 +391,16 @@ text_condition_logic = {
         lambda state, self: state.can_reach_region("Container Forest", self.player),
     "Visit the Divergence subarea in Mystery Zone B":
         lambda state, self: state.can_reach_region("Mystery Zone", self.player),
+    "Visit Sugarholic at least once":
+        lambda state, self: state.can_reach_region("Sugarholic", self.player),
+    "Visit Blue Sanctuary at least once":
+        lambda state, self: state.can_reach_region("Blue Sanctuary", self.player),
+    "Visit Red Sewers at least once":
+        lambda state, self: state.can_reach_region("Red Sewers", self.player),
+    "Visit Sealed Rainbow Pillars at least once":
+        lambda state, self: state.can_reach_region("Sealed Rainbow Pillars", self.player),
+    "Visit Fluorescent City at least once":
+        lambda state, self: state.can_reach_region("Fluorescent City", self.player),
 
     # random specific ones
     "After seeing the first four endings":
@@ -398,6 +412,7 @@ text_condition_logic = {
             state.can_reach_region("Elvis Masada's Place", self.player) or # TODO: 25% chance
             state.can_reach_region("Spelling Room", self.player), # TODO: 1 in 6 chance
     "One-way if the UFO is present": True,
+    "If the UFO is not present": True,
     "Obtain the Cake effect and enter Dream Park's central section at least once":
         lambda state, self: state.has("Cake", self.player) and state.can_reach_region("Dream Park", self.player),
     "Obtain the Teru Teru Bōzu effect and enter Dream Park's central section at least once":
@@ -579,11 +594,11 @@ text_condition_logic = {
     "Meet certain conditions": False, # TODO undocumented
     "Visit the Spiked Sands at least once and have the Plaster Cast effect":
         lambda state, self: state.can_reach_region("Spiked Sands", self.player) and state.has("Plaster Cast", self.player),
-    "➡️ If entered from Garden World / ⛔ If entered from Bishop Cathedral":
+    "[ONW] If entered from Garden World / [NEN] If entered from Bishop Cathedral":
         lambda state, self: state.can_reach_region("Garden World", self.player),
-    "➡️ If entered from Bishop Cathedral / ⛔ If entered from Garden World":
+    "[ONW] If entered from Bishop Cathedral / [NEN] If entered from Garden World":
         lambda state, self: state.can_reach_region("Bishop Cathedral", self.player),
-    "➡️ If entered from Wrinked Fields and not entering from Entrails / ⛔ If entered from Entrails":
+    "[ONW] If entered from Wrinked Fields and not entering from Entrails / [NEN] If entered from Entrails":
         lambda state, self: state.can_reach_region("Wrinkled Fields", self.player),
     "Complete the terminal puzzle": True,
     "Complete the Chase sequence event": True,
@@ -674,6 +689,8 @@ text_condition_logic = {
         lambda state, self: state.can_reach_region("Moonlight Lantern Forest", self.player),
     "Chainsaw the Tree of Life in Blood Cell Sea":
         lambda state, self: state.has("Chainsaw", self.player) and state.can_reach_region("Blood Cell Sea", self.player),
+    "If the Tree of Life is in Qliphothic state":
+        lambda state, self: state.has("Chainsaw", self.player) and state.can_reach_region("Blood Cell Sea", self.player),
     "Enter from the Library":
         lambda state, self: state.can_reach_region("Library", self.player),
     "Isolated area requires Child effect. Full area requires visiting Innocent Dream once":
@@ -696,16 +713,17 @@ text_condition_logic = {
         lambda state, self: state.can_reach_entrance("Promnesic Terminal -> Solemn Meadow", self.player),
     "If this world was reached via Mystery Zone":
         lambda state, self: state.can_reach_entrance("Mystery Zone -> Solemn Meadow", self.player),
-    "🔐✨☠️ If Katana Man was chainsawed in Scribbled Worksite, from a chaser that can trap you in the opposite side / (↩️/⛔) Supposed to be to an isolated section, however by an issue it could be one-way to the main area of this location":
-        False,
-    "🚷 From a chaser in the opposite area / 🔐✨(🚩/➡️) If Katana Man was chainsawed in Scribbled Worksite, supposed to lead to an isolated section, however by an issue it could be one-way to the main area":
+    # i'm not sure the next 2 are correct, this is worded really weirdly
+    "[CHR] From a chaser in the opposite area / [LCK][EFF]([ISL]/[ONW]) If Katana Man was chainsawed in Scribbled Worksite, supposed to lead to an isolated section, however by an issue it could be one-way to the main area":
         lambda state, self: state.has("Chainsaw", self.player) and state.can_reach_region("Scribbled Worksite", self.player),
+    "[LCK][EFF][TRP] If Katana Man was chainsawed in Scribbled Worksite, from a chaser that can trap you in the opposite side / ([OPP]/[NEN]) Supposed to be to an isolated section, however by an issue it could be one-way to the main area of this location":
+        False,
     # TODO: disconnect Scribbled Worksite - Partial from the full version, then change the origin of this to the Partial ver. requires a refactor
-    "⛔ From the main area / ↩️➡️ From the isolated section of this area through Crazy Pink House":
+    "[NEN] From the main area / [OPP][ONW] From the isolated section of this area through Crazy Pink House":
         True,
     "With 1000夢 the most or 0夢 the least, depending on how many flowers Urotsuki earned in Obstacle Course's hard mode":
         True,
-    "✨➡️ With the Chainsaw effect, one-way to main area / ⛔ From the isolated section of Scribbled Worksite through Crazy Pink House":
+    "[EFF][ONW] With the Chainsaw effect, one-way to main area / [NEN] From the isolated section of Scribbled Worksite through Crazy Pink House":
         lambda state, self: state.has("Chainsaw", self.player),
     "Earning all three flowers in Obstacle Course's hard mode":
         lambda state, self: state.can_reach_region("Obstacle Course", self.player),
@@ -729,10 +747,20 @@ text_condition_logic = {
             state.can_reach_region("Ocean Floor", self.player) and
             state.has_any(["Child", "Glasses", "Stretch"], self.player),
     "If this world was reached via Auguries of Innocence":
-        lambda state, self: state.can_reach_region("Auguries of Innocence", self.player)
+        lambda state, self: state.can_reach_region("Auguries of Innocence", self.player),
+    "Visit the two isolated sections accessible from this area":
+        lambda state, self: state.can_reach_region("Sweets Chaos - Partial", self.player) and state.can_reach_region("Serene Garden - Partial", self.player),
+    "Visit Art Gallery at least once and have the Child effect acquired":
+        lambda state, self: state.can_reach_region("Art Gallery", self.player) and state.has("Child", self.player),
+    "Chainsaw the blue humanoid creature in the path's end and then come back":
+        lambda state, self: state.has("Chainsaw", self.player),
+    "Get caught by a Shadow ??? or a Robot Guard": True,
+    "Chainsaw effect if coming from Broken Faces Area":
+        lambda state, self: state.can_reach_region("Burial Desert", self.player) or state.can_reach_region("Hand Fields", self.player) or state.has("Chainsaw", self.player),
 }
 
 class Yume2kkiWorld(World):
+
     game = "Yume 2kki"
     web = Yume2kkiWeb()
     item_name_to_id = {data.name: id for id, data in item_ids.items()}
@@ -1025,16 +1053,21 @@ class Yume2kkiWorld(World):
                 continue
             if t & ConnType.LOCKED.value:
                 rules.append(lambda state, target_region_name=target_region.name: state.can_reach_region(target_region_name, self.player))
-            if t & ConnType.DEAD_END.value and target_region.name != "Lamplit Stones": # TODO temp data fix
-                is_dead_end = True
+            #if t & ConnType.DEAD_END.value and target_region.name != "Lamplit Stones": # temp data fix
+            #    is_dead_end = True
             if t & ConnType.ISOLATED.value:
-                continue
+                if target_region.name != "Cocoa Trap Streets": # TODO temp data fix
+                    continue
             if t & ConnType.EFFECT.value:
-                effects = connection["params"][str(ConnType.EFFECT.value)]
-                for effect in effects:
-                    item = next((item for item in item_data if item.name == effect), None)
+                effect_names = connection["params"][str(ConnType.EFFECT.value)]
+                effects = []
+                for effect in effect_names:
+                    item = next((item for item in item_data if str.lower(item.name) == str.lower(effect)), None)
                     if item is None:
                         logger.warning(f"Yume 2kki: unknown effect used for {name} connection: {effect}")
+                        continue
+                    else:
+                        effects.append(item.name)
                 
                 rules.append(lambda state, effects=effects: state.has_all(effects, self.player))
             if t & ConnType.CHANCE.value:

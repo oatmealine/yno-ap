@@ -4,6 +4,7 @@ import { loadYNOAPClientBridge } from '../explorer/bridge';
 import { globalStore, saveGlobal } from '../lib/store';
 import { patchChangeLocation } from '../patches/change-location-patch';
 import { patchI18N } from '../patches/i18n-patch';
+import { patchMessageSend } from '../patches/send-message-patch';
 import { patchUpdateCanvasOverlays } from '../patches/update-canvas-overlays';
 import { patchWebsocketClass } from '../patches/websocket-intercept';
 import { init } from '../ui';
@@ -22,6 +23,7 @@ async function onYNOLoaded() {
   
   patchChangeLocation();
   patchUpdateCanvasOverlays();
+  patchMessageSend();
 
   if (globalStore.lastConnection.autoConnect) {
     const creds = globalStore.lastConnection;

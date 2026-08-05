@@ -1,10 +1,12 @@
 import { sendMessage } from '../ap/client';
 
 export function patchMessageSend() {
-  document.querySelector('#chatInputContainer > form').addEventListener('submit', () => {
+  const _chatInputActionFired = window.chatInputActionFired;
+  window.chatInputActionFired = async () => {
     const chatbox = document.querySelector('#chatbox');
     if (!chatbox.classList.contains('apChat'))
-      return;
+      return await _chatInputActionFired();
+    
     /** @type {HTMLInputElement} */
     // @ts-ignore
     const input = document.querySelector('#chatInput');
@@ -13,5 +15,5 @@ export function patchMessageSend() {
 
     sendMessage(input.value.trim());
     input.value = '';
-  });
+  };
 }

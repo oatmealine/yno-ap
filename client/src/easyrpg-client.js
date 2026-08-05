@@ -10,6 +10,7 @@ import { checkLocations } from './ap/client';
 import { handleMapSwitch as checksHandleMapSwitch, processTrigger } from './ap/check';
 import { handleSwitch as sessionHandleSwitch, handleMapSwitch as sessionHandleMapSwitch, handleActionEvent as sessionHandleActionEvent, isSessionValid } from './ap/dream-session';
 import { sendClientPackets } from './patches/websocket-intercept';
+import { updateLocationTracker } from './explorer/bridge';
 
 let prevMapID = 0;
 let mapID = 0;
@@ -294,6 +295,8 @@ export function onNewMap(newMapID) {
   processTrigger(mapID, 'prevMap', prevMapID.toString());
 
   sessionHandleMapSwitch(newMapID);
+
+  updateLocationTracker();
 }
 
 /**

@@ -7,4 +7,13 @@
 
   color: rgba(216, 216, 216, 1);
   text-shadow: 1.5px 1.5px black;
+
+  font-size: 12px;
+}
+.ap-overlay.hidden {
+  display: none;
+}
+
+.ap-overlay .checked-location {
+  color: #888;
 }

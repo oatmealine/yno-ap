@@ -6,6 +6,7 @@ import { GAME_NAME } from '../const';
 import { hideStatus, setConnected, setConnecting, updateItemDisplay } from '../ui/status';
 import { onToastMessage, showToastMessage } from '../ui/toasts';
 import { onMessage } from '../ui/ap-tab';
+import { updateLocationTracker } from '../explorer/bridge';
 
 export const client = new Client();
 
@@ -128,6 +129,7 @@ export async function connect(host, password, slot) {
 
   updateLocationCompletions();
   updateSessionValidity();
+  updateLocationTracker();
   
   setConnected(true);
   //showToastMessage('Connected to Archipelago server successfully', 'archipelago', false, undefined);
@@ -139,6 +141,7 @@ export function disconnect(disableChecks = false, silent = false) {
   if (disableChecks) {
     enabled = false;
     hideStatus();
+    updateLocationTracker();
   }
 
   if (silent) silenceNextDisconnect = true;
@@ -219,14 +222,21 @@ function onItemReceived(item) {
 }
 
 client.messages.on('itemSent', (content, item, nodes) => 
-  (item.locationGame !== client.game) && (onToastMessage(nodes), onItemReceived(item)));
+  (item.locationGame !== client.game)
+  && (onToastMessage(nodes), onItemReceived(item), updateLocationTracker()));
 client.messages.on('itemHinted', (content, item, found, nodes) =>
-  (item.locationGame === client.game || item.game === client.game) && onToastMessage(nodes));
+  (item.locationGame === client.game || item.game === client.game)
+  && (onToastMessage(nodes), updateLocationTracker()));
 client.messages.on('itemCheated', (content, item, nodes) =>
-  item.locationGame === client.game && (onToastMessage(nodes), onItemReceived(item)));
+  item.locationGame === client.game
+  && (onToastMessage(nodes), onItemReceived(item), updateLocationTracker()));
 
 export async function sendMessage(content) {
   await client.messages.say(content);
+}
+
+export function isLocationHinted(locationName) {
+  return client.items.hints.find(hint => hint.item.locationName === locationName) !== undefined;
 }
 
 export function isLocationChecked(locationName) {

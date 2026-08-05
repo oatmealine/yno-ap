@@ -7,6 +7,7 @@ import { isSessionValid } from './dream-session';
 import { getPos, getSwitch, getVariable, trackSwitch, waitForEvent, waitForPicture, waitForSwitchChange, waitForVariableChange } from '../easyrpg-client';
 import { saveSlot, slotStore } from '../lib/store';
 import { showToastMessage } from '../ui/toasts';
+import { updateLocationTracker } from '../explorer/bridge';
 
 /** @type {Location[]} */
 const locations = locationsRaw
@@ -148,6 +149,8 @@ function updateLocationCompletion(location, routine = false) {
       if (!isConditionComplete(condition))
         slotStore.completedConditions.push(condition.identifier);
     saveSlot();
+
+    updateLocationTracker();
   }
 }
 
@@ -373,6 +376,12 @@ function getRelevantConditions(mapId) {
         isLocationChecked(condition.parent.name)
       )
     );
+}
+
+export function getMapConditions(mapId) {
+  return locations
+    .flatMap(location => location.conditions ?? singleton(location.condition))
+    .filter(condition => condition.map === mapId);
 }
 
 /**

@@ -87,7 +87,7 @@ Client:
   - UI
     - [x] Show available effects
     - [ ] Show available minigames
-    - [ ] Show possible checks in current area
+    - [x] Show possible checks in current area
 
   - [x] Award location on world visit
   - [x] Award location on vending machine use
